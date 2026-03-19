@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Производственный план</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: Segoe UI, Tahoma, sans-serif;
+    font-size: 13px;
+    background: #f5f5f5;
+    color: #333;
+    padding: 12px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 10px 16px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    gap: 12px;
+  }
+
+  .header h1 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    white-space: nowrap;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  /* Mode switcher */
+  .mode-switcher {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .mode-btn {
+    padding: 5px 16px;
+    border: none;
+    background: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    color: #555;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .mode-btn + .mode-btn {
+    border-left: 1px solid #ccc;
+  }
+
+  .mode-btn:hover { background: #f0f0f0; }
+
+  .mode-btn.active.carp {
+    background: #5c6bc0;
+    color: #fff;
+  }
+
+  .mode-btn.active.paint {
+    background: #ef6c00;
+    color: #fff;
+  }
+
+  .btn {
+    padding: 6px 14px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    color: #333;
+    transition: background 0.15s;
+  }
+
+  .btn:hover { background: #f0f0f0; }
+  .btn-primary { background: #2a7de1; color: #fff; border-color: #2a7de1; }
+  .btn-primary:hover { background: #1f6bc4; }
+  .btn-primary.paint { background: #ef6c00; border-color: #ef6c00; }
+  .btn-primary.paint:hover { background: #d45e00; }
+  .btn-danger { color: #c0392b; border-color: #e6b0aa; }
+  .btn-danger:hover { background: #fdf0ef; }
+  .btn-sm { padding: 3px 8px; font-size: 11px; }
+
+  .batch-section {
+    margin-bottom: 12px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .batch-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .batch-header:hover { background: #f0f1f2; }
+  .batch-header.unassigned { background: #fff3e0; border-bottom-color: #ffe0b2; }
+  .batch-header.unassigned:hover { background: #fff8ec; }
+
+  .batch-title {
+    font-weight: 600;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .batch-title .arrow { transition: transform 0.2s; }
+  .batch-title .arrow.collapsed { transform: rotate(-90deg); }
+
+  .batch-count {
+    font-weight: 400;
+    color: #888;
+    font-size: 12px;
+  }
+
+  .mode-tag {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 2px;
+    font-size: 10px;
+    font-weight: 600;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  .mode-tag.carp  { background: #e8eaf6; color: #3949ab; }
+  .mode-tag.paint { background: #fff3e0; color: #e65100; }
+
+  .batch-body { overflow: hidden; }
+  .batch-body.collapsed { display: none; }
+
+  .drop-zone { min-height: 36px; transition: background 0.15s; }
+
+  .drop-zone.drag-over {
+    background: #e8f4fd;
+    outline: 2px dashed #2a7de1;
+    outline-offset: -2px;
+  }
+
+  .drop-zone-hint {
+    padding: 10px;
+    text-align: center;
+    color: #aaa;
+    font-style: italic;
+    font-size: 12px;
+  }
+
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+
+  table th {
+    padding: 6px 8px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    border-bottom: 1px solid #eee;
+    background: #fafafa;
+    white-space: nowrap;
+  }
+
+  table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #f0f0f0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+  }
+
+  .col-num    { width: 30px; text-align: center; }
+  .col-order  { width: 140px; }
+  .col-date   { width: 90px; }
+  .col-client { width: auto; }
+  .col-status { width: 130px; }
+  .col-price  { width: 110px; text-align: right; }
+  .col-comment { width: 180px; }
+
+  tr.order-row { cursor: grab; transition: background 0.1s; }
+  tr.order-row:hover { background: #f8f9fa; }
+  tr.order-row:active { cursor: grabbing; }
+  tr.order-row.dragging { opacity: 0.4; background: #e3f2fd; }
+
+  tr.order-row .order-link {
+    color: #2a7de1;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  tr.order-row .order-link:hover { text-decoration: underline; }
+
+  .status-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .status-0   { background: #e8eaf6; color: #3949ab; }
+  .status-4   { background: #fff3e0; color: #e65100; }
+  .status-3   { background: #e8f5e9; color: #2e7d32; }
+  .status-100 { background: #fce4ec; color: #c62828; }
+
+  .price { font-variant-numeric: tabular-nums; }
+
+  .loading { text-align: center; padding: 40px; color: #888; }
+
+  .error-msg {
+    text-align: center;
+    padding: 20px;
+    color: #c0392b;
+    background: #fdf0ef;
+    border: 1px solid #e6b0aa;
+    border-radius: 4px;
+    margin: 12px 0;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 18px;
+    background: #333;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1000;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Производственный план</h1>
+  <div class="mode-switcher">
+    <button class="mode-btn carp active" id="mode-carp" onclick="setMode(1)">Столярка</button>
+    <button class="mode-btn paint" id="mode-paint" onclick="setMode(2)">Малярка</button>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-primary" id="btn-add-batch" onclick="addBatch()">+ Добавить партию</button>
+  </div>
+</div>
+
+<div id="content">
+  <div class="loading">Загрузка заказов...</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ========== STATE ==========
+var orders  = [];
+var batches = []; // [{id, batchNumber, sortOrder}]
+var currentMode = 1; // 1=столярка, 2=малярка
+var draggedOrderId = null;
+
+// ========== API ==========
+
+function callMethod(name, params) {
+  return Host.executeMethod(name, params || {});
+}
+
+// ========== MODE ==========
+
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('mode-carp').classList.toggle('active', mode === 1);
+  document.getElementById('mode-paint').classList.toggle('active', mode === 2);
+  var addBtn = document.getElementById('btn-add-batch');
+  if (mode === 2) addBtn.classList.add('paint');
+  else addBtn.classList.remove('paint');
+  // Батчи зависят от режима — перезагружаем
+  loadBatches();
+}
+
+// ========== LOAD ==========
+
+function loadData() {
+  document.getElementById('content').innerHTML =
+    '<div class="loading">Загрузка заказов...</div>';
+
+  callMethod('getProductionOrders', {})
+    .then(function(result) {
+      orders = JSON.parse(result.data);
+      return callMethod('getBatches', { batchType: currentMode });
+    })
+    .then(function(result) {
+      batches = JSON.parse(result.data);
+      render();
+    })
+    .catch(function(err) {
+      showError('Ошибка загрузки: ' + err);
+    });
+}
+
+function loadBatches() {
+  callMethod('getBatches', { batchType: currentMode })
+    .then(function(result) {
+      batches = JSON.parse(result.data);
+      render();
+    })
+    .catch(function(err) {
+      showError('Ошибка загрузки партий: ' + err);
+    });
+}
+
+// ========== RENDER ==========
+
+function getOrderBatch(order) {
+  return currentMode === 1 ? (order.carpBatch || '') : (order.paintBatch || '');
+}
+
+function setOrderBatch(order, batchNum) {
+  if (currentMode === 1) order.carpBatch = batchNum;
+  else order.paintBatch = batchNum;
+}
+
+function render() {
+  var modeLabel = currentMode === 1 ? 'столярке' : 'малярке';
+  var modeTag   = currentMode === 1
+    ? '<span class="mode-tag carp">Столярка</span>'
+    : '<span class="mode-tag paint">Малярка</span>';
+
+  var html = '';
+
+  // Нераспределённые
+  var unassigned = orders.filter(function(o) {
+    return getOrderBatch(o) === '';
+  });
+  html += renderBatchSection('', 'Нераспределённые заказы', unassigned, false, modeTag);
+
+  // Партии текущего режима
+  batches.forEach(function(batch) {
+    var batchOrders = orders.filter(function(o) {
+      return getOrderBatch(o) === batch.batchNumber;
+    });
+    html += renderBatchSection(
+      batch.batchNumber,
+      'Партия ' + batch.batchNumber,
+      batchOrders,
+      true,
+      modeTag
+    );
+  });
+
+  document.getElementById('content').innerHTML = html;
+  initDragAndDrop();
+}
+
+function renderBatchSection(batchNum, title, batchOrders, canDelete) {
+  var sectionId   = batchNum === '' ? 'unassigned' : 'batch-' + batchNum.replace(/[^a-zA-Z0-9]/g, '_');
+  var headerClass = batchNum === '' ? 'batch-header unassigned' : 'batch-header';
+  var deleteBtn   = canDelete
+    ? '<button class="btn btn-danger btn-sm" onclick="event.stopPropagation();removeBatch(\'' + escapeAttr(batchNum) + '\')">Удалить</button>'
+    : '';
+
+  var html = '<div class="batch-section" id="section-' + sectionId + '">';
+  html += '<div class="' + headerClass + '" onclick="toggleSection(\'' + sectionId + '\')">';
+  html += '<span class="batch-title">';
+  html += '<span class="arrow" id="arrow-' + sectionId + '">&#9660;</span> ';
+  html += escapeHtml(title);
+  html += ' <span class="batch-count">(' + batchOrders.length + ')</span>';
+  html += '</span>';
+  html += deleteBtn;
+  html += '</div>';
+
+  html += '<div class="batch-body" id="body-' + sectionId + '">';
+  html += '<div class="drop-zone" data-batch="' + escapeAttr(batchNum) + '">';
+
+  if (batchOrders.length === 0) {
+    html += '<div class="drop-zone-hint">Перетащите заказы сюда</div>';
+  } else {
+    html += '<table>';
+    html += '<thead><tr>';
+    html += '<th class="col-num">#</th>';
+    html += '<th class="col-order">Заказ</th>';
+    html += '<th class="col-date">Дата</th>';
+    html += '<th class="col-client">Клиент</th>';
+    html += '<th class="col-status">Статус</th>';
+    html += '<th class="col-price">Сумма</th>';
+    html += '<th class="col-comment">Комментарий</th>';
+    html += '</tr></thead><tbody>';
+    batchOrders.forEach(function(order, idx) {
+      html += renderOrderRow(order, idx + 1);
+    });
+    html += '</tbody></table>';
+  }
+
+  html += '</div></div></div>';
+  return html;
+}
+
+function renderOrderRow(order, num) {
+  var statusClass = 'status-100';
+  if (order.orderStatus === 0 || order.orderStatus === 3 || order.orderStatus === 4)
+    statusClass = 'status-' + order.orderStatus;
+
+  var price   = order.totalPrice ? formatPrice(order.totalPrice) : '';
+  var date    = order.dateOrder  ? formatDate(order.dateOrder)   : '';
+  var comment = order.comment || '';
+  if (comment.length > 40) comment = comment.substring(0, 40) + '...';
+
+  var html = '<tr class="order-row" draggable="true" data-order-id="' + order.id + '">';
+  html += '<td class="col-num">' + num + '</td>';
+  html += '<td class="col-order"><a class="order-link" onclick="openOrder(' + order.id + ')">' + escapeHtml(order.orderNo) + '</a></td>';
+  html += '<td class="col-date">' + date + '</td>';
+  html += '<td class="col-client" title="' + escapeAttr(order.customerName || '') + '">' + escapeHtml(order.customerName || '') + '</td>';
+  html += '<td class="col-status"><span class="status-badge ' + statusClass + '">' + escapeHtml(order.stateName || '') + '</span></td>';
+  html += '<td class="col-price price">' + price + '</td>';
+  html += '<td class="col-comment" title="' + escapeAttr(order.comment || '') + '">' + escapeHtml(comment) + '</td>';
+  html += '</tr>';
+  return html;
+}
+
+// ========== BATCH MANAGEMENT ==========
+
+function generateBatchNumber() {
+  var prefix = currentMode === 1 ? 'С-' : 'М-';
+  var max = 0;
+  batches.forEach(function(b) {
+    var s = b.batchNumber;
+    if (s.indexOf(prefix) === 0) {
+      var n = parseInt(s.substring(prefix.length));
+      if (!isNaN(n) && n > max) max = n;
+    }
+  });
+  var next = max + 1;
+  return prefix + (next < 10 ? '0' + next : '' + next);
+}
+
+function addBatch() {
+  var batchNum = generateBatchNumber();
+  callMethod('addBatch', { batchType: currentMode, batchNumber: batchNum })
+    .then(function() {
+      showToast('Создана партия ' + batchNum);
+      loadBatches();
+    })
+    .catch(function(err) { showToast('Ошибка: ' + err); });
+}
+
+function removeBatch(batchNum) {
+  callMethod('deleteBatch', { batchType: currentMode, batchNumber: batchNum })
+    .then(function() {
+      orders.forEach(function(o) {
+        if (getOrderBatch(o) === batchNum) setOrderBatch(o, '');
+      });
+      batches = batches.filter(function(b) { return b.batchNumber !== batchNum; });
+      render();
+      showToast('Партия ' + batchNum + ' удалена');
+    })
+    .catch(function(err) { showToast('Ошибка: ' + err); });
+}
+
+function toggleSection(sectionId) {
+  var body  = document.getElementById('body-'  + sectionId);
+  var arrow = document.getElementById('arrow-' + sectionId);
+  body.classList.toggle('collapsed');
+  arrow.classList.toggle('collapsed');
+}
+
+// ========== DRAG AND DROP ==========
+
+function initDragAndDrop() {
+  document.querySelectorAll('.order-row').forEach(function(row) {
+    row.addEventListener('dragstart', function(e) {
+      draggedOrderId = parseInt(this.getAttribute('data-order-id'));
+      this.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    row.addEventListener('dragend', function() {
+      this.classList.remove('dragging');
+      draggedOrderId = null;
+      document.querySelectorAll('.drag-over').forEach(function(el) {
+        el.classList.remove('drag-over');
+      });
+    });
+  });
+
+  document.querySelectorAll('.drop-zone').forEach(function(zone) {
+    zone.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      this.classList.add('drag-over');
+    });
+    zone.addEventListener('dragleave', function(e) {
+      if (!this.contains(e.relatedTarget)) this.classList.remove('drag-over');
+    });
+    zone.addEventListener('drop', function(e) {
+      e.preventDefault();
+      this.classList.remove('drag-over');
+      if (draggedOrderId === null) return;
+
+      var targetBatch = this.getAttribute('data-batch');
+      var order = findOrder(draggedOrderId);
+      if (!order) return;
+
+      var oldBatch = getOrderBatch(order);
+      if (oldBatch === targetBatch) return;
+
+      setOrderBatch(order, targetBatch);
+      render();
+
+      callMethod('assignOrderBatch', {
+        orderId:     order.id,
+        batchNumber: targetBatch,
+        batchType:   currentMode
+      })
+      .then(function() {
+        showToast(targetBatch
+          ? 'Заказ назначен в партию ' + targetBatch
+          : 'Заказ убран из партии');
+      })
+      .catch(function(err) {
+        showToast('Ошибка сохранения: ' + err);
+        loadData();
+      });
+    });
+  });
+}
+
+// ========== ACTIONS ==========
+
+function openOrder(orderId) {
+  callMethod('openOrder', { orderId: orderId })
+    .catch(function(err) { showToast('Не удалось открыть заказ: ' + err); });
+}
+
+// ========== HELPERS ==========
+
+function findOrder(id) {
+  for (var i = 0; i < orders.length; i++) {
+    if (orders[i].id === id) return orders[i];
+  }
+  return null;
+}
+
+function formatPrice(value) {
+  if (!value && value !== 0) return '';
+  return Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0') + '\u00a0\u20BD';
+}
+
+function formatDate(dateStr) {
+  if (!dateStr || dateStr === 'null') return '';
+  try {
+    var d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    return ('0' + d.getDate()).slice(-2) + '.' +
+           ('0' + (d.getMonth() + 1)).slice(-2) + '.' +
+           d.getFullYear();
+  } catch(e) { return dateStr; }
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function escapeAttr(str) {
+  if (!str) return '';
+  return String(str).replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+}
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 2500);
+}
+
+function showError(msg) {
+  document.getElementById('content').innerHTML =
+    '<div class="error-msg">' + escapeHtml(msg) + '</div>';
+}
+
+// ========== INIT ==========
+loadData();
+</script>
+</body>
+</html>
