@@ -144,6 +144,23 @@ ExecSQL(
 
 ---
 
+## Параметры типа DATE
+
+FastScript **не умеет** передавать строку (`OleStr`) как параметр в DATE-поле — ошибка `Could not convert variant of type (OleStr) into type (Double)`.
+
+Решение: встраивать дату как литерал в SQL-строку:
+```pascal
+dsStr := VarToStr(dateStart); // "2025-03-19" или ""
+if dsStr <> '' then sqlDS := '''' + dsStr + '''' else sqlDS := 'NULL';
+ExecSQL(
+  'INSERT INTO T (DATE_COL) VALUES (' + sqlDS + ')',
+  MakeDictionary([]), ''
+);
+```
+Безопасно, если источник — HTML `<input type="date">` (всегда `YYYY-MM-DD` или `""`).
+
+---
+
 ## Строковые функции
 
 ```pascal

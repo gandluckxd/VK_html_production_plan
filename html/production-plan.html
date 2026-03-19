@@ -8,18 +8,18 @@
 
   body {
     font-family: Segoe UI, Tahoma, sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     background: #f5f5f5;
     color: #333;
-    padding: 12px;
+    padding: 8px;
   }
 
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
-    padding: 10px 16px;
+    margin-bottom: 6px;
+    padding: 6px 12px;
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -27,7 +27,7 @@
   }
 
   .header h1 {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     color: #1a1a1a;
     white-space: nowrap;
@@ -49,7 +49,7 @@
   }
 
   .mode-btn {
-    padding: 5px 16px;
+    padding: 4px 12px;
     border: none;
     background: #fff;
     cursor: pointer;
@@ -76,7 +76,7 @@
   }
 
   .btn {
-    padding: 6px 14px;
+    padding: 4px 12px;
     border: 1px solid #ccc;
     border-radius: 3px;
     background: #fff;
@@ -96,7 +96,7 @@
   .btn-sm { padding: 3px 8px; font-size: 11px; }
 
   .batch-section {
-    margin-bottom: 12px;
+    margin-bottom: 6px;
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -107,7 +107,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 12px;
+    padding: 5px 10px;
     background: #f8f9fa;
     border-bottom: 1px solid #eee;
     cursor: pointer;
@@ -120,7 +120,7 @@
 
   .batch-title {
     font-weight: 600;
-    font-size: 13px;
+    font-size: 12px;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -151,7 +151,7 @@
   .batch-body { overflow: hidden; }
   .batch-body.collapsed { display: none; }
 
-  .drop-zone { min-height: 36px; transition: background 0.15s; }
+  .drop-zone { min-height: 28px; transition: background 0.15s; }
 
   .drop-zone.drag-over {
     background: #e8f4fd;
@@ -160,7 +160,7 @@
   }
 
   .drop-zone-hint {
-    padding: 10px;
+    padding: 6px;
     text-align: center;
     color: #aaa;
     font-style: italic;
@@ -170,7 +170,7 @@
   table { width: 100%; border-collapse: collapse; table-layout: fixed; }
 
   table th {
-    padding: 6px 8px;
+    padding: 3px 8px;
     text-align: left;
     font-weight: 600;
     font-size: 11px;
@@ -183,7 +183,7 @@
   }
 
   table td {
-    padding: 6px 8px;
+    padding: 3px 8px;
     border-bottom: 1px solid #f0f0f0;
     white-space: nowrap;
     overflow: hidden;
@@ -253,6 +253,67 @@
     pointer-events: none;
   }
   .toast.show { opacity: 1; }
+
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+
+  .modal {
+    background: #fff;
+    border-radius: 6px;
+    padding: 24px;
+    min-width: 320px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  }
+
+  .modal h2 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: #1a1a1a;
+  }
+
+  .form-row {
+    margin-bottom: 14px;
+  }
+
+  .form-row label {
+    display: block;
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+
+  .form-row input {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 13px;
+    font-family: inherit;
+    color: #333;
+    outline: none;
+  }
+
+  .form-row input:focus { border-color: #2a7de1; }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 20px;
+  }
 </style>
 </head>
 <body>
@@ -274,12 +335,36 @@
 
 <div class="toast" id="toast"></div>
 
+<!-- Модальный диалог создания партии -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <h2 id="modal-title">Новая партия</h2>
+    <div class="form-row">
+      <label>Наименование партии *</label>
+      <input type="text" id="modal-name" placeholder="Например: Смена 1, Март-01..." />
+    </div>
+    <div class="form-row">
+      <label>Дата начала</label>
+      <input type="date" id="modal-date-start" />
+    </div>
+    <div class="form-row">
+      <label>Дата окончания</label>
+      <input type="date" id="modal-date-end" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal()">Отмена</button>
+      <button class="btn btn-primary" id="modal-confirm" onclick="confirmModal()">Создать</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // ========== STATE ==========
 var orders  = [];
 var batches = []; // [{id, batchNumber, sortOrder}]
 var currentMode = 1; // 1=столярка, 2=малярка
 var draggedOrderId = null;
+var editingBatchNumber = null; // null = добавление, string = редактирование
 
 // ========== API ==========
 
@@ -350,25 +435,33 @@ function render() {
 
   var html = '';
 
-  // Нераспределённые
-  var unassigned = orders.filter(function(o) {
-    return getOrderBatch(o) === '';
-  });
-  html += renderBatchSection('', 'Нераспределённые заказы', unassigned, false, modeTag);
-
   // Партии текущего режима
   batches.forEach(function(batch) {
     var batchOrders = orders.filter(function(o) {
       return getOrderBatch(o) === batch.batchNumber;
     });
+    var dates = '';
+    if (batch.dateStart || batch.dateEnd) {
+      var dateColor = currentMode === 1 ? '#5c6bc0' : '#ef6c00';
+      dates = ' <span style="font-weight:600;color:' + dateColor + ';font-size:12px;">';
+      if (batch.dateStart) dates += formatDate(batch.dateStart);
+      if (batch.dateStart && batch.dateEnd) dates += ' — ';
+      if (batch.dateEnd) dates += formatDate(batch.dateEnd);
+      dates += '</span>';
+    }
     html += renderBatchSection(
       batch.batchNumber,
-      'Партия ' + batch.batchNumber,
+      escapeHtml(batch.batchNumber) + dates,
       batchOrders,
-      true,
-      modeTag
+      true
     );
   });
+
+  // Нераспределённые — в конце
+  var unassigned = orders.filter(function(o) {
+    return getOrderBatch(o) === '';
+  });
+  html += renderBatchSection('', escapeHtml('Нераспределённые заказы'), unassigned, false, modeTag);
 
   document.getElementById('content').innerHTML = html;
   initDragAndDrop();
@@ -377,7 +470,10 @@ function render() {
 function renderBatchSection(batchNum, title, batchOrders, canDelete) {
   var sectionId   = batchNum === '' ? 'unassigned' : 'batch-' + batchNum.replace(/[^a-zA-Z0-9]/g, '_');
   var headerClass = batchNum === '' ? 'batch-header unassigned' : 'batch-header';
-  var deleteBtn   = canDelete
+  var editBtn   = canDelete
+    ? '<button class="btn btn-sm" style="margin-right:4px;" onclick="event.stopPropagation();editBatch(\'' + escapeAttr(batchNum) + '\')">Изменить</button>'
+    : '';
+  var deleteBtn = canDelete
     ? '<button class="btn btn-danger btn-sm" onclick="event.stopPropagation();removeBatch(\'' + escapeAttr(batchNum) + '\')">Удалить</button>'
     : '';
 
@@ -385,10 +481,10 @@ function renderBatchSection(batchNum, title, batchOrders, canDelete) {
   html += '<div class="' + headerClass + '" onclick="toggleSection(\'' + sectionId + '\')">';
   html += '<span class="batch-title">';
   html += '<span class="arrow" id="arrow-' + sectionId + '">&#9660;</span> ';
-  html += escapeHtml(title);
+  html += title;
   html += ' <span class="batch-count">(' + batchOrders.length + ')</span>';
   html += '</span>';
-  html += deleteBtn;
+  html += '<div style="display:flex;gap:4px;">' + editBtn + deleteBtn + '</div>';
   html += '</div>';
 
   html += '<div class="batch-body" id="body-' + sectionId + '">';
@@ -441,28 +537,101 @@ function renderOrderRow(order, num) {
 
 // ========== BATCH MANAGEMENT ==========
 
-function generateBatchNumber() {
-  var prefix = currentMode === 1 ? 'С-' : 'М-';
-  var max = 0;
-  batches.forEach(function(b) {
-    var s = b.batchNumber;
-    if (s.indexOf(prefix) === 0) {
-      var n = parseInt(s.substring(prefix.length));
-      if (!isNaN(n) && n > max) max = n;
-    }
-  });
-  var next = max + 1;
-  return prefix + (next < 10 ? '0' + next : '' + next);
+function addBatch() {
+  editingBatchNumber = null;
+  var confirm = document.getElementById('modal-confirm');
+  document.getElementById('modal-title').textContent =
+    currentMode === 1 ? 'Новая партия — Столярка' : 'Новая партия — Малярка';
+  confirm.className = 'btn btn-primary' + (currentMode === 2 ? ' paint' : '');
+  confirm.textContent = 'Создать';
+  document.getElementById('modal-name').value = '';
+  document.getElementById('modal-date-start').value = '';
+  document.getElementById('modal-date-end').value = '';
+  document.getElementById('modal-overlay').classList.add('show');
+  setTimeout(function() { document.getElementById('modal-name').focus(); }, 50);
 }
 
-function addBatch() {
-  var batchNum = generateBatchNumber();
-  callMethod('addBatch', { batchType: currentMode, batchNumber: batchNum })
-    .then(function() {
-      showToast('Создана партия ' + batchNum);
-      loadBatches();
-    })
-    .catch(function(err) { showToast('Ошибка: ' + err); });
+function editBatch(batchNum) {
+  var batch = null;
+  for (var i = 0; i < batches.length; i++) {
+    if (batches[i].batchNumber === batchNum) { batch = batches[i]; break; }
+  }
+  if (!batch) return;
+
+  editingBatchNumber = batchNum;
+  var confirm = document.getElementById('modal-confirm');
+  document.getElementById('modal-title').textContent =
+    currentMode === 1 ? 'Редактировать партию — Столярка' : 'Редактировать партию — Малярка';
+  confirm.className = 'btn btn-primary' + (currentMode === 2 ? ' paint' : '');
+  confirm.textContent = 'Сохранить';
+  document.getElementById('modal-name').value = batchNum;
+  document.getElementById('modal-date-start').value = batch.dateStart || '';
+  document.getElementById('modal-date-end').value = batch.dateEnd || '';
+  document.getElementById('modal-overlay').classList.add('show');
+  setTimeout(function() { document.getElementById('modal-name').focus(); }, 50);
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('show');
+}
+
+function confirmModal() {
+  if (editingBatchNumber !== null) {
+    confirmEditBatch();
+  } else {
+    confirmAddBatch();
+  }
+}
+
+function confirmAddBatch() {
+  var name      = document.getElementById('modal-name').value.trim();
+  var dateStart = document.getElementById('modal-date-start').value;
+  var dateEnd   = document.getElementById('modal-date-end').value;
+
+  if (!name) { document.getElementById('modal-name').focus(); return; }
+  closeModal();
+
+  callMethod('addBatch', {
+    batchType:   currentMode,
+    batchNumber: name,
+    dateStart:   dateStart,
+    dateEnd:     dateEnd
+  })
+  .then(function() {
+    showToast('Создана партия «' + name + '»');
+    loadBatches();
+  })
+  .catch(function(err) { showToast('Ошибка: ' + err); });
+}
+
+function confirmEditBatch() {
+  var name      = document.getElementById('modal-name').value.trim();
+  var dateStart = document.getElementById('modal-date-start').value;
+  var dateEnd   = document.getElementById('modal-date-end').value;
+
+  if (!name) { document.getElementById('modal-name').focus(); return; }
+  closeModal();
+
+  var oldName = editingBatchNumber;
+  editingBatchNumber = null;
+
+  callMethod('editBatch', {
+    batchType:      currentMode,
+    oldBatchNumber: oldName,
+    newBatchNumber: name,
+    dateStart:      dateStart,
+    dateEnd:        dateEnd
+  })
+  .then(function() {
+    showToast('Партия обновлена');
+    if (oldName !== name) {
+      orders.forEach(function(o) {
+        if (getOrderBatch(o) === oldName) setOrderBatch(o, name);
+      });
+    }
+    loadBatches();
+  })
+  .catch(function(err) { showToast('Ошибка: ' + err); });
 }
 
 function removeBatch(batchNum) {
@@ -602,6 +771,17 @@ function showError(msg) {
   document.getElementById('content').innerHTML =
     '<div class="error-msg">' + escapeHtml(msg) + '</div>';
 }
+
+// ========== MODAL KEYBOARD ==========
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'Enter' && document.getElementById('modal-overlay').classList.contains('show')) {
+    confirmModal();
+  }
+});
 
 // ========== INIT ==========
 loadData();
