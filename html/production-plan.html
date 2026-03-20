@@ -95,6 +95,19 @@
   .btn-danger:hover { background: #fdf0ef; }
   .btn-sm { padding: 3px 8px; font-size: 11px; }
 
+  .batch-drag-handle {
+    cursor: grab;
+    color: #ccc;
+    font-size: 15px;
+    padding: 0 5px 0 0;
+    user-select: none;
+    line-height: 1;
+  }
+  .batch-drag-handle:hover { color: #888; }
+  .batch-drag-handle:active { cursor: grabbing; }
+  .batch-section.drag-batch-over { outline: 2px dashed #2a7de1; outline-offset: -2px; }
+  .batch-section.dragging-batch { opacity: 0.45; }
+
   .batch-section {
     margin-bottom: 6px;
     background: #fff;
@@ -358,13 +371,27 @@
   </div>
 </div>
 
+<!-- Модальный диалог подтверждения удаления -->
+<div class="modal-overlay" id="modal-delete-overlay">
+  <div class="modal">
+    <h2>Удалить партию?</h2>
+    <p id="modal-delete-text" style="font-size:13px;color:#555;margin-bottom:20px;line-height:1.5;"></p>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeDeleteModal()">Отмена</button>
+      <button class="btn btn-danger" onclick="confirmDelete()">Удалить</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // ========== STATE ==========
 var orders  = [];
 var batches = []; // [{id, batchNumber, sortOrder}]
 var currentMode = 1; // 1=столярка, 2=малярка
 var draggedOrderId = null;
+var draggedBatchNum = null;
 var editingBatchNumber = null; // null = добавление, string = редактирование
+var pendingDeleteBatch = null;
 
 // ========== API ==========
 
@@ -465,6 +492,7 @@ function render() {
 
   document.getElementById('content').innerHTML = html;
   initDragAndDrop();
+  initBatchDragAndDrop();
 }
 
 function renderBatchSection(batchNum, title, batchOrders, canDelete) {
@@ -477,9 +505,14 @@ function renderBatchSection(batchNum, title, batchOrders, canDelete) {
     ? '<button class="btn btn-danger btn-sm" onclick="event.stopPropagation();removeBatch(\'' + escapeAttr(batchNum) + '\')">Удалить</button>'
     : '';
 
-  var html = '<div class="batch-section" id="section-' + sectionId + '">';
+  var dragHandle = canDelete
+    ? '<span class="batch-drag-handle" draggable="true" onclick="event.stopPropagation()">&#8942;</span>'
+    : '';
+
+  var html = '<div class="batch-section" id="section-' + sectionId + '" data-batch-num="' + escapeAttr(batchNum) + '">';
   html += '<div class="' + headerClass + '" onclick="toggleSection(\'' + sectionId + '\')">';
   html += '<span class="batch-title">';
+  html += dragHandle;
   html += '<span class="arrow" id="arrow-' + sectionId + '">&#9660;</span> ';
   html += title;
   html += ' <span class="batch-count">(' + batchOrders.length + ')</span>';
@@ -635,6 +668,21 @@ function confirmEditBatch() {
 }
 
 function removeBatch(batchNum) {
+  pendingDeleteBatch = batchNum;
+  document.getElementById('modal-delete-text').textContent =
+    'Партия «' + batchNum + '» будет удалена. Все заказы из неё станут нераспределёнными.';
+  document.getElementById('modal-delete-overlay').classList.add('show');
+}
+
+function closeDeleteModal() {
+  pendingDeleteBatch = null;
+  document.getElementById('modal-delete-overlay').classList.remove('show');
+}
+
+function confirmDelete() {
+  if (!pendingDeleteBatch) return;
+  var batchNum = pendingDeleteBatch;
+  closeDeleteModal();
   callMethod('deleteBatch', { batchType: currentMode, batchNumber: batchNum })
     .then(function() {
       orders.forEach(function(o) {
@@ -674,6 +722,7 @@ function initDragAndDrop() {
 
   document.querySelectorAll('.drop-zone').forEach(function(zone) {
     zone.addEventListener('dragover', function(e) {
+      if (draggedBatchNum !== null) return;
       e.preventDefault();
       e.dataTransfer.dropEffect = 'move';
       this.classList.add('drag-over');
@@ -710,6 +759,69 @@ function initDragAndDrop() {
         showToast('Ошибка сохранения: ' + err);
         loadData();
       });
+    });
+  });
+}
+
+// ========== BATCH DRAG AND DROP ==========
+
+function initBatchDragAndDrop() {
+  document.querySelectorAll('.batch-drag-handle').forEach(function(handle) {
+    handle.addEventListener('dragstart', function(e) {
+      var section = this.parentElement.parentElement.parentElement;
+      draggedBatchNum = section.getAttribute('data-batch-num');
+      e.dataTransfer.effectAllowed = 'move';
+      var s = section;
+      setTimeout(function() { s.classList.add('dragging-batch'); }, 0);
+    });
+    handle.addEventListener('dragend', function() {
+      draggedBatchNum = null;
+      document.querySelectorAll('.batch-section').forEach(function(s) {
+        s.classList.remove('dragging-batch', 'drag-batch-over');
+      });
+    });
+  });
+
+  document.querySelectorAll('.batch-section').forEach(function(section) {
+    section.addEventListener('dragover', function(e) {
+      if (draggedBatchNum === null) return;
+      var targetNum = this.getAttribute('data-batch-num');
+      if (targetNum === draggedBatchNum) return;
+      e.preventDefault();
+      e.stopPropagation();
+      document.querySelectorAll('.batch-section').forEach(function(s) {
+        s.classList.remove('drag-batch-over');
+      });
+      this.classList.add('drag-batch-over');
+    });
+    section.addEventListener('dragleave', function(e) {
+      if (!this.contains(e.relatedTarget)) this.classList.remove('drag-batch-over');
+    });
+    section.addEventListener('drop', function(e) {
+      if (draggedBatchNum === null) return;
+      var targetNum = this.getAttribute('data-batch-num');
+      if (!targetNum || targetNum === draggedBatchNum) return;
+      e.preventDefault();
+      e.stopPropagation();
+      this.classList.remove('drag-batch-over');
+
+      var fromIdx = -1, toIdx = -1;
+      for (var i = 0; i < batches.length; i++) {
+        if (batches[i].batchNumber === draggedBatchNum) fromIdx = i;
+        if (batches[i].batchNumber === targetNum) toIdx = i;
+      }
+      if (fromIdx === -1 || toIdx === -1) return;
+      var moved = batches.splice(fromIdx, 1)[0];
+      batches.splice(toIdx, 0, moved);
+      render();
+
+      var batchNums = '';
+      for (var j = 0; j < batches.length; j++) {
+        if (j > 0) batchNums += '|';
+        batchNums += batches[j].batchNumber;
+      }
+      callMethod('reorderBatches', { batchType: currentMode, batchesStr: batchNums })
+        .catch(function(err) { showToast('Ошибка сохранения порядка: ' + err); loadBatches(); });
     });
   });
 }
@@ -776,8 +888,11 @@ function showError(msg) {
 document.getElementById('modal-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
+document.getElementById('modal-delete-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeDeleteModal();
+});
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeModal();
+  if (e.key === 'Escape') { closeModal(); closeDeleteModal(); }
   if (e.key === 'Enter' && document.getElementById('modal-overlay').classList.contains('show')) {
     confirmModal();
   }
