@@ -38,7 +38,7 @@ end;
 var
   ufId: Integer;
 begin
-  ufId := GetBatchUfId(batchType);
+  ufId := GetBatchUfId(StrToInt(batchType));
 
   // Снимаем партию со всех заказов в ORDERS_UF_VALUES
   ExecSQL(

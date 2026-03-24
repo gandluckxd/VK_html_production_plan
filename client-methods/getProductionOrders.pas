@@ -100,6 +100,7 @@ begin
     '  o.AGREEMENTNO, o.ORDERSTATUS, o.ORDERSTATEID, ' +
     '  COALESCE(os.NAME, '''') as STATENAME, ' +
     '  COALESCE(os.RECINDEX, -1) as STATE_RECINDEX, ' +
+    '  o.CUSTOMERID, ' +
     '  COALESCE(ca.NAME, '''') as CUSTOMERNAME, ' +
     '  COALESCE(o.RCOMMENT, '''') as RCOMMENT, ' +
     '  COALESCE(o.TOTALPRICE, 0) as TOTALPRICE, ' +
@@ -224,6 +225,7 @@ begin
     outRec.Add('orderStateId', srcRec['ORDERSTATEID']);
     outRec.Add('stateRecIdx',  srcRec['STATE_RECINDEX']);
     outRec.Add('stateName',    srcRec['STATENAME']);
+    outRec.Add('customerId',   srcRec['CUSTOMERID']);
     outRec.Add('customerName', srcRec['CUSTOMERNAME']);
     outRec.Add('comment',      srcRec['RCOMMENT']);
     outRec.Add('totalPrice',   srcRec['TOTALPRICE']);

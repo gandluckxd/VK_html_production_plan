@@ -42,7 +42,7 @@ var
   ufId: Integer;
   dsStr, deStr, sqlDS, sqlDE: string;
 begin
-  ufId := GetBatchUfId(batchType);
+  ufId := GetBatchUfId(StrToInt(batchType));
 
   // Если имя изменилось — переписываем во всех заказах ORDERS_UF_VALUES
   if VarToStr(oldBatchNumber) <> VarToStr(newBatchNumber) then

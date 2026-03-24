@@ -39,7 +39,7 @@ end;
 var
   ufId: Integer;
 begin
-  ufId := GetBatchUfId(batchType);
+  ufId := GetBatchUfId(StrToInt(batchType));
 
   // Всегда удаляем старое значение, потом вставляем новое если нужно
   ExecSQL(

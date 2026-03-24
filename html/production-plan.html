@@ -270,6 +270,14 @@
   }
   tr.order-row .order-link:hover { color: #4f46e5; text-decoration: underline; }
 
+  tr.order-row .client-link {
+    color: #6366f1;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+  tr.order-row .client-link:hover { color: #4f46e5; text-decoration: underline; }
+
   /* ---- STATUS ---- */
   .status-badge {
     display: inline-block;
@@ -735,7 +743,7 @@ function renderOrderRow(order, num) {
   html += '<td class="col-status"><div class="status-cell">' + renderProgressDots(order.stateRecIdx) + '<span class="status-badge ' + statusClass + '">' + escapeHtml(order.stateName || '') + '</span></div></td>';
   html += '<td class="col-agreement">' + escapeHtml(order.agreementNo || '') + '</td>';
   html += '<td class="col-date">' + date + '</td>';
-  html += '<td class="col-client" title="' + escapeAttr(order.customerName || '') + '">' + escapeHtml(order.customerName || '') + '</td>';
+  html += '<td class="col-client" title="' + escapeAttr(order.customerName || '') + '">' + (order.customerId ? '<a class="client-link" onclick="openCustomer(' + order.customerId + ')">' + escapeHtml(order.customerName || '') + '</a>' : escapeHtml(order.customerName || '')) + '</td>';
   html += '<td class="col-manager">' + escapeHtml(order.manager || '') + '</td>';
   html += '<td class="col-area">' + formatDecimal(order.areaIzd) + '</td>';
   html += '<td class="col-qty">' + (order.qtyIzd > 0 ? Math.round(order.qtyIzd) : '') + '</td>';
@@ -1017,6 +1025,11 @@ function initBatchDragAndDrop() {
 function openOrder(orderId) {
   callMethod('openOrder', { orderId: orderId })
     .catch(function(err) { showToast('Не удалось открыть заказ: ' + err); });
+}
+
+function openCustomer(customerId) {
+  callMethod('openCustomer', { customerId: customerId })
+    .catch(function(err) { showToast('Не удалось открыть клиента: ' + err); });
 }
 
 // ========== HELPERS ==========
