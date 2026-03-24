@@ -1,5 +1,7 @@
 # Производственный план (Production Plan) — План реализации
 
+> Статус: исторический план первой версии. Актуальная инструкция по развёртыванию и актуальный список методов находятся в `docs/setup-instructions.md`.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** HTML-представление для altAwin, позволяющее группировать заказы (Orders) в производственные партии (сменные задания) через drag-and-drop интерфейс.

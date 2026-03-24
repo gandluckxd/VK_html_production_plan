@@ -1,13 +1,72 @@
 // Клиентский метод: reorderBatches
 // Параметры:
 //   batchType   (integer, Входной)  — 1=столярка, 2=малярка
-//   batchesStr  (string,  Входной)  — имена партий через | в новом порядке
+//   batchesStr  (string,  Входной)  — legacy: имена партий через |
 //   success     (string,  Выходной)
+//
+// Дополнительно поддерживается JSON через Args['batchesJson']:
+//   [{"batchNumber":"..."}, ...]
+// Если JSON не передан/невалиден, используется legacy batchesStr.
+
+function SetBatchOrder(token: string; so: Integer): Boolean;
+begin
+  Result := False;
+  if token = '' then Exit;
+
+  ExecSQL(
+    'UPDATE VK_PROD_BATCHES SET SORTORDER = :so WHERE BATCHTYPE = :bt AND BATCHNUMBER = :bn',
+    MakeDictionary(['so', so, 'bt', batchType, 'bn', token]),
+    ''
+  );
+  Result := True;
+end;
+
+function ApplyOrderFromJson(jsonText: string): Boolean;
+var
+  items: IcmDictionaryList;
+  item: IcmDictionary;
+  i, sortOrder: Integer;
+  token: string;
+begin
+  Result := False;
+  if jsonText = '' then Exit;
+
+  try
+    items := IcmDictionaryList(JSONDecode(jsonText));
+    sortOrder := 0;
+    for i := 0 to items.Count - 1 do
+    begin
+      item := items.Items[i];
+      token := '';
+      if item.Exists('batchNumber') then
+        token := VarToStr(item['batchNumber']);
+      if SetBatchOrder(token, sortOrder) then
+        sortOrder := sortOrder + 1;
+    end;
+    Result := True;
+  except
+    Result := False;
+  end;
+end;
 
 var
-  remaining, token: string;
+  remaining, token, jsonPayload: string;
   sepPos, sortOrder: Integer;
 begin
+  jsonPayload := '';
+  try
+    jsonPayload := VarToStr(Args['batchesJson']);
+  except
+    jsonPayload := '';
+  end;
+
+  if ApplyOrderFromJson(jsonPayload) then
+  begin
+    success := 'true';
+    Exit;
+  end;
+
+  // Legacy режим: строка через "|"
   remaining := VarToStr(batchesStr);
   sortOrder := 0;
   while remaining <> '' do
@@ -24,12 +83,8 @@ begin
     end;
     if token <> '' then
     begin
-      ExecSQL(
-        'UPDATE VK_PROD_BATCHES SET SORTORDER = :so WHERE BATCHTYPE = :bt AND BATCHNUMBER = :bn',
-        MakeDictionary(['so', sortOrder, 'bt', batchType, 'bn', token]),
-        ''
-      );
-      sortOrder := sortOrder + 1;
+      if SetBatchOrder(token, sortOrder) then
+        sortOrder := sortOrder + 1;
     end;
   end;
   success := 'true';

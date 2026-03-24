@@ -3,7 +3,7 @@
 // Наименование (TITLE): Открытие заказа
 // Серверный: Нет
 //
-// Параметры (Args):
+// Параметры:
 //   orderId: Integer — ID заказа
 // Возвращает: Result['success'] = 'true'/'false'
 //
@@ -15,7 +15,7 @@
 var
   Order: IdocOrder;
 begin
-  Order := OpenDocument(IdocOrder, Args['orderId']);
+  Order := OpenDocument(IdocOrder, orderId);
   if Order <> nil then
   begin
     Order.ShowModal;
@@ -33,7 +33,7 @@ end;
 //   Order: IdocOrder;
 //   UI: IpubObjectsUIService;
 // begin
-//   Order := OpenDocument(IdocOrder, Args['orderId']);
+//   Order := OpenDocument(IdocOrder, orderId);
 //   if Order <> nil then
 //   begin
 //     UI := Framework.GetService(IpubObjectsUIService);

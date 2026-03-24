@@ -1,0 +1,1602 @@
+- generic [active] [ref=e1]:
+  - banner:
+    - generic [ref=e2]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - generic [ref=e6]:
+            - img [ref=e7]
+            - generic [ref=e9]: Москва
+          - generic [ref=e10]: Производим и устанавливаем окна с 1992 года!
+        - list [ref=e11]:
+          - listitem [ref=e12]:
+            - link "О компании" [ref=e13] [cursor=pointer]:
+              - /url: /o-kompanii
+          - listitem [ref=e14]:
+            - link "Оплата заказа" [ref=e15] [cursor=pointer]:
+              - /url: /oplata
+          - listitem [ref=e16]:
+            - link "Доставка" [ref=e17] [cursor=pointer]:
+              - /url: /uslugi/dostavka
+          - listitem [ref=e18]:
+            - link "Личный кабинет" [ref=e19] [cursor=pointer]:
+              - /url: /oferta
+          - listitem [ref=e20]:
+            - link "Контакты" [ref=e21] [cursor=pointer]:
+              - /url: /kontakty
+      - generic [ref=e23]:
+        - link "Московские окна" [ref=e24] [cursor=pointer]:
+          - /url: /
+          - img "Московские окна" [ref=e26]
+        - generic [ref=e27]:
+          - generic [ref=e28]:
+            - link "калькулятор" [ref=e29] [cursor=pointer]:
+              - /url: /kalkulator
+              - img [ref=e30]
+              - generic [ref=e32]: калькулятор
+            - generic [ref=e33] [cursor=pointer]:
+              - img [ref=e34]
+              - generic [ref=e39]:
+                - text: Заявка
+                - text: на расчет
+            - generic [ref=e40] [cursor=pointer]:
+              - img [ref=e41]
+              - generic [ref=e43]: Заказать звонок
+          - generic [ref=e44]:
+            - generic [ref=e45]: Ежедневно с 9:00 до 21:00
+            - link "+7 495 126-24-22" [ref=e46] [cursor=pointer]:
+              - /url: tel:+74951262422
+          - generic [ref=e47]:
+            - button [ref=e48] [cursor=pointer]:
+              - img [ref=e49]
+            - button [ref=e52] [cursor=pointer]:
+              - img [ref=e53]
+        - navigation [ref=e58]:
+          - list [ref=e59]:
+            - listitem [ref=e60]:
+              - generic [ref=e61] [cursor=pointer]: Остекление квартиры
+              - generic [ref=e63]:
+                - list [ref=e64]:
+                  - listitem [ref=e65]:
+                    - link "Остекление квартиры окна ПВХ различной формы и ценовой категории Остекление квартиры" [ref=e66] [cursor=pointer]:
+                      - /url: /ceny/osteklenie-kvartiry
+                      - paragraph [ref=e67]:
+                        - generic [ref=e68]: Остекление квартиры
+                        - text: окна ПВХ различной формы и ценовой категории
+                      - img "Остекление квартиры" [ref=e69]
+                  - listitem [ref=e70]:
+                    - link "Балконы и лоджии теплое и холодное остекление балконов, отделка Балконы и лоджии" [ref=e71] [cursor=pointer]:
+                      - /url: /balkony-lodzhii
+                      - paragraph [ref=e72]:
+                        - generic [ref=e73]: Балконы и лоджии
+                        - text: теплое и холодное остекление балконов, отделка
+                      - img "Балконы и лоджии" [ref=e74]
+                - list [ref=e75]:
+                  - listitem [ref=e76]:
+                    - link "Пластиковые окна" [ref=e77] [cursor=pointer]:
+                      - /url: /plastikovye-okna
+                      - generic [ref=e78]: Пластиковые окна
+                  - listitem [ref=e79]:
+                    - link "Двери" [ref=e80] [cursor=pointer]:
+                      - /url: /dveri/plastikovye-balkonye-dveri
+                      - generic [ref=e81]: Двери
+                  - listitem [ref=e82]:
+                    - link "Рольшторы" [ref=e83] [cursor=pointer]:
+                      - /url: /plastikovye-okna/aksesuary/rulonnye-shtory-na-plastikovye-okna
+                      - generic [ref=e84]: Рольшторы
+                  - listitem [ref=e85]:
+                    - link "Перегородки" [ref=e86] [cursor=pointer]:
+                      - /url: /dveri/peregorodki/dlya-kvartiry-i-doma
+                      - generic [ref=e87]: Перегородки
+                  - listitem [ref=e88]:
+                    - link "Аксессуары" [ref=e89] [cursor=pointer]:
+                      - /url: /plastikovye-okna/aksesuary
+                      - generic [ref=e90]: Аксессуары
+            - listitem [ref=e91]:
+              - generic [ref=e92] [cursor=pointer]: Загородное остекление
+              - generic [ref=e94]:
+                - list [ref=e95]:
+                  - listitem [ref=e96]:
+                    - link "Остекление коттеджей загородные дома, дачи, веранды, беседки Остекление коттеджей" [ref=e97] [cursor=pointer]:
+                      - /url: /zagorodnoe-osteklenie
+                      - paragraph [ref=e98]:
+                        - generic [ref=e99]: Остекление коттеджей
+                        - text: загородные дома, дачи, веранды, беседки
+                      - img "Остекление коттеджей" [ref=e100]
+                  - listitem [ref=e101]:
+                    - link "Веранды и террасы раздвижное и распашное остекление веранд и террас Веранды и террасы" [ref=e102] [cursor=pointer]:
+                      - /url: /zagorodnoe-osteklenie/verandy-i-terrasy
+                      - paragraph [ref=e103]:
+                        - generic [ref=e104]: Веранды и террасы
+                        - text: раздвижное и распашное остекление веранд и террас
+                      - img "Веранды и террасы" [ref=e105]
+                - list [ref=e106]:
+                  - listitem [ref=e107]:
+                    - link "Остекление дачи" [ref=e108] [cursor=pointer]:
+                      - /url: /zagorodnoe-osteklenie/osteklenie-dachi
+                      - generic [ref=e109]: Остекление дачи
+                  - listitem [ref=e110]:
+                    - link "Беседки" [ref=e111] [cursor=pointer]:
+                      - /url: /zagorodnoe-osteklenie/osteklenie-besedki
+                      - generic [ref=e112]: Беседки
+                  - listitem [ref=e113]:
+                    - link "Теплицы" [ref=e114] [cursor=pointer]:
+                      - /url: /zagorodnoe-osteklenie/teplitsy
+                      - generic [ref=e115]: Теплицы
+                  - listitem [ref=e116]:
+                    - link "Двери" [ref=e117] [cursor=pointer]:
+                      - /url: /dveri/v-zagorodnyi-dom
+                      - generic [ref=e118]: Двери
+                  - listitem [ref=e119]:
+                    - link "Рольшторы" [ref=e120] [cursor=pointer]:
+                      - /url: /plastikovye-okna/aksesuary/rulonnye-shtory-na-plastikovye-okna
+                      - generic [ref=e121]: Рольшторы
+                  - listitem [ref=e122]:
+                    - link "Перегородки" [ref=e123] [cursor=pointer]:
+                      - /url: /dveri/peregorodki
+                      - generic [ref=e124]: Перегородки
+                  - listitem [ref=e125]:
+                    - link "Аксессуары" [ref=e126] [cursor=pointer]:
+                      - /url: /plastikovye-okna/aksesuary
+                      - generic [ref=e127]: Аксессуары
+                  - listitem [ref=e128]:
+                    - link "Оконные системы для загородных домов" [ref=e129] [cursor=pointer]:
+                      - /url: /plastikovye-okna-rehau
+                      - generic [ref=e130]: Оконные системы для загородных домов
+            - listitem [ref=e131]:
+              - generic [ref=e132] [cursor=pointer]: Для офисов
+              - generic [ref=e134]:
+                - list [ref=e135]:
+                  - listitem [ref=e136]:
+                    - link "Офисное остекление Различные решения для остекления офисов Офисное остекление" [ref=e137] [cursor=pointer]:
+                      - /url: /ofisnoe-osteklenie
+                      - paragraph [ref=e138]:
+                        - generic [ref=e139]: Офисное остекление
+                        - text: Различные решения для остекления офисов
+                      - img "Офисное остекление" [ref=e140]
+                  - listitem [ref=e141]:
+                    - link "Двери офисные, входые, балконные двери из ПВХ и алюминия Двери" [ref=e142] [cursor=pointer]:
+                      - /url: /dveri/ofisnye-dveri
+                      - paragraph [ref=e143]:
+                        - generic [ref=e144]: Двери
+                        - text: офисные, входые, балконные двери из ПВХ и алюминия
+                      - img "Двери" [ref=e145]
+                - list [ref=e146]:
+                  - listitem [ref=e147]:
+                    - link "Перегородки" [ref=e148] [cursor=pointer]:
+                      - /url: /dveri/peregorodki/dlya-ofisov-i-tc
+                      - generic [ref=e149]: Перегородки
+                  - listitem [ref=e150]:
+                    - link "Жалюзи" [ref=e151] [cursor=pointer]:
+                      - /url: /plastikovye-okna/aksesuary/zhaluzi-na-plastikovye-okna
+                      - generic [ref=e152]: Жалюзи
+                  - listitem [ref=e153]:
+                    - link "Аксессуары" [ref=e154] [cursor=pointer]:
+                      - /url: /plastikovye-okna/aksesuary
+                      - generic [ref=e155]: Аксессуары
+                  - listitem [ref=e156]:
+                    - link "Пластиковые окна" [ref=e157] [cursor=pointer]:
+                      - /url: /ofisnoe-osteklenie/plastikovye-okna-dlya-ofisa
+                      - generic [ref=e158]: Пластиковые окна
+            - listitem [ref=e159]:
+              - generic [ref=e160] [cursor=pointer]: Оконные системы
+              - list [ref=e163]:
+                - listitem [ref=e164]:
+                  - link "Окна РЕХАУ" [ref=e165] [cursor=pointer]:
+                    - /url: /plastikovye-okna-rehau
+                    - generic [ref=e166]: Окна РЕХАУ
+                - listitem [ref=e167]:
+                  - link "ГОСТ 60™" [ref=e168] [cursor=pointer]:
+                    - /url: /plastikovye-okna-rehau/standart-60
+                    - generic [ref=e169]: ГОСТ 60™
+                - listitem [ref=e170]:
+                  - link "ГОСТ 70™" [ref=e171] [cursor=pointer]:
+                    - /url: /plastikovye-okna-rehau/standart-70
+                    - generic [ref=e172]: ГОСТ 70™
+                - listitem [ref=e173]:
+                  - link "Гжель 60™ (РЕХАУ Blitz)" [ref=e174] [cursor=pointer]:
+                    - /url: /plastikovye-okna-rehau/blitz
+                    - generic [ref=e175]: Гжель 60™ (РЕХАУ Blitz)
+                - listitem [ref=e176]:
+                  - link "Ситилайт 70™ (РЕХАУ Grazio)" [ref=e177] [cursor=pointer]:
+                    - /url: /plastikovye-okna-rehau/grazio
+                    - generic [ref=e178]: Ситилайт 70™ (РЕХАУ Grazio)
+                - listitem [ref=e179]:
+                  - link "Village 80/94™" [ref=e180] [cursor=pointer]:
+                    - /url: /plastikovye-okna-rehau/la-prima
+                    - generic [ref=e181]: Village 80/94™
+                - listitem [ref=e182]:
+                  - link "РЕХАУ Delight™" [ref=e183] [cursor=pointer]:
+                    - /url: /plastikovye-okna-rehau/delight
+                    - generic [ref=e184]: РЕХАУ Delight™
+                - listitem [ref=e185]:
+                  - link "РЕХАУ Intelio 80™" [ref=e186] [cursor=pointer]:
+                    - /url: /plastikovye-okna-rehau/intelio80
+                    - generic [ref=e187]: РЕХАУ Intelio 80™
+            - listitem [ref=e188]:
+              - generic [ref=e189] [cursor=pointer]: Аксессуары
+              - list [ref=e192]:
+                - listitem [ref=e193]:
+                  - link "Подоконники" [ref=e194] [cursor=pointer]:
+                    - /url: /plastikovye-okna/aksesuary/plastikovye-podokonniki
+                    - generic [ref=e195]: Подоконники
+                - listitem [ref=e196]:
+                  - link "Откосы" [ref=e197] [cursor=pointer]:
+                    - /url: /plastikovye-okna/aksesuary/otkosy
+                    - generic [ref=e198]: Откосы
+                - listitem [ref=e199]:
+                  - link "Рольшторы" [ref=e200] [cursor=pointer]:
+                    - /url: /plastikovye-okna/aksesuary/rulonnye-shtory-na-plastikovye-okna
+                    - generic [ref=e201]: Рольшторы
+                - listitem [ref=e202]:
+                  - link "Цветные окна" [ref=e203] [cursor=pointer]:
+                    - /url: /plastikovye-okna/aksesuary/laminaciya
+                    - generic [ref=e204]: Цветные окна
+                - listitem [ref=e205]:
+                  - link "Ручки" [ref=e206] [cursor=pointer]:
+                    - /url: /plastikovye-okna/aksesuary/ruchki
+                    - generic [ref=e207]: Ручки
+                - listitem [ref=e208]:
+                  - link "Детский замок" [ref=e209] [cursor=pointer]:
+                    - /url: /plastikovye-okna/aksesuary/detskij-zamok
+                    - generic [ref=e210]: Детский замок
+                - listitem [ref=e211]:
+                  - link "Декоративная раскладка" [ref=e212] [cursor=pointer]:
+                    - /url: /plastikovye-okna/aksesuary/raskladka
+                    - generic [ref=e213]: Декоративная раскладка
+                - listitem [ref=e214]:
+                  - link "Москитные сетки" [ref=e215] [cursor=pointer]:
+                    - /url: /plastikovye-okna/aksesuary/moskitnye-setki-na-plastikovye-okna
+                    - generic [ref=e216]: Москитные сетки
+                - listitem [ref=e217]:
+                  - link "Гребенка" [ref=e218] [cursor=pointer]:
+                    - /url: /plastikovye-okna/aksesuary/ogranichitel
+                    - generic [ref=e219]: Гребенка
+            - listitem [ref=e220]:
+              - generic [ref=e221] [cursor=pointer]: Услуги
+              - list [ref=e224]:
+                - listitem [ref=e225]:
+                  - link "Ремонт окон" [ref=e226] [cursor=pointer]:
+                    - /url: /uslugi/remont-okon
+                    - generic [ref=e227]: Ремонт окон
+                - listitem [ref=e228]:
+                  - link "Доставка" [ref=e229] [cursor=pointer]:
+                    - /url: /uslugi/dostavka
+                    - generic [ref=e230]: Доставка
+                - listitem [ref=e231]:
+                  - link "Монтаж" [ref=e232] [cursor=pointer]:
+                    - /url: /uslugi/montazh-okon-pvh-gost
+                    - generic [ref=e233]: Монтаж
+                - listitem [ref=e234]:
+                  - link "Замер" [ref=e235] [cursor=pointer]:
+                    - /url: /uslugi/zamer
+                    - generic [ref=e236]: Замер
+                - listitem [ref=e237]:
+                  - link "Вывоз мусора" [ref=e238] [cursor=pointer]:
+                    - /url: /uslugi/vyvoz-musora
+                    - generic [ref=e239]: Вывоз мусора
+                - listitem [ref=e240]:
+                  - link "Гарантийное обслуживание" [ref=e241] [cursor=pointer]:
+                    - /url: /uslugi/garantiya
+                    - generic [ref=e242]: Гарантийное обслуживание
+            - listitem [ref=e243]:
+              - generic [ref=e244] [cursor=pointer]: Цены
+              - list [ref=e247]:
+                - listitem [ref=e248]:
+                  - link "Цены на окна" [ref=e249] [cursor=pointer]:
+                    - /url: /ceny
+                    - generic [ref=e250]: Цены на окна
+                - listitem [ref=e251]:
+                  - link "Интернет-магазин" [ref=e252] [cursor=pointer]:
+                    - /url: https://online-shop.mosokna.ru/
+                    - generic [ref=e253]: Интернет-магазин
+                - listitem [ref=e254]:
+                  - link "Прайс-лист на услуги" [ref=e255] [cursor=pointer]:
+                    - /url: /uslugi/ceny
+                    - generic [ref=e256]: Прайс-лист на услуги
+                - listitem [ref=e257]:
+                  - link "Окна в рассрочку" [ref=e258] [cursor=pointer]:
+                    - /url: /ceny/rassrochka
+                    - generic [ref=e259]: Окна в рассрочку
+        - generic [ref=e260]:
+          - link [ref=e261] [cursor=pointer]:
+            - /url: "/o-kompanii/sertifikat-rehau "
+          - generic [ref=e263]:
+            - text: Партнер №1
+            - text: с 1992 года
+  - generic:
+    - generic [ref=e1745]:
+      - img [ref=e1746] [cursor=pointer]
+      - paragraph [ref=e1749]: Дарим скидки до 55% +5%! на новые окна
+      - generic [ref=e1751]:
+        - textbox "* Ваше имя" [ref=e1753]
+        - textbox "* Телефон" [ref=e1755]
+        - textbox "* E-mail" [ref=e1757]
+        - generic [ref=e1758]:
+          - button "Отправить" [ref=e1759] [cursor=pointer]:
+            - generic [ref=e1760]: Отправить
+          - paragraph [ref=e1761]:
+            - text: Нажимая на кнопку «Отправить», Вы принимаете условия
+            - link "политики конфиденциальности" [ref=e1762] [cursor=pointer]:
+              - /url: /privacy-policy
+            - text: в отношении обработки персональных данных.
+    - generic:
+      - generic:
+        - generic:
+          - paragraph: Спасибо за заявку!
+          - paragraph: Наш менеджер свяжется с вами в ближайшее время
+        - generic:
+          - button "Вернуться на сайт":
+            - generic: Вернуться на сайт
+    - generic:
+      - generic:
+        - generic:
+          - button "Повторить":
+            - generic: Повторить
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - img
+  - main [ref=e264]:
+    - list [ref=e267]:
+      - listitem [ref=e268]:
+        - link "Главная" [ref=e269] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e270]: Главная
+      - listitem [ref=e271]:
+        - img "chevron" [ref=e272]
+        - generic [ref=e274]: Калькулятор
+    - generic [ref=e275]:
+      - generic [ref=e276]:
+        - generic [ref=e277]:
+          - img "Заказывайте окна" [ref=e278]
+          - img "Калькулятор" [ref=e279]
+        - generic [ref=e280]:
+          - generic [ref=e281]:
+            - paragraph [ref=e282]: Рассчитайте стоимость окон сейчас и зафиксируйте скидку до 55% +5%!
+            - paragraph [ref=e283]: Заказывайте окна лёгким касанием пальца!
+            - generic [ref=e284]:
+              - textbox [ref=e285]
+              - generic: Вильнюсска
+              - generic [ref=e286]:
+                - button "Рассчитать" [disabled] [ref=e288]:
+                  - generic [ref=e289]: Рассчитать
+                - link "Указать на картe" [ref=e290] [cursor=pointer]:
+                  - /url: /poisk-po-karte
+                  - generic: Указать на картe
+          - paragraph [ref=e293] [cursor=pointer]: Как это работает?
+      - generic:
+        - generic:
+          - generic:
+            - button "Закрыть"
+            - generic:
+              - img "logo"
+    - list [ref=e296]:
+      - listitem [ref=e297]:
+        - img "Калькулятор" [ref=e299]
+        - paragraph [ref=e300]: Мы не делаем приблизительные расчеты, не тратим ваше время зря
+      - listitem [ref=e301]:
+        - img "Калькулятор" [ref=e303]
+        - paragraph [ref=e304]: В москве нет ни одного дома, где бы не были установлены «Московские окна»
+      - listitem [ref=e305]:
+        - img "Калькулятор" [ref=e307]
+        - paragraph [ref=e308]: Укажите улицу и номер дома, мы назовем точную стоимость заказа без замера
+    - generic [ref=e310]:
+      - heading "Калькулятор стоимости окон по вашим размерам" [level=1] [ref=e311]
+      - generic [ref=e312]:
+        - generic [ref=e313]:
+          - generic [ref=e315]:
+            - paragraph [ref=e1764] [cursor=pointer]: Одностворчатые окна
+            - paragraph [ref=e1766] [cursor=pointer]: Двустворчатые окна
+            - paragraph [ref=e1768] [cursor=pointer]: Трехстворчатые окна
+            - paragraph [ref=e1770] [cursor=pointer]: Балконные двери
+          - link [ref=e320] [cursor=pointer]:
+            - /url: /basket
+            - img [ref=e321]
+        - generic [ref=e323]:
+          - generic [ref=e324]:
+            - generic [ref=e328]:
+              - img "variant" [ref=e1772] [cursor=pointer]
+              - img "variant" [ref=e1774] [cursor=pointer]
+              - img "variant" [ref=e1776] [cursor=pointer]
+              - img "variant" [ref=e1778] [cursor=pointer]
+            - img "CONSTR01" [ref=e1780]
+            - generic [ref=e333]:
+              - generic [ref=e334]:
+                - generic [ref=e1781] [cursor=pointer]:
+                  - generic [ref=e1783]: Ширина окна
+                  - generic [ref=e1784]:
+                    - spinbutton "Ширина окна" [ref=e1785]: "500"
+                    - generic [ref=e1786]: мм
+                - generic [ref=e1787] [cursor=pointer]:
+                  - generic [ref=e1789]: Высота окна
+                  - generic [ref=e1790]:
+                    - spinbutton "Высота окна" [ref=e1791]: "1400"
+                    - generic [ref=e1792]: мм
+              - generic [ref=e1793]:
+                - button [disabled] [ref=e1794] [cursor=pointer]:
+                  - img [ref=e1795]
+                - generic [ref=e1798]: "1"
+                - button [ref=e1800] [cursor=pointer]:
+                  - img [ref=e1801]
+          - generic [ref=e335]:
+            - generic [ref=e336]:
+              - generic [ref=e337]:
+                - generic [ref=e1804] [cursor=pointer]:
+                  - generic [ref=e1805]:
+                    - paragraph [ref=e1806]: Системы
+                    - paragraph [ref=e1807]: ГОСТ 60™
+                  - img [ref=e1809]
+                - img [ref=e339] [cursor=pointer]
+              - generic [ref=e344]:
+                - generic [ref=e1812] [cursor=pointer]:
+                  - generic [ref=e1813]:
+                    - paragraph [ref=e1814]: Отлив
+                    - paragraph [ref=e1815]: Не выбран
+                  - img [ref=e1817]
+                - img [ref=e346] [cursor=pointer]
+              - generic [ref=e351]:
+                - generic [ref=e1820] [cursor=pointer]:
+                  - generic [ref=e1821]:
+                    - paragraph [ref=e1822]: Подоконник
+                    - paragraph [ref=e1823]: Не выбран
+                  - img [ref=e1825]
+                - img [ref=e353] [cursor=pointer]
+              - generic [ref=e358]:
+                - generic [ref=e1828] [cursor=pointer]:
+                  - generic [ref=e1829]:
+                    - paragraph [ref=e1830]: Ламинация
+                    - paragraph [ref=e1831]: Без ламинации
+                  - img [ref=e1833]
+                - img [ref=e360] [cursor=pointer]
+            - generic [ref=e365]:
+              - generic [ref=e366]:
+                - paragraph [ref=e367]: Цена выбранного окна
+                - paragraph [ref=e368]: 7 750 руб
+              - generic [ref=e370]:
+                - paragraph [ref=e371]: Доступно в рассрочку, ежемесячный платеж
+                - paragraph [ref=e372]: 1 292 руб
+              - generic [ref=e1835]:
+                - button "Добавить в корзину" [ref=e1836] [cursor=pointer]:
+                  - generic [ref=e1837]: Добавить в корзину
+                - button "Заказать остекление" [ref=e1838] [cursor=pointer]:
+                  - generic [ref=e1839]: Заказать остекление
+        - paragraph [ref=e374]:
+          - text: Важно!
+          - text: Калькулятор показывает точную стоимость пластикового окна по заданным размерам при условии самовывоза и без монтажа. В системах Стандарт 60 и Blitz рассчитывается однокамерный стеклопакет
+      - generic [ref=e375]:
+        - heading "Дополнительные скидки за объём — уточните у менеджера!" [level=3] [ref=e376]
+        - generic [ref=e377]:
+          - generic [ref=e378]:
+            - generic [ref=e379]:
+              - img "Калькулятор" [ref=e380]
+              - img "Калькулятор" [ref=e382]
+            - generic [ref=e385]:
+              - paragraph [ref=e386]: Скидка 10%
+              - paragraph [ref=e387]: остекление одного проема в квартире
+              - paragraph [ref=e388]: действует один раз при заказе с монтажными работами на остекление одного проема в квартире
+          - generic [ref=e389]:
+            - generic [ref=e390]:
+              - img "Калькулятор" [ref=e391]
+              - img "Калькулятор" [ref=e393]
+            - generic [ref=e396]:
+              - paragraph [ref=e397]: Скидка 15%
+              - paragraph [ref=e398]: остекление 1- и 2-комнатной квартиры
+              - paragraph [ref=e399]: действует один раз при заказе с монтажными работами на остекление 1- и 2-комнатной квартиры (от 2-х окон)
+          - generic [ref=e400]:
+            - generic [ref=e401]:
+              - img "Калькулятор" [ref=e402]
+              - img "Калькулятор" [ref=e404]
+            - generic [ref=e407]:
+              - paragraph [ref=e408]: Скидка 18%
+              - paragraph [ref=e409]: остекление 3-комнатной квартиры / лоджии
+              - paragraph [ref=e410]: действует один раз при заказе с монтажными работами на остекление 3-комнатной квартиры (от 4-х окон) / остекление лоджии
+          - generic [ref=e411]:
+            - generic [ref=e412]:
+              - img "Калькулятор" [ref=e413]
+              - img "Калькулятор" [ref=e415]
+            - generic [ref=e418]:
+              - paragraph [ref=e419]: Скидка 25%
+              - paragraph [ref=e420]: остекление загородного дома от 10 изделий
+              - paragraph [ref=e421]: действует один раз при заказе с монтажными работами на остекление загородного дома от 10 изделий
+    - generic [ref=e424]:
+      - generic [ref=e425]:
+        - heading "Нужна помощь в выборе окон?" [level=2] [ref=e426]
+        - paragraph [ref=e427]: Закажите обратный звонок, и мы перезвоним вам в удобное для вас время и поможем сделать правильный выбор.
+      - button "Заказать звонок" [ref=e429] [cursor=pointer]:
+        - generic [ref=e430]: Заказать звонок
+    - generic [ref=e432]:
+      - generic [ref=e433]:
+        - heading "Рассчитать стоимость остекления квартир в типовых домах Москвы" [level=2] [ref=e434]
+        - paragraph [ref=e435]: Выберите серию дома и тип квартиры, чтобы узнать стоимость остекления. Обратите внимание, что стоимость является предварительной, итоговая цена пластиковых окон и остекления квартиры под ключ может отличаться в зависимости от комплектации вашего заказа и соответствия оконных проёмов типовым.
+      - generic [ref=e436]:
+        - generic [ref=e439]:
+          - generic [ref=e442] [cursor=pointer]: Дом II-49
+          - generic [ref=e445] [cursor=pointer]: Дом П-44
+          - generic [ref=e448] [cursor=pointer]: Дом П-3
+          - generic [ref=e451] [cursor=pointer]: Дом П-30
+        - generic [ref=e452]:
+          - img "Калькулятор" [ref=e454]
+          - generic [ref=e455]:
+            - generic [ref=e456]:
+              - generic [ref=e457] [cursor=pointer]:
+                - paragraph [ref=e458]: Тип квартиры
+                - paragraph [ref=e459]: Однокомнатная
+                - img [ref=e461]
+              - generic:
+                - generic [ref=e463] [cursor=pointer]: Однокомнатная
+                - generic [ref=e464] [cursor=pointer]: Двухкомнатная
+                - generic [ref=e465] [cursor=pointer]: Трехкомнатная
+                - generic [ref=e466] [cursor=pointer]: Четырехкомнатная
+            - generic [ref=e467]:
+              - generic [ref=e468]:
+                - paragraph [ref=e469]: "Состав остекления:"
+                - generic [ref=e473]:
+                  - img "Калькулятор" [ref=e477]
+                  - img "Калькулятор" [ref=e481]
+              - generic [ref=e483]:
+                - paragraph [ref=e484]: "Основные характеристики:"
+                - list [ref=e485]:
+                  - listitem [ref=e486]:
+                    - paragraph [ref=e487]: Профиль BLITZ™, 3 камеры, 60 мм
+                  - listitem [ref=e488]:
+                    - paragraph [ref=e489]: Противоударный стеклопакет 32 мм
+                  - listitem [ref=e490]:
+                    - paragraph [ref=e491]: Фурнитура SoftOPEN™ BASE
+            - generic [ref=e492]:
+              - generic [ref=e493]:
+                - paragraph [ref=e494]: Цена «под ключ»
+                - paragraph [ref=e496]: от 118 094 руб
+              - button "Рассчитать мою квартиру" [ref=e498] [cursor=pointer]:
+                - generic [ref=e499]: Рассчитать мою квартиру
+        - generic [ref=e500]:
+          - heading "Стоимость остекления «под ключ» включает:" [level=3] [ref=e501]
+          - paragraph [ref=e502]: конструкции в оконной cистеме РЕХАУ BLITZ; ручка белая пластиковая стандарт (Россия); подоконник ПВХ белый, 250 мм; монтаж базовый с изоляцией наружнего шва; отлив белый, 150 мм; подставочный профиль; откосы белые (сендвич-панель), 200 мм; подготовка проема и монтаж откосов; доставка с разгрузкой.
+    - generic [ref=e504]:
+      - generic [ref=e505]:
+        - heading "Нашли дешевле? Мы сделаем выгоднее!" [level=6] [ref=e506]
+        - paragraph [ref=e507]: Отправьте расчет конкурента и получите лучшее предложение!
+      - button "Отправить расчёт" [ref=e508] [cursor=pointer]:
+        - generic [ref=e509]: Отправить расчёт
+      - img [ref=e510]
+    - generic [ref=e512]:
+      - img "Калькулятор" [ref=e514]
+      - generic [ref=e515]:
+        - paragraph [ref=e516]: Окна в рассрочку
+        - paragraph [ref=e517]: Благодаря сервису Всегда.Да! мы предлагаем удобные программы покупки в рассрочку без переплат.
+        - list [ref=e518]:
+          - listitem [ref=e519]:
+            - generic [ref=e520]:
+              - img "Калькулятор" [ref=e521]
+              - paragraph [ref=e522]: Легко
+            - paragraph [ref=e523]: Предоплата от 0%; Без справки о доходах, залогов и поручителей.
+          - listitem [ref=e524]:
+            - generic [ref=e525]:
+              - img "Калькулятор" [ref=e526]
+              - paragraph [ref=e527]: Быстро
+            - paragraph [ref=e528]: Оформление за 20 минут; Оформление нашим менеджером.
+          - listitem [ref=e529]:
+            - generic [ref=e530]:
+              - img "Калькулятор" [ref=e531]
+              - paragraph [ref=e532]: Удобно
+            - paragraph [ref=e533]: Оформление одновременно с заказом окон. Возможность досрочного погашения.
+          - listitem [ref=e534]:
+            - generic [ref=e535]:
+              - img "Калькулятор" [ref=e536]
+              - paragraph [ref=e537]: Выгодно
+            - paragraph [ref=e538]: Рассрочка на 6 месяцев под 0% годовых.
+        - button "Оставить заявку" [ref=e540] [cursor=pointer]:
+          - generic [ref=e541]: Оставить заявку
+    - generic [ref=e543]:
+      - generic [ref=e544]:
+        - img "Калькулятор" [ref=e545]
+        - generic [ref=e546]:
+          - paragraph [ref=e547]: «Московские окна» — крупнейший производитель пластиковых окон в России
+          - button "Заказать консультацию" [ref=e549] [cursor=pointer]:
+            - generic [ref=e550]: Заказать консультацию
+      - generic [ref=e552]:
+        - generic [ref=e554]:
+          - img "Калькулятор" [ref=e556]
+          - paragraph [ref=e557]: Работаем 33 года! Компания основана в 1992 году. Мы сделали первое пластиковое окно в Росcии!
+        - generic [ref=e559]:
+          - img "Калькулятор" [ref=e561]
+          - paragraph [ref=e562]: "Мы не делаем приблизительные расчеты: укажите улицу и номер дома – мы назовем точную стоимость заказа без замера. Нам знаком каждый дом Москвы!"
+        - generic [ref=e564]:
+          - img "Калькулятор" [ref=e566]
+          - paragraph [ref=e567]: "Оформление заказа онлайн: закажите окна и оплатите заказ любым удобным способом не выходя из дома"
+        - generic [ref=e569]:
+          - img "Калькулятор" [ref=e571]
+          - paragraph [ref=e572]: Каждый наш клиент остается доволен результатом и с уверенностью рекомендует нас своим друзьям
+        - generic [ref=e574]:
+          - img "Калькулятор" [ref=e576]
+          - paragraph [ref=e577]: Собственное автоматизированное производство. Завод в Московской области
+        - generic [ref=e579]:
+          - img "Калькулятор" [ref=e581]
+          - paragraph [ref=e582]: Профессиональный монтаж с учетом типа строения. Работают проверенные специалисты – штатные монтажные бригады
+        - generic [ref=e584]:
+          - img "Калькулятор" [ref=e586]
+          - paragraph [ref=e587]: "Изготовим окна в короткие сроки: 7 дней от заказа до монтажа. Точный срок выполнения заказа рассчитывается индивидуально"
+        - generic [ref=e589]:
+          - img "Калькулятор" [ref=e591]
+          - paragraph [ref=e592]: Контроль качества и гарантии. Гарантия на окна – 5 лет. В течение этого срока бесплатно выезжаем на регулировку фурнитуры
+    - generic [ref=e594]:
+      - paragraph [ref=e595]: Нам доверяют
+      - generic [ref=e596]:
+        - link "Яндекс 5,0 885 отзыва" [ref=e597] [cursor=pointer]:
+          - /url: https://yandex.ru/maps/-/CDfo7R9U
+          - generic [ref=e598]:
+            - img "Яндекс" [ref=e599]
+            - generic [ref=e600]:
+              - img [ref=e601]
+              - img [ref=e603]
+              - img [ref=e605]
+              - img [ref=e607]
+              - img [ref=e609]
+          - generic [ref=e614]:
+            - paragraph [ref=e615]: 5,0
+            - paragraph [ref=e616]: 885 отзыва
+        - link "Google Maps 4,6 235 отзыва" [ref=e617] [cursor=pointer]:
+          - /url: https://maps.app.goo.gl/ttiC2vfAaSjQxJgG9
+          - generic [ref=e618]:
+            - img "Google Maps" [ref=e619]
+            - generic [ref=e620]:
+              - img [ref=e621]
+              - img [ref=e623]
+              - img [ref=e625]
+              - img [ref=e627]
+              - img [ref=e629]
+          - generic [ref=e634]:
+            - paragraph [ref=e635]: 4,6
+            - paragraph [ref=e636]: 235 отзыва
+        - link "2GIS 4,8 80 отзывов" [ref=e637] [cursor=pointer]:
+          - /url: https://2gis.ru/moscow/firm/4504127908386123?m=37.7018%2C55.748891%2F16
+          - generic [ref=e638]:
+            - img "2GIS" [ref=e639]
+            - generic [ref=e640]:
+              - img [ref=e641]
+              - img [ref=e643]
+              - img [ref=e645]
+              - img [ref=e647]
+              - img [ref=e649]
+          - generic [ref=e654]:
+            - paragraph [ref=e655]: 4,8
+            - paragraph [ref=e656]: 80 отзывов
+    - generic [ref=e658]:
+      - heading "Производство оконных конструкций по европейским стандартам" [level=2] [ref=e659]
+      - list [ref=e660]:
+        - listitem [ref=e661]:
+          - generic [ref=e662]:
+            - img "Калькулятор" [ref=e664]
+            - paragraph [ref=e665]: Надежность и немецкое качество
+          - paragraph [ref=e666]: Профили РЕХАУ, в сравнении с другими, уверенно выигрывают по уровню качества. Они соответствуют самым высоким стандартам. Гарантия на профиль 25 лет!
+        - listitem [ref=e667]:
+          - generic [ref=e668]:
+            - img "Калькулятор" [ref=e670]
+            - paragraph [ref=e671]: Экологичность и безопасность
+          - paragraph [ref=e672]: Низкая токсичность профиля по немецкому ГОСТу – пригоден для детских комнат и клиник, в том числе для операционных палат.
+        - listitem [ref=e673]:
+          - generic [ref=e674]:
+            - img "Калькулятор" [ref=e676]
+            - paragraph [ref=e677]: Чистота без усилий
+          - paragraph [ref=e678]: Идеально гладкий профиль благодаря инновационному составу – остается белоснежным и не впитывает грязь.
+    - generic [ref=e682]:
+      - heading "Функциональные возможности стеклопакетов" [level=2] [ref=e683]
+      - generic [ref=e684]:
+        - generic [ref=e685]:
+          - generic [ref=e686]:
+            - img "Калькулятор" [ref=e687]
+            - generic [ref=e688]:
+              - generic [ref=e689]:
+                - paragraph [ref=e690]: Надёжные окна без переплат
+                - paragraph [ref=e691]: Такие окна подойдут для сезонных дач и простых построек
+              - generic [ref=e692]:
+                - img "Калькулятор" [ref=e693]
+                - img "Калькулятор" [ref=e694]
+                - img "Калькулятор" [ref=e695]
+                - img "Калькулятор" [ref=e696]
+          - generic [ref=e697]:
+            - paragraph [ref=e699]: Всё необходимое
+            - 'link "ГОСТ 60™ ГОСТ Профиль: Рехау Blitz, 3 камерный Стеклопакет: 32 мм Фурнитура: SoftOPEN™ BASE, EU Всё необходимое для вашего комфорта, соответствует ГОСТ 30674-2023 и ГОСТ 23166-2024 Калькулятор Купить от 6 188 руб/м² Калькулятор" [ref=e701] [cursor=pointer]':
+              - /url: /plastikovye-okna-rehau/standart-60
+              - generic [ref=e702]:
+                - generic [ref=e704]:
+                  - generic [ref=e705]:
+                    - paragraph [ref=e706]: ГОСТ 60™
+                    - img "ГОСТ" [ref=e708]
+                  - list [ref=e710]:
+                    - listitem [ref=e711]:
+                      - paragraph [ref=e712]: "Профиль: Рехау Blitz, 3 камерный"
+                    - listitem [ref=e713]:
+                      - paragraph [ref=e714]: "Стеклопакет: 32 мм"
+                    - listitem [ref=e715]:
+                      - paragraph [ref=e716]: "Фурнитура: SoftOPEN™ BASE, EU"
+                  - paragraph [ref=e717]: Всё необходимое для вашего комфорта, соответствует ГОСТ 30674-2023 и ГОСТ 23166-2024
+                - img "Калькулятор" [ref=e719]
+                - paragraph [ref=e721]: Купить от 6 188 руб/м²
+              - img "Калькулятор" [ref=e723]
+          - generic [ref=e724]:
+            - paragraph [ref=e726]: Тепло по выгодной цене
+            - 'link "ГОСТ 70™ ГОСТ Профиль: Рехау Grazio, 5 камерный Стеклопакет: 40 мм Фурнитура: SoftOPEN™ BASE, EU Уют и надёжность для вашего дома по стандарту ГОСТ 30674-2023 и ГОСТ 23166-2024 Калькулятор Купить от 6 674 руб/м² Калькулятор" [ref=e728] [cursor=pointer]':
+              - /url: /plastikovye-okna-rehau/standart-70
+              - generic [ref=e729]:
+                - generic [ref=e731]:
+                  - generic [ref=e732]:
+                    - paragraph [ref=e733]: ГОСТ 70™
+                    - img "ГОСТ" [ref=e735]
+                  - list [ref=e737]:
+                    - listitem [ref=e738]:
+                      - paragraph [ref=e739]: "Профиль: Рехау Grazio, 5 камерный"
+                    - listitem [ref=e740]:
+                      - paragraph [ref=e741]: "Стеклопакет: 40 мм"
+                    - listitem [ref=e742]:
+                      - paragraph [ref=e743]: "Фурнитура: SoftOPEN™ BASE, EU"
+                  - paragraph [ref=e744]: Уют и надёжность для вашего дома по стандарту ГОСТ 30674-2023 и ГОСТ 23166-2024
+                - img "Калькулятор" [ref=e746]
+                - paragraph [ref=e748]: Купить от 6 674 руб/м²
+              - img "Калькулятор" [ref=e750]
+          - generic [ref=e751]:
+            - paragraph [ref=e753]: Европейский стандарт
+            - 'link "ГЖЕЛЬ 60™ Гжель Профиль: Рехау Blitz, 3 камерный Стеклопакет: энергосберегающий 32 S мм Фурнитура: SoftOPEN™ PREMIUM Для тех кто выбирает простоту и надежность с европейским качеством Калькулятор Купить от 6 767 руб/м² Калькулятор" [ref=e755] [cursor=pointer]':
+              - /url: /plastikovye-okna-rehau/blitz
+              - generic [ref=e756]:
+                - generic [ref=e758]:
+                  - generic [ref=e759]:
+                    - paragraph [ref=e760]: ГЖЕЛЬ 60™
+                    - img "Гжель" [ref=e762]
+                  - list [ref=e764]:
+                    - listitem [ref=e765]:
+                      - paragraph [ref=e766]: "Профиль: Рехау Blitz, 3 камерный"
+                    - listitem [ref=e767]:
+                      - paragraph [ref=e768]: "Стеклопакет: энергосберегающий 32 S мм"
+                    - listitem [ref=e769]:
+                      - paragraph [ref=e770]: "Фурнитура: SoftOPEN™ PREMIUM"
+                  - paragraph [ref=e771]: Для тех кто выбирает простоту и надежность с европейским качеством
+                - img "Калькулятор" [ref=e773]
+                - paragraph [ref=e775]: Купить от 6 767 руб/м²
+              - img "Калькулятор" [ref=e777]
+        - generic [ref=e778]:
+          - generic [ref=e779]:
+            - generic [ref=e780]:
+              - img "Калькулятор" [ref=e781]
+              - generic [ref=e782]:
+                - generic [ref=e783]:
+                  - paragraph [ref=e784]: Окна для комфортной жизни
+                  - paragraph [ref=e785]: Оптимальный вариант для вторичного жилья, новостроек, коттеджей и дач
+                - generic [ref=e786]:
+                  - img "Калькулятор" [ref=e787]
+                  - img "Калькулятор" [ref=e788]
+                  - img "Калькулятор" [ref=e789]
+                  - img "Калькулятор" [ref=e790]
+            - generic [ref=e791]:
+              - paragraph [ref=e793]: Любимые окна
+              - 'link "СИТИЛАЙТ 70™ Профиль: Рехау Grazio, округлый штапик Стеклопакет: энергосберегающий 32 S мм Фурнитура: SoftOPEN™ Premium Позвольте себе лучшие окна, проверенные временем и тысячами покупателей Калькулятор Купить от 7 284 руб/м² Калькулятор" [ref=e795] [cursor=pointer]':
+                - /url: /plastikovye-okna-rehau/grazio
+                - generic [ref=e796]:
+                  - generic [ref=e798]:
+                    - paragraph [ref=e800]: СИТИЛАЙТ 70™
+                    - list [ref=e802]:
+                      - listitem [ref=e803]:
+                        - paragraph [ref=e804]: "Профиль: Рехау Grazio, округлый штапик"
+                      - listitem [ref=e805]:
+                        - paragraph [ref=e806]: "Стеклопакет: энергосберегающий 32 S мм"
+                      - listitem [ref=e807]:
+                        - paragraph [ref=e808]: "Фурнитура: SoftOPEN™ Premium"
+                    - paragraph [ref=e809]: Позвольте себе лучшие окна, проверенные временем и тысячами покупателей
+                  - img "Калькулятор" [ref=e811]
+                  - paragraph [ref=e813]: Купить от 7 284 руб/м²
+                - img "Калькулятор" [ref=e815]
+            - generic [ref=e816]:
+              - paragraph [ref=e818]: Загородный комфорт
+              - 'link "VILLAGE 80/94™ Профиль: Рехау La Prima, фигурный штапик Стеклопакет: энергосберегающий 42 S мм Фурнитура: SoftOPEN™ Premium Создайте свой идеальный загородный дом с максимальным комфортом Калькулятор Купить от 7 793 руб/м² Калькулятор" [ref=e820] [cursor=pointer]':
+                - /url: /plastikovye-okna-rehau/la-prima
+                - generic [ref=e821]:
+                  - generic [ref=e823]:
+                    - paragraph [ref=e825]: VILLAGE 80/94™
+                    - list [ref=e827]:
+                      - listitem [ref=e828]:
+                        - paragraph [ref=e829]: "Профиль: Рехау La Prima, фигурный штапик"
+                      - listitem [ref=e830]:
+                        - paragraph [ref=e831]: "Стеклопакет: энергосберегающий 42 S мм"
+                      - listitem [ref=e832]:
+                        - paragraph [ref=e833]: "Фурнитура: SoftOPEN™ Premium"
+                    - paragraph [ref=e834]: Создайте свой идеальный загородный дом с максимальным комфортом
+                  - img "Калькулятор" [ref=e836]
+                  - paragraph [ref=e838]: Купить от 7 793 руб/м²
+                - img "Калькулятор" [ref=e840]
+          - generic [ref=e843]:
+            - generic [ref=e844]:
+              - paragraph [ref=e845]: Нужна помощь в выборе окон?
+              - paragraph [ref=e846]: Закажите обратный звонок, и мы перезвоним вам в удобное для вас время и поможем сделать правильный выбор.
+            - button "Заказать звонок" [ref=e848] [cursor=pointer]:
+              - generic [ref=e849]: Заказать звонок
+    - generic [ref=e851]:
+      - heading "Цены на наши окна" [level=2] [ref=e852]
+      - generic [ref=e853]:
+        - generic [ref=e855]:
+          - generic [ref=e856] [cursor=pointer]:
+            - paragraph [ref=e857]: Оконная система
+            - paragraph [ref=e858]: ГОСТ 60™
+            - img [ref=e860]
+          - generic:
+            - generic [ref=e862] [cursor=pointer]: ГОСТ 60™
+            - generic [ref=e863] [cursor=pointer]: ГОСТ 70™
+            - generic [ref=e864] [cursor=pointer]: Гжель 60™
+            - generic [ref=e865] [cursor=pointer]: Ситилайт 70™
+            - generic [ref=e866] [cursor=pointer]: РЕХАУ Delight™
+            - generic [ref=e867] [cursor=pointer]: РЕХАУ Intelio 80™
+            - generic [ref=e868] [cursor=pointer]: Village 80/94™
+        - generic [ref=e873]:
+          - generic [ref=e875]:
+            - link "Калькулятор" [ref=e877] [cursor=pointer]:
+              - /url: /plastikovye-okna-rehau/standart-60/odnostvorchatoe
+              - img "Калькулятор" [ref=e878]
+            - generic [ref=e879]:
+              - generic [ref=e880]:
+                - link "Одностворчатое окно" [ref=e881] [cursor=pointer]:
+                  - /url: /plastikovye-okna-rehau/standart-60/odnostvorchatoe
+                - paragraph [ref=e882]: Размер 800 х 1400 мм
+                - list [ref=e884]:
+                  - listitem [ref=e885]:
+                    - paragraph [ref=e886]: Профиль Blitz, 3 камеры, 60 мм
+                  - listitem [ref=e887]:
+                    - paragraph [ref=e888]: Стеклопакет 32 мм
+                  - listitem [ref=e889]:
+                    - paragraph [ref=e890]: "Фурнитура: SoftOPEN™ BASE"
+                - link "от 16 723 руб" [ref=e891] [cursor=pointer]:
+                  - /url: /plastikovye-okna-rehau/standart-60/odnostvorchatoe
+                  - paragraph [ref=e893]: от 16 723 руб
+              - paragraph [ref=e894]: Цена «под ключ» 30 579 руб.
+              - button "Заказать" [ref=e896] [cursor=pointer]:
+                - generic [ref=e897]: Заказать
+          - generic [ref=e899]:
+            - link "Калькулятор" [ref=e901] [cursor=pointer]:
+              - /url: /plastikovye-okna-rehau/standart-60/dvukhstvorchatoye
+              - img "Калькулятор" [ref=e902]
+            - generic [ref=e903]:
+              - generic [ref=e904]:
+                - link "Двухстворчатое окно" [ref=e905] [cursor=pointer]:
+                  - /url: /plastikovye-okna-rehau/standart-60/dvukhstvorchatoye
+                - paragraph [ref=e906]: Размер 1300 х 1400 мм
+                - list [ref=e908]:
+                  - listitem [ref=e909]:
+                    - paragraph [ref=e910]: Профиль Blitz, 3 камеры, 60 мм
+                  - listitem [ref=e911]:
+                    - paragraph [ref=e912]: Стеклопакет 32 мм
+                  - listitem [ref=e913]:
+                    - paragraph [ref=e914]: "Фурнитура: SoftOPEN™ BASE"
+                - link "от 23 025 руб" [ref=e915] [cursor=pointer]:
+                  - /url: /plastikovye-okna-rehau/standart-60/dvukhstvorchatoye
+                  - paragraph [ref=e917]: от 23 025 руб
+              - paragraph [ref=e918]: Цена «под ключ» 41 837 руб.
+              - button "Заказать" [ref=e920] [cursor=pointer]:
+                - generic [ref=e921]: Заказать
+          - generic [ref=e923]:
+            - link "Калькулятор" [ref=e925] [cursor=pointer]:
+              - /url: /plastikovye-okna-rehau/standart-60/trekhstvorchatoye
+              - img "Калькулятор" [ref=e926]
+            - generic [ref=e927]:
+              - generic [ref=e928]:
+                - link "Трёхстворчатое окно" [ref=e929] [cursor=pointer]:
+                  - /url: /plastikovye-okna-rehau/standart-60/trekhstvorchatoye
+                - paragraph [ref=e930]: Размер 1750 х 1400 мм
+                - list [ref=e932]:
+                  - listitem [ref=e933]:
+                    - paragraph [ref=e934]: Профиль Blitz, 3 камеры, 60 мм
+                  - listitem [ref=e935]:
+                    - paragraph [ref=e936]: Стеклопакет 32 мм
+                  - listitem [ref=e937]:
+                    - paragraph [ref=e938]: "Фурнитура: SoftOPEN™ BASE"
+                - link "от 27 984 руб" [ref=e939] [cursor=pointer]:
+                  - /url: /plastikovye-okna-rehau/standart-60/trekhstvorchatoye
+                  - paragraph [ref=e941]: от 27 984 руб
+              - paragraph [ref=e942]: Цена «под ключ» 51 339 руб.
+              - button "Заказать" [ref=e944] [cursor=pointer]:
+                - generic [ref=e945]: Заказать
+          - generic [ref=e947]:
+            - link "Калькулятор" [ref=e949] [cursor=pointer]:
+              - /url: /plastikovye-okna-rehau/standart-60/balkonniy-blok
+              - img "Калькулятор" [ref=e950]
+            - generic [ref=e951]:
+              - generic [ref=e952]:
+                - link "Балконный блок" [ref=e953] [cursor=pointer]:
+                  - /url: /plastikovye-okna-rehau/standart-60/balkonniy-blok
+                - paragraph [ref=e954]: Размер 1550 х 1450 мм
+                - list [ref=e956]:
+                  - listitem [ref=e957]:
+                    - paragraph [ref=e958]: Профиль Blitz, 3 камеры, 60 мм
+                  - listitem [ref=e959]:
+                    - paragraph [ref=e960]: Стеклопакет 32 мм
+                  - listitem [ref=e961]:
+                    - paragraph [ref=e962]: "Фурнитура: SoftOPEN™ BASE"
+                - link "от 35 304 руб" [ref=e963] [cursor=pointer]:
+                  - /url: /plastikovye-okna-rehau/standart-60/balkonniy-blok
+                  - paragraph [ref=e965]: от 35 304 руб
+              - paragraph [ref=e966]: Цена «под ключ» 63 037 руб.
+              - button "Заказать" [ref=e968] [cursor=pointer]:
+                - generic [ref=e969]: Заказать
+        - generic [ref=e970]:
+          - button [disabled] [ref=e971] [cursor=pointer]:
+            - img [ref=e972]
+          - button [ref=e974] [cursor=pointer]:
+            - img [ref=e975]
+        - generic [ref=e977]:
+          - paragraph [ref=e978]: Цена под ключ включает
+          - text: ":"
+          - paragraph [ref=e979]: стоимость изделия в выбранной оконной системе, подоконники — 250 мм, отлив — 150 мм, подставочный профиль, базовый монтаж с изоляцией наружного шва, откосы до 250 мм, подготовку проема к монтажу откосов, монтаж откосов.
+    - generic [ref=e981]:
+      - generic [ref=e982]:
+        - generic [ref=e983]:
+          - generic [ref=e984]:
+            - paragraph [ref=e985]: Покупайте пластиковые окна с Яндекс Сплит
+            - img "Логотип Яндекс Сплит" [ref=e986]
+          - paragraph [ref=e987]: Платите частями — удобно, безопасно, на срок от 2 до 6 месяцев
+        - generic [ref=e988]:
+          - paragraph [ref=e989]: Как пользоваться Яндекс Сплит?
+          - list [ref=e990]:
+            - listitem [ref=e991]:
+              - paragraph [ref=e992]:
+                - text: Выберите Сплит
+                - link "при оформлении оплаты на сайте" [ref=e993] [cursor=pointer]:
+                  - /url: /oplata
+                - text: .
+            - listitem [ref=e994]:
+              - paragraph [ref=e995]: Укажите удобный срок оплаты — на 2, 4 либо 6 месяцев.
+            - listitem [ref=e996]:
+              - paragraph [ref=e997]: Оплатите первую часть — товар сразу ваш.
+            - listitem [ref=e998]:
+              - paragraph [ref=e999]: Остальное спишется позже по графику.
+      - img "Покупайте пластиковые окна с Яндекс Сплит" [ref=e1001]
+    - generic [ref=e1003]:
+      - heading "Наши акции" [level=3] [ref=e1004]
+      - generic [ref=e1006]:
+        - generic [ref=e1008]:
+          - link "Калькулятор" [ref=e1010] [cursor=pointer]:
+            - /url: https://api.mosokna.ru/upload/iblock/aa3/4uvbxa5h1pvtaipy3zo1zw3xzmtiqp30/Desktop.png
+            - img "Калькулятор" [ref=e1011]
+          - generic [ref=e1012]:
+            - generic [ref=e1013]:
+              - paragraph [ref=e1014]: Весеннее обновление окон со скидкой до 55% +5%!
+              - paragraph [ref=e1015]: Срок акции ограничен
+            - link "Подробнее" [ref=e1016] [cursor=pointer]:
+              - /url: /akcii/bolshie-skidki
+              - generic [ref=e1017]: Подробнее
+        - generic [ref=e1019]:
+          - link "Калькулятор" [ref=e1021] [cursor=pointer]:
+            - /url: https://api.mosokna.ru/upload/iblock/962/g5zxlkr2ns2hmm2haz3u06x2reis9vkd/1234.png
+            - img "Калькулятор" [ref=e1022]
+          - generic [ref=e1023]:
+            - generic [ref=e1024]:
+              - paragraph [ref=e1025]: Ремонт окон с профессиональным подходом
+              - paragraph [ref=e1026]: От регулировки до замены откосов — мы поможем
+            - link "Подробнее" [ref=e1027] [cursor=pointer]:
+              - /url: /uslugi/remont-okon
+              - generic [ref=e1028]: Подробнее
+        - generic [ref=e1030]:
+          - link "Калькулятор" [ref=e1032] [cursor=pointer]:
+            - /url: https://api.mosokna.ru/upload/iblock/1ae/oomknhystpxkr2198l5a622f9zwsw6zv/clipboard_202602181623_vhnhj.jpg
+            - img "Калькулятор" [ref=e1033]
+          - generic [ref=e1034]:
+            - generic [ref=e1035]:
+              - paragraph [ref=e1036]: "Окна в рассрочку без хлопот: 0% первый взнос, 0% переплата"
+              - paragraph [ref=e1037]: Наслаждайтесь тишиной и комфортом уже сегодня, а платить начнёте потом — без переплат и первого взноса.
+            - link "Подробнее" [ref=e1038] [cursor=pointer]:
+              - /url: /ceny/rassrochka
+              - generic [ref=e1039]: Подробнее
+        - generic [ref=e1041]:
+          - link "Калькулятор" [ref=e1043] [cursor=pointer]:
+            - /url: https://api.mosokna.ru/upload/iblock/a33/h2r3iqhbhehq3g9hsxgic6nrevb4ud8k/4rfk4o0v00dz0km021h58pi0j758aoqx.jpg
+            - img "Калькулятор" [ref=e1044]
+          - generic [ref=e1045]:
+            - generic [ref=e1046]:
+              - paragraph [ref=e1047]: "Лоджия мечты: остекление под ключ, ваше личное пространство для спокойствия и уюта!"
+              - paragraph [ref=e1048]: Профессиональное остекление лоджий и балконов для тепла и тишины
+            - link "Подробнее" [ref=e1049] [cursor=pointer]:
+              - /url: /balkony-lodzhii
+              - generic [ref=e1050]: Подробнее
+        - generic [ref=e1052]:
+          - link "Калькулятор" [ref=e1054] [cursor=pointer]:
+            - /url: https://api.mosokna.ru/upload/iblock/0bb/t4h7y1bn8tbich0i33a9qi13x3aepem2/0702.jpg
+            - img "Калькулятор" [ref=e1055]
+          - generic [ref=e1056]:
+            - generic [ref=e1057]:
+              - paragraph [ref=e1058]: Большой заказ в загородный дом? Весной выгодно! Скидки до 55%
+              - paragraph [ref=e1059]: Чем больше окон, тем выгоднее остекление для вашего дома
+            - link "Подробнее" [ref=e1060] [cursor=pointer]:
+              - /url: /akcii/bolshoy-zakaz-v-zagorodnyy-dom
+              - generic [ref=e1061]: Подробнее
+        - generic [ref=e1063]:
+          - link "Калькулятор" [ref=e1065] [cursor=pointer]:
+            - /url: https://api.mosokna.ru/upload/iblock/1bf/550dkfm0mabna3b8vli9lj504hnt7yx1/0452.jpg
+            - img "Калькулятор" [ref=e1066]
+          - generic [ref=e1067]:
+            - generic [ref=e1068]:
+              - paragraph [ref=e1069]: Сотрудничество с компанией «Московские окна»
+              - paragraph [ref=e1070]: Вознаграждение в размере 10% станет отличным дополнительным доходом для дизайнеров, архитекторов, проектировщиков и самозанятых
+            - link "Подробнее" [ref=e1071] [cursor=pointer]:
+              - /url: /akcii/partnerskaya-programma
+              - generic [ref=e1072]: Подробнее
+        - generic [ref=e1074]:
+          - link "Калькулятор" [ref=e1076] [cursor=pointer]:
+            - /url: https://api.mosokna.ru/upload/iblock/20f/8v0zj91c83vi7nhx1efvgjat55aazrm0/ChatGPT-Image-18-fevr.-2026-g._-15_03_03-_1_.png
+            - img "Калькулятор" [ref=e1077]
+          - generic [ref=e1078]:
+            - generic [ref=e1079]:
+              - paragraph [ref=e1080]: Окна без монтажа Выгода до 24%
+              - paragraph [ref=e1081]: можно сэкономить при самостоятельной установке окон
+            - link "Подробнее" [ref=e1082] [cursor=pointer]:
+              - /url: /akcii/okna-bez-montazha
+              - generic [ref=e1083]: Подробнее
+      - generic [ref=e1084]:
+        - button [disabled] [ref=e1085] [cursor=pointer]:
+          - img [ref=e1086]
+        - button [ref=e1088] [cursor=pointer]:
+          - img [ref=e1089]
+    - generic [ref=e1092]:
+      - heading "Преимущества установки окон в компании «Московские окна»" [level=2] [ref=e1093]
+      - generic [ref=e1094]:
+        - generic [ref=e1096]:
+          - generic [ref=e1097]:
+            - img "Калькулятор" [ref=e1099]
+            - paragraph [ref=e1100]: Проверенный штат
+          - paragraph [ref=e1101]: Штатные монтажные бригады (не наемные). Сотрудники – граждане РФ.
+        - generic [ref=e1103]:
+          - generic [ref=e1104]:
+            - img "Калькулятор" [ref=e1106]
+            - paragraph [ref=e1107]: Аттестация сотрудников
+          - paragraph [ref=e1108]: Все монтажные бригады обучены в собственном сервисном центре, ежегодно проходят повышение квалификации и аттестацию.
+        - generic [ref=e1110]:
+          - generic [ref=e1111]:
+            - img "Калькулятор" [ref=e1113]
+            - paragraph [ref=e1114]: Надежные поставщики
+          - paragraph [ref=e1115]: Все монтажные и крепежные материалы закупаются централизованно у проверенных поставщиков.
+        - generic [ref=e1117]:
+          - generic [ref=e1118]:
+            - img "Калькулятор" [ref=e1120]
+            - paragraph [ref=e1121]: Нет ошибкам при расчете
+          - paragraph [ref=e1122]: Автоматизированный расчет монтажных материалов исключает ошибки и позволяет гарантировать соблюдение стандартов ГОСТ.
+        - generic [ref=e1124]:
+          - generic [ref=e1125]:
+            - img "Калькулятор" [ref=e1127]
+            - paragraph [ref=e1128]: Качество монтажа
+          - paragraph [ref=e1129]: Ежедневно независимая служба контроля качества выборочно выезжает на объекты для проверки производимых работ.
+        - generic [ref=e1131]:
+          - generic [ref=e1132]:
+            - img "Калькулятор" [ref=e1134]
+            - paragraph [ref=e1135]: Обратная связь
+          - paragraph [ref=e1136]: Через 2 дня после монтажа с вами обязательно свяжется диспетчер службы контроля качества, и Вы оцените нашу работу.
+    - generic [ref=e1138]:
+      - generic [ref=e1139]:
+        - generic [ref=e1140]:
+          - img "Калькулятор" [ref=e1141]
+          - paragraph [ref=e1143]: «Московские окна» — срок эксплуатации стеклопакетов 70 лет!
+          - button "Подробная консультация" [ref=e1145] [cursor=pointer]:
+            - generic [ref=e1146]: Подробная консультация
+        - generic [ref=e1147]:
+          - generic [ref=e1148]:
+            - img "Калькулятор" [ref=e1149]
+            - paragraph [ref=e1150]: НА ВСЕ НАШИ СТЕКЛОПАКЕТЫ ПОЖИЗНЕННАЯ ГАРАНТИЯ
+          - paragraph [ref=e1151]: "Основную площадь окна занимает стеклопакет, и именно через него происходит основная потеря тепла и проникновение жары, шума и света. Поэтому выбору стеклопакета стоит уделить особое внимание. Мы можем установить стеклопакеты различной функциональности: энергосберегающие, шумоизоляционные, мультифункциональные"
+      - generic [ref=e1155]:
+        - 'link "Калькулятор ОТРАЖЕНИЕ ЭНЕРГИИ С УЛИЦЫ 58% СБЕРЕЖЕННОЕ ТЕПЛО ПОМЕЩЕНИЯ 78% Многофункциональный Мультипакет Мультифункциональное стекло обеспечивает максимальный комфорт: защищает от жары летом и сохраняет тепло зимой" [ref=e1157] [cursor=pointer]':
+          - /url: /plastikovye-okna/tehnologii/solar
+          - generic [ref=e1158]:
+            - img "Калькулятор" [ref=e1159]
+            - generic [ref=e1160]:
+              - paragraph [ref=e1161]: ОТРАЖЕНИЕ ЭНЕРГИИ С УЛИЦЫ
+              - paragraph [ref=e1162]: 58%
+            - generic [ref=e1163]:
+              - paragraph [ref=e1164]: СБЕРЕЖЕННОЕ ТЕПЛО ПОМЕЩЕНИЯ
+              - paragraph [ref=e1165]: 78%
+          - generic [ref=e1166]:
+            - generic [ref=e1167]:
+              - paragraph [ref=e1168]: Многофункциональный Мультипакет
+              - paragraph [ref=e1169]: "Мультифункциональное стекло обеспечивает максимальный комфорт: защищает от жары летом и сохраняет тепло зимой"
+            - img [ref=e1171]
+        - link "Калькулятор МЕНЬШЕ НА 39 дБ Шумоизоляционный Тихопакет Для улучшения звукозащитных свойств окна в Тихопакете™ используются стекла разной толщины, которые гасят звуковые колебания разной частоты" [ref=e1174] [cursor=pointer]:
+          - /url: /plastikovye-okna/tehnologii/tihopaket
+          - generic [ref=e1175]:
+            - img "Калькулятор" [ref=e1176]
+            - generic [ref=e1177]:
+              - generic [ref=e1178]: МЕНЬШЕ НА
+              - generic [ref=e1179]: 39 дБ
+          - generic [ref=e1180]:
+            - generic [ref=e1181]:
+              - paragraph [ref=e1182]: Шумоизоляционный Тихопакет
+              - paragraph [ref=e1183]: Для улучшения звукозащитных свойств окна в Тихопакете™ используются стекла разной толщины, которые гасят звуковые колебания разной частоты
+            - img [ref=e1185]
+        - link "Калькулятор ОТРАЖЕНИЕ ЭНЕРГИИ С УЛИЦЫ 23% СБЕРЕЖЕННОЕ ТЕПЛО ПОМЕЩЕНИЯ 78% Энергосберегающий Теплопакет Энергосберегающее стекло делает Теплопакет™ значительно теплее обычного благодаря многослойному напылению металлов" [ref=e1188] [cursor=pointer]:
+          - /url: /plastikovye-okna/tehnologii/teplopaket
+          - generic [ref=e1189]:
+            - img "Калькулятор" [ref=e1190]
+            - generic [ref=e1191]:
+              - paragraph [ref=e1192]: ОТРАЖЕНИЕ ЭНЕРГИИ С УЛИЦЫ
+              - paragraph [ref=e1193]: 23%
+            - generic [ref=e1194]:
+              - paragraph [ref=e1195]: СБЕРЕЖЕННОЕ ТЕПЛО ПОМЕЩЕНИЯ
+              - paragraph [ref=e1196]: 78%
+          - generic [ref=e1197]:
+            - generic [ref=e1198]:
+              - paragraph [ref=e1199]: Энергосберегающий Теплопакет
+              - paragraph [ref=e1200]: Энергосберегающее стекло делает Теплопакет™ значительно теплее обычного благодаря многослойному напылению металлов
+            - img [ref=e1202]
+    - generic [ref=e1205]:
+      - heading "Рекомендации партнеров" [level=2] [ref=e1206]
+      - generic [ref=e1208]:
+        - generic [ref=e1210]:
+          - generic [ref=e1211] [cursor=pointer]:
+            - img [ref=e1213]
+            - img "Калькулятор" [ref=e1217]
+          - generic [ref=e1218]:
+            - paragraph [ref=e1219]: «Кристаллит»
+            - paragraph [ref=e1220]: Является партнером компании «Московские окна» по поставке подоконников.
+        - generic [ref=e1222]:
+          - generic [ref=e1223] [cursor=pointer]:
+            - img [ref=e1225]
+            - img "Калькулятор" [ref=e1229]
+          - generic [ref=e1230]:
+            - paragraph [ref=e1231]: «РЕХАУ»
+            - paragraph [ref=e1232]: Является партнером компании «Московские окна» по поставке оконных профилей.
+        - generic [ref=e1234]:
+          - generic [ref=e1235] [cursor=pointer]:
+            - img [ref=e1237]
+            - img "Калькулятор" [ref=e1241]
+          - generic [ref=e1242]:
+            - paragraph [ref=e1243]: «Рото Франк»
+            - paragraph [ref=e1244]: Является партнером компании «Московские окна» по поставке фурнитуры.
+        - generic [ref=e1246]:
+          - generic [ref=e1247] [cursor=pointer]:
+            - img [ref=e1249]
+            - img "Калькулятор" [ref=e1253]
+          - generic [ref=e1254]:
+            - paragraph [ref=e1255]: «Амиго»
+            - paragraph [ref=e1256]: Является партнером компании «Московские окна» по поставке жалюзи.
+      - generic [ref=e1257]:
+        - button [disabled] [ref=e1258] [cursor=pointer]:
+          - img [ref=e1259]
+        - button [ref=e1261] [cursor=pointer]:
+          - img [ref=e1262]
+    - generic [ref=e1265]:
+      - heading "Наши гарантии" [level=2] [ref=e1266]
+      - generic [ref=e1268]:
+        - link "Калькулятор Изготовим в соответствии с вашими пожеланиями Нашими специалистами разрабатываются любые оконные конструкции и балконные блоки с учётом всех пожеланий заказчика и особенностей помещения, в котором будут производиться работы" [ref=e1270] [cursor=pointer]:
+          - /url: /plastikovye-okna
+          - img "Калькулятор" [ref=e1272]
+          - generic [ref=e1273]:
+            - generic [ref=e1274]:
+              - paragraph [ref=e1275]: Изготовим в соответствии с вашими пожеланиями
+              - paragraph [ref=e1276]: Нашими специалистами разрабатываются любые оконные конструкции и балконные блоки с учётом всех пожеланий заказчика и особенностей помещения, в котором будут производиться работы
+            - img [ref=e1279]
+        - link "Калькулятор Профессиональный монтаж Качественные пластиковые окна устанавливаются с использованием оригинальных систем SetFull™ и SetEco™ в соответствии требованиям ГОСТ и СНиП" [ref=e1282] [cursor=pointer]:
+          - /url: /uslugi/montazh-okon-pvh-gost
+          - img "Калькулятор" [ref=e1284]
+          - generic [ref=e1285]:
+            - generic [ref=e1286]:
+              - paragraph [ref=e1287]: Профессиональный монтаж
+              - paragraph [ref=e1288]: Качественные пластиковые окна устанавливаются с использованием оригинальных систем SetFull™ и SetEco™ в соответствии требованиям ГОСТ и СНиП
+            - img [ref=e1291]
+        - link "Калькулятор Бесплатная гарантия – 5 лет! Установка оконных конструкций выполняется с последующей пятилетней бесплатной гарантией (при условии прохождения сервисного обслуживания раз в год)" [ref=e1294] [cursor=pointer]:
+          - /url: /uslugi/garantiya
+          - img "Калькулятор" [ref=e1296]
+          - generic [ref=e1297]:
+            - generic [ref=e1298]:
+              - paragraph [ref=e1299]: Бесплатная гарантия – 5 лет!
+              - paragraph [ref=e1300]: Установка оконных конструкций выполняется с последующей пятилетней бесплатной гарантией (при условии прохождения сервисного обслуживания раз в год)
+            - img [ref=e1303]
+        - link "Калькулятор Собственные разработки и технологии Мастера компании в своей работе используют новейшие технологии и лучшие современные материалы" [ref=e1306] [cursor=pointer]:
+          - /url: /plastikovye-okna/tehnologii
+          - img "Калькулятор" [ref=e1308]
+          - generic [ref=e1309]:
+            - generic [ref=e1310]:
+              - paragraph [ref=e1311]: Собственные разработки и технологии
+              - paragraph [ref=e1312]: Мастера компании в своей работе используют новейшие технологии и лучшие современные материалы
+            - img [ref=e1315]
+      - generic [ref=e1317]:
+        - button [disabled] [ref=e1318] [cursor=pointer]:
+          - img [ref=e1319]
+        - button [ref=e1321] [cursor=pointer]:
+          - img [ref=e1322]
+    - generic [ref=e1325]:
+      - img "Калькулятор" [ref=e1327]
+      - generic [ref=e1328]:
+        - generic [ref=e1329]:
+          - paragraph [ref=e1330]: Позвоните мне
+          - paragraph [ref=e1331]: Закажите бесплатную консультацию у специалистов нашей компании.
+        - generic [ref=e1332]:
+          - generic [ref=e1334]:
+            - textbox "* Ваше имя" [ref=e1336]
+            - textbox "* Ваш телефон" [ref=e1338]
+            - button "Отправить" [ref=e1340] [cursor=pointer]:
+              - generic [ref=e1341]: Отправить
+          - paragraph [ref=e1342]:
+            - text: Нажимая на кнопку «Отправить», Вы принимаете условия
+            - link "политики конфиденциальности" [ref=e1343] [cursor=pointer]:
+              - /url: /privacy-policy
+            - text: в отношении обработки персональных данных.
+    - generic [ref=e1345]:
+      - generic [ref=e1346] [cursor=pointer]:
+        - generic [ref=e1347]:
+          - img "Калькулятор" [ref=e1348]
+          - heading "Все калькуляторы расчета стоимости" [level=3] [ref=e1349]
+        - img [ref=e1350]
+      - list [ref=e1353]:
+        - listitem [ref=e1354]:
+          - link "Калькулятор остекления балконов" [ref=e1355] [cursor=pointer]:
+            - /url: /kalkulator/raschet-stoimosti-osteklenie-balkonov
+            - generic [ref=e1356]: Калькулятор остекления балконов
+        - listitem [ref=e1357]:
+          - link "Расчет экономии электроэнергии из-за окон" [ref=e1358] [cursor=pointer]:
+            - /url: /kalkulator/raschet-economii-rashoda-elektroenergii-okon
+            - generic [ref=e1359]: Расчет экономии электроэнергии из-за окон
+        - listitem [ref=e1360]:
+          - link "Калькулятор стоимости стеклопакетов Рехау" [ref=e1361] [cursor=pointer]:
+            - /url: /kalkulator/stoimosti-steklopaketov-rehau
+            - generic [ref=e1362]: Калькулятор стоимости стеклопакетов Рехау
+        - listitem [ref=e1363]:
+          - link "Расчет стоимости окон Рехау" [ref=e1364] [cursor=pointer]:
+            - /url: /kalkulator/raschet-stoimosti-okon-rehau
+            - generic [ref=e1365]: Расчет стоимости окон Рехау
+    - generic [ref=e1367]:
+      - generic [ref=e1368]:
+        - generic [ref=e1369]:
+          - heading "Расчет стоимости пластиковых окон" [level=2] [ref=e1370]
+          - paragraph [ref=e1373]: Сколько будут стоить окна? А с установкой? Заранее рассчитать бюджет на установку пластиковых окон, балкона или решение другой задачи – это очень важно. Мы понимаем, как важно точно оценивать затраты – и поэтому предлагаем вам точный и удобный калькулятор для расчета стоимости. С его помощью вы сможете узнать · стоимость окон, стеклопакетов Рехау для вашего дома или квартиры; · стоимость окон в зависимости от их размера – по своим замерам; · цену балкона. Окно может быть одностворчатым, двустворчатым или трехстворчатым. Также вы можете оценить стоимость балконной двери в зависимости от ее ширины, длины и площади. Кроме того, вы можете подсчитать экономическую выгоду, которую можно получить при установке качественных пластиковых окон. Достичь экономии можно за счет сокращения затрат на электроэнергию – хорошие окна сохраняют приятный микроклимат в помещении круглый год.
+        - generic [ref=e1374]:
+          - link "Остекление квартиры" [ref=e1375] [cursor=pointer]:
+            - /url: /ceny/osteklenie-kvartiry
+            - generic [ref=e1376]: Остекление квартиры
+          - link "Пластиковые окна" [ref=e1377] [cursor=pointer]:
+            - /url: /plastikovye-okna
+            - generic [ref=e1378]: Пластиковые окна
+          - link "Окна РЕХАУ" [ref=e1379] [cursor=pointer]:
+            - /url: /plastikovye-okna-rehau
+            - generic [ref=e1380]: Окна РЕХАУ
+          - link "Цены на окна" [ref=e1381] [cursor=pointer]:
+            - /url: /ceny
+            - generic [ref=e1382]: Цены на окна
+          - link "Теплое остекление" [ref=e1383] [cursor=pointer]:
+            - /url: /balkony-lodzhii/teploe-osteklenie
+            - generic [ref=e1384]: Теплое остекление
+          - link "Холодное остекление" [ref=e1385] [cursor=pointer]:
+            - /url: /balkony-lodzhii/holodnoe-osteklenie
+            - generic [ref=e1386]: Холодное остекление
+          - link "Окна в гостиную" [ref=e1387] [cursor=pointer]:
+            - /url: /plastikovye-okna/v-gostinuyu
+            - generic [ref=e1388]: Окна в гостиную
+          - link "Панорамные окна на балкон" [ref=e1389] [cursor=pointer]:
+            - /url: /balkony-lodzhii/francuzskoe-osteklenie
+            - generic [ref=e1390]: Панорамные окна на балкон
+          - link "Окна в коттедж и загородный дом" [ref=e1391] [cursor=pointer]:
+            - /url: /zagorodnoe-osteklenie
+            - generic [ref=e1392]: Окна в коттедж и загородный дом
+          - link "Монтаж по ГОСТу" [ref=e1393] [cursor=pointer]:
+            - /url: /uslugi/montazh-okon-pvh-gost
+            - generic [ref=e1394]: Монтаж по ГОСТу
+      - generic [ref=e1395]:
+        - generic [ref=e1396]:
+          - paragraph [ref=e1397]: Какие окна подходят именно Вам?
+          - img "Калькулятор" [ref=e1399]
+          - button "Консультация" [ref=e1401] [cursor=pointer]:
+            - generic [ref=e1402]: Консультация
+        - generic [ref=e1403]:
+          - paragraph [ref=e1404]: Купите готовые окна прямо со склада
+          - img "Калькулятор" [ref=e1406]
+          - button "Заказать окно" [ref=e1408] [cursor=pointer]:
+            - generic [ref=e1409]: Заказать окно
+        - generic [ref=e1410]:
+          - generic [ref=e1411]:
+            - paragraph [ref=e1412]: Как выбрать пластиковые окна?
+            - paragraph [ref=e1413]: Затрудняетесь с выбором? Хотите получить самое выгодное предложение? Звоните или оставьте свой телефон, мы свяжемся с вами. Пригласите менеджера для консультации на дому и точного замера. Наши специалисты сделают профессиональный расчет выбранного вами окна.
+          - generic [ref=e1414]:
+            - link "icon Бесплатный звонок" [ref=e1415] [cursor=pointer]:
+              - /url: tel:+74951262422
+              - img "icon" [ref=e1416]
+              - generic [ref=e1417]: Бесплатный звонок
+            - link "icon Написать в WhatsApp" [ref=e1418] [cursor=pointer]:
+              - /url: javascript:void(0)
+              - img "icon" [ref=e1419]
+              - generic [ref=e1420]: Написать в WhatsApp
+    - generic [ref=e1422]:
+      - generic [ref=e1423]:
+        - heading "Вопросы и ответы по калькулятору окон" [level=2] [ref=e1424]
+        - paragraph [ref=e1425]:
+          - text: "Если Вы не найдете здесь интересующую информацию, мы с радостью проконсультируем Вас лично. Смело обращайтесь в любой из наших офисов или просто звоните на номер «горячей линии»:"
+          - link "+7 (495) 126-24-22" [ref=e1426] [cursor=pointer]:
+            - /url: tel:+74951262422
+      - generic [ref=e1427]:
+        - list [ref=e1428]:
+          - listitem [ref=e1429]:
+            - paragraph [ref=e1431] [cursor=pointer]: Что такое калькулятор пластиковых окон?
+            - paragraph [ref=e1436]: Калькулятор пластиковых окон — это онлайн-инструмент, который позволяет быстро рассчитать стоимость пластиковых окон, исходя из размеров, типа окна, и других параметров.
+          - listitem [ref=e1437]:
+            - paragraph [ref=e1439] [cursor=pointer]: Как пользоваться калькулятором пластиковых окон?
+            - paragraph [ref=e1444]: "У нас 2 вида калькулятора: по адресу и по своим параметрам. Для первого введите точный адрес, планировку и желаемую модель оконных конструкций — замеры делать не нужно. Для второго введите размеры окна, выберите систему, отлив и подоконник, а калькулятор сразу рассчитает точную стоимость."
+          - listitem [ref=e1445]:
+            - paragraph [ref=e1447] [cursor=pointer]: Нужно ли делать замеры перед расчетом?
+            - paragraph [ref=e1452]: Нет, калькулятор предоставит вам точную цену на основе указанных вами данных.
+          - listitem [ref=e1453]:
+            - paragraph [ref=e1455] [cursor=pointer]: Входит ли монтаж в цену окон ПВХ?
+            - paragraph [ref=e1460]: Калькулятор по адресу показывает стоимость вместе с монтажом. Калькулятор по своим параметрам рассчитывает без монтажа — для расчета с установкой нужно обратиться к менеджеру.
+          - listitem [ref=e1461]:
+            - paragraph [ref=e1463] [cursor=pointer]: Могу я заказать окна в Москве в рассрочку?
+            - paragraph [ref=e1468]: Да, наш калькулятор рассчитывает ежемесячный платеж по рассрочке.
+        - generic [ref=e1469]:
+          - paragraph [ref=e1470]: Возникли вопросы?
+          - paragraph [ref=e1471]: Напишите, и наши специалисты подробно ответят вам в удобной форме.
+          - generic [ref=e1472]:
+            - generic [ref=e1473]:
+              - generic [ref=e1474]:
+                - textbox "*" [ref=e1476]:
+                  - /placeholder: "* "
+                - textbox "* Ваш вопрос" [ref=e1478]
+                - textbox "* Ваше имя" [ref=e1480]
+                - textbox "* + 7 926 123-45-67" [ref=e1482]
+                - generic [ref=e1483]:
+                  - generic [ref=e1484] [cursor=pointer]:
+                    - paragraph [ref=e1485]: Где получить ответ?
+                    - paragraph [ref=e1486]: Получить ответ на телефон
+                    - img [ref=e1488]
+                  - generic:
+                    - generic [ref=e1490] [cursor=pointer]: Получить ответ на телефон
+                    - generic [ref=e1491] [cursor=pointer]: Получить ответ в What’sApp
+              - button "Отправить" [ref=e1492] [cursor=pointer]:
+                - generic [ref=e1493]: Отправить
+              - paragraph [ref=e1494]:
+                - text: Нажимая на кнопку «Отправить», Вы принимаете условия
+                - link "политики конфиденциальности" [ref=e1495] [cursor=pointer]:
+                  - /url: /privacy-policy
+                - text: в отношении обработки персональных данных.
+            - generic:
+              - generic:
+                - generic:
+                  - paragraph: Спасибо за заявку!
+                  - paragraph: Наш менеджер свяжется с вами в ближайшее время
+                - generic:
+                  - button "Вернуться на сайт":
+                    - generic: Вернуться на сайт
+    - generic [ref=e1496]:
+      - generic [ref=e1497]:
+        - button [ref=e1498] [cursor=pointer]:
+          - img [ref=e1499]
+        - paragraph [ref=e1503]:
+          - link "Сделайте расчет сейчас и зафиксируйте скидку до 55% +5%" [ref=e1504] [cursor=pointer]:
+            - /url: https://calculator.mosokna.ru/
+        - img [ref=e1506]
+      - link [ref=e1508] [cursor=pointer]:
+        - /url: https://calculator.mosokna.ru/
+  - contentinfo [ref=e1509]:
+    - generic [ref=e1510]:
+      - generic [ref=e1511]:
+        - link "icon Оплатить заказ" [ref=e1513] [cursor=pointer]:
+          - /url: /oplata
+          - img "icon" [ref=e1514]
+          - generic [ref=e1515]: Оплатить заказ
+        - button "icon Обратный звонок" [ref=e1517] [cursor=pointer]:
+          - img "icon" [ref=e1518]
+          - generic [ref=e1519]: Обратный звонок
+      - generic [ref=e1520]:
+        - generic [ref=e1521]:
+          - generic [ref=e1522]: Компания
+          - generic [ref=e1523]:
+            - link "О компании" [ref=e1524] [cursor=pointer]:
+              - /url: /o-kompanii
+            - link "Наше производство" [ref=e1525] [cursor=pointer]:
+              - /url: /o-kompanii/proizvodstvo
+            - link "Отзывы клиентов" [ref=e1526] [cursor=pointer]:
+              - /url: /o-kompanii/otzyvy
+            - link "Вакансии" [ref=e1527] [cursor=pointer]:
+              - /url: /o-kompanii/vakansii
+            - link "Контакты" [ref=e1528] [cursor=pointer]:
+              - /url: /kontakty
+            - link "Партнерская программа" [ref=e1529] [cursor=pointer]:
+              - /url: /akcii/partnerskaya-programma
+            - link "Договор оферты" [ref=e1530] [cursor=pointer]:
+              - /url: /oferta
+            - link "Написать директору" [ref=e1531] [cursor=pointer]:
+              - /url: /kontakty/napisat-direktory
+            - link "Партнерам и друзьям" [ref=e1532] [cursor=pointer]:
+              - /url: /partneram
+            - link "Фотогалерея" [ref=e1533] [cursor=pointer]:
+              - /url: /fotogalereya
+        - generic [ref=e1534]:
+          - generic [ref=e1535]: Продукция
+          - generic [ref=e1536]:
+            - link "Пластиковые окна" [ref=e1537] [cursor=pointer]:
+              - /url: /plastikovye-okna
+            - link "Пластиковые окна РЕХАУ" [ref=e1538] [cursor=pointer]:
+              - /url: /plastikovye-okna-rehau
+            - link "Стеклопакеты" [ref=e1539] [cursor=pointer]:
+              - /url: /plastikovye-okna/steklopaket
+            - link "Двери" [ref=e1540] [cursor=pointer]:
+              - /url: /dveri
+            - link "Готовые окна" [ref=e1541] [cursor=pointer]:
+              - /url: /ceny/gotovie-okna-pvh
+            - link "Аксессуары" [ref=e1542] [cursor=pointer]:
+              - /url: /plastikovye-okna/aksesuary
+        - generic [ref=e1543]:
+          - generic [ref=e1544]: Услуги
+          - generic [ref=e1545]:
+            - link "Остекление квартир" [ref=e1546] [cursor=pointer]:
+              - /url: /ceny/osteklenie-kvartiry
+            - link "Остекление балконов" [ref=e1547] [cursor=pointer]:
+              - /url: /balkony-lodzhii
+            - link "Отделка балконов" [ref=e1548] [cursor=pointer]:
+              - /url: /balkony-lodzhii/otdelka-balkonov-i-lodzhii
+            - link "Остекление офисов" [ref=e1549] [cursor=pointer]:
+              - /url: /ofisnoe-osteklenie
+            - link "Остекление загородных домов" [ref=e1550] [cursor=pointer]:
+              - /url: /zagorodnoe-osteklenie
+            - link "Установка пластиковых окон" [ref=e1551] [cursor=pointer]:
+              - /url: /uslugi/montazh-okon-pvh-gost
+        - generic [ref=e1552]:
+          - generic [ref=e1553]: Цены и оплата
+          - generic [ref=e1554]:
+            - link "Калькулятор стоимости окон" [ref=e1555] [cursor=pointer]:
+              - /url: /kalkulator
+            - link "Калькулятор окон РЕХАУ" [ref=e1556] [cursor=pointer]:
+              - /url: /kalkulator/raschet-stoimosti-okon-rehau
+            - link "Цены на окна" [ref=e1557] [cursor=pointer]:
+              - /url: /ceny
+            - link "Как купить" [ref=e1558] [cursor=pointer]:
+              - /url: /ceny/kak-kupit
+            - link "Оплатить заказ" [ref=e1559] [cursor=pointer]:
+              - /url: /oplata
+            - link "Рассрочка" [ref=e1560] [cursor=pointer]:
+              - /url: /ceny/rassrochka
+        - generic [ref=e1561]:
+          - generic [ref=e1562]:
+            - link "Сертификаты" [ref=e1563] [cursor=pointer]:
+              - /url: /o-kompanii/sertifikaty
+            - link "Статьи" [ref=e1564] [cursor=pointer]:
+              - /url: /stati
+            - link "Политика конфидециальности" [ref=e1565] [cursor=pointer]:
+              - /url: /privacy-policy
+          - paragraph [ref=e1566]: Мы в соц. сетях
+          - generic [ref=e1567]:
+            - link "VK" [ref=e1568] [cursor=pointer]:
+              - /url: https://vk.com/mosokna_ru
+              - img "VK" [ref=e1569]
+            - link "DZEN" [ref=e1570] [cursor=pointer]:
+              - /url: https://dzen.ru/mosoknaru
+              - img "DZEN" [ref=e1571]
+            - link "TG" [ref=e1572] [cursor=pointer]:
+              - /url: https://t.me/MOSOKNAru
+              - img "TG" [ref=e1573]
+          - generic [ref=e1575]:
+            - paragraph [ref=e1576]: ООО «Московские окна»
+            - paragraph [ref=e1577]: "ИНН: 7701042682"
+            - paragraph [ref=e1578]: "БИК: 044525666"
+            - paragraph [ref=e1579]: "р/сч.: 40702810400000026686 в ОАО “РосДорБанк”"
+            - paragraph [ref=e1580]: "ОГРН: 1027700473987"
+      - generic [ref=e1581]:
+        - paragraph [ref=e1582]: Наши награды
+        - list [ref=e1583]:
+          - listitem [ref=e1584]:
+            - img "Золотое Окно 2017" [ref=e1585]
+          - listitem [ref=e1586]:
+            - img "Права потребителей и качества обслудживания" [ref=e1587]
+          - listitem [ref=e1588]:
+            - img "Награда 3" [ref=e1589]
+          - listitem [ref=e1590]:
+            - img "Награда 4" [ref=e1591]
+          - listitem [ref=e1592]:
+            - img "Награда 5" [ref=e1593]
+          - listitem [ref=e1594]:
+            - img "Награда 6" [ref=e1595]
+          - listitem [ref=e1596]:
+            - img "Награда 7" [ref=e1597]
+          - listitem [ref=e1598]:
+            - img "Награда 8" [ref=e1599]
+      - generic [ref=e1600]:
+        - generic [ref=e1601]:
+          - paragraph [ref=e1602]: Все цены на сайте указаны с учетом действующих скидок и акций. Сайт не является публичной офертой и носит информационный характер.
+          - generic [ref=e1603]:
+            - img "Московские Окна" [ref=e1605]
+            - paragraph [ref=e1606]: © 1992—2026 «Московские Окна»
+            - paragraph [ref=e1607]: Права официального использования слова «Москва» письменно предоставлены Межведомственной комиссией Правительства Москвы.
+        - generic [ref=e1609]:
+          - img "REHAU" [ref=e1611]
+          - paragraph [ref=e1612]: ООО «Московские окна» является сертифицированным производителем компании РЕХАУ
+          - link "Сертификат REHAU Сертификат" [ref=e1613] [cursor=pointer]:
+            - /url: /o-kompanii/sertifikat-rehau
+            - img "Сертификат REHAU" [ref=e1615]
+            - text: Сертификат
+  - generic [ref=e1619]:
+    - generic [ref=e1620]: Поиск
+    - textbox "Что будем искать?" [ref=e1622]
+    - button "Искать" [ref=e1623] [cursor=pointer]:
+      - img [ref=e1624]
+      - text: Искать
+    - button "Закрыть панель поиска" [ref=e1627] [cursor=pointer]:
+      - img [ref=e1628]
+  - generic [ref=e1630]:
+    - generic [ref=e1631]:
+      - generic [ref=e1632]:
+        - link "Позвонить" [ref=e1633] [cursor=pointer]:
+          - /url: tel:+74951262422
+          - img [ref=e1635]
+          - generic [ref=e1639]: Позвонить
+        - link "Telegram Telegram" [ref=e1640] [cursor=pointer]:
+          - /url: https://t.me/+79161422193
+          - img "Telegram" [ref=e1642]
+          - generic [ref=e1643]: Telegram
+      - img [ref=e1645] [cursor=pointer]
+    - generic [ref=e1647]:
+      - link "Оплата по договору онлайн" [ref=e1649] [cursor=pointer]:
+        - /url: /oplata
+        - img [ref=e1650]
+        - generic [ref=e1653]: Оплата по договору онлайн
+      - list [ref=e1655]:
+        - listitem [ref=e1656] [cursor=pointer]:
+          - paragraph [ref=e1659]: Остекление квартиры
+        - listitem [ref=e1660] [cursor=pointer]:
+          - paragraph [ref=e1663]: Загородное остекление
+        - listitem [ref=e1664] [cursor=pointer]:
+          - paragraph [ref=e1667]: Офисное остекление
+      - list [ref=e1669]:
+        - listitem [ref=e1670] [cursor=pointer]:
+          - paragraph [ref=e1673]: Балконы и лоджии
+        - listitem [ref=e1674] [cursor=pointer]:
+          - paragraph [ref=e1677]: Панорамное остекление
+      - list [ref=e1679]:
+        - listitem [ref=e1680] [cursor=pointer]:
+          - paragraph [ref=e1683]: Цены
+        - listitem [ref=e1684] [cursor=pointer]:
+          - paragraph [ref=e1687]: Калькулятор
+        - listitem [ref=e1688] [cursor=pointer]:
+          - paragraph [ref=e1691]: Скидки и акции
+      - list [ref=e1693]:
+        - listitem [ref=e1694] [cursor=pointer]:
+          - paragraph [ref=e1697]: Оконные системы
+        - listitem [ref=e1698] [cursor=pointer]:
+          - paragraph [ref=e1701]: Аксессуары
+        - listitem [ref=e1702] [cursor=pointer]:
+          - paragraph [ref=e1705]: Услуги
+      - list [ref=e1707]:
+        - listitem [ref=e1708] [cursor=pointer]:
+          - paragraph [ref=e1711]: О компании
+      - list [ref=e1713]:
+        - listitem [ref=e1714]:
+          - link "Оплата заказа" [ref=e1715] [cursor=pointer]:
+            - /url: /oplata
+            - generic [ref=e1716]: Оплата заказа
+        - listitem [ref=e1717]:
+          - link "Контакты" [ref=e1718] [cursor=pointer]:
+            - /url: /kontakty
+            - generic [ref=e1719]: Контакты
+      - generic [ref=e1720]:
+        - link "Личный кабинет" [ref=e1721] [cursor=pointer]:
+          - /url: /oferta
+          - img [ref=e1722]
+          - generic [ref=e1725]: Личный кабинет
+        - paragraph [ref=e1726]: Производим и устанавливаем окна с 1992 года!
+        - generic [ref=e1729]:
+          - text: Партнер №1
+          - text: с 1992 года
+  - generic [ref=e1731]:
+    - paragraph [ref=e1733]:
+      - text: Наш сайт использует файлы cookie для аналитики и персонализации. Продолжая использовать сайт после ознакомления с этим сообщением и предоставления своего выбора, вы соглашаетесь с нашей
+      - link "Политикой обработки персональных данных" [ref=e1734] [cursor=pointer]:
+        - /url: /privacy-policy
+    - generic [ref=e1735]:
+      - button "Разрешить все" [ref=e1736] [cursor=pointer]:
+        - generic [ref=e1737]: Разрешить все
+      - button "Разрешить обязательные" [ref=e1738] [cursor=pointer]:
+        - generic [ref=e1739]: Разрешить обязательные
+      - button "Настроить cookies" [ref=e1740] [cursor=pointer]:
+        - generic [ref=e1741]: Настроить cookies
+  - generic:
+    - generic:
+      - img "Московские окна"
+      - generic:
+        - img "Логотип Московские окна"
+    - generic:
+      - generic:
+        - img "Rehau"
+    - generic:
+      - generic:
+        - img "Логотип Московские окна"
+    - navigation
+  - alert [ref=e1742]
+  - list [ref=e1842] [cursor=pointer]:
+    - listitem [ref=e1843]
+    - listitem [ref=e1844]
