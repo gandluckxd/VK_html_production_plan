@@ -13,6 +13,7 @@
     color: #1e293b;
     padding: 6px;
     min-height: 100vh;
+    overflow-x: hidden;
   }
 
   /* ---- HEADER ---- */
@@ -134,7 +135,13 @@
     background: #fff;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
+    overflow: clip;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 14px rgba(0,0,0,0.02);
+  }
+
+  .batch-section.collapsed .batch-header {
+    border-radius: 7px;
+    border-bottom: none;
   }
 
   .batch-header {
@@ -207,7 +214,8 @@
   }
 
   /* ---- TABLE ---- */
-  #content { overflow-x: auto; }
+  #content { overflow-x: auto; scrollbar-width: none; }
+  #content::-webkit-scrollbar { display: none; }
 
   table { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
 
@@ -238,10 +246,10 @@
   }
   table td:last-child { border-right: none; }
 
-  .col-num       { width: 30px; text-align: center; }
-  .col-order     { width: 110px; }
-  .col-agreement { width: 85px; }
-  .col-date      { width: 80px; }
+  .col-num         { width: 30px; text-align: center; }
+  .col-order       { width: 110px; }
+  .col-cross-batch { width: 80px; }
+  .col-agreement   { width: 85px; }
   .col-client    { width: 120px; }
   .col-manager   { width: 85px; }
   .col-status    { width: 180px; }
@@ -249,9 +257,12 @@
   .col-qty       { width: 40px; text-align: right; }
   .col-pogon     { width: 70px; text-align: right; }
   .col-wood      { width: 100px; }
+  .col-shpross   { width: 120px; }
   .col-color     { width: 100px; }
-  .col-price     { width: 100px; text-align: right; }
-  .col-comment   { width: 150px; }
+  .col-brus-enough { width: 110px; }
+  .col-sp-arrival { width: 95px; }
+  .col-ready     { width: 90px; }
+  .col-supply-comment { width: 150px; }
 
   tr.order-row { cursor: grab; transition: all 0.12s ease; }
   tr.order-row:hover td { background: #f8fafc; }
@@ -288,10 +299,11 @@
     white-space: nowrap;
   }
 
-  .status-pre    { background: #eef2ff; color: #4338ca; }
-  .status-prod   { background: #fff7ed; color: #c2410c; }
-  .status-ready  { background: #ecfdf5; color: #059669; }
-  .status-return { background: #fef2f2; color: #dc2626; }
+  .status-pre     { background: #eef2ff; color: #4338ca; }
+  .status-checked { background: #fee2e2; color: #b91c1c; }
+  .status-prod    { background: #fff7ed; color: #c2410c; }
+  .status-ready   { background: #ecfdf5; color: #059669; }
+  .status-return  { background: #fef2f2; color: #dc2626; }
 
   .status-cell { display: flex; flex-direction: row; align-items: center; gap: 5px; overflow: hidden; }
   .progress-dots { display: flex; gap: 2px; align-items: center; flex-shrink: 0; }
@@ -479,7 +491,7 @@
     <h2 id="modal-title">Новая партия</h2>
     <div class="form-row">
       <label>Наименование партии *</label>
-      <input type="text" id="modal-name" placeholder="Например: Смена 1, Март-01..." />
+      <input type="text" id="modal-name" />
     </div>
     <div class="form-row">
       <label>Дата начала</label>
@@ -517,27 +529,31 @@ var draggedOrderId = null;
 var draggedBatchNum = null;
 var editingBatchNumber = null; // null = добавление, string = редактирование
 var pendingDeleteBatch = null;
+var autoRefreshTimer = null;
 var colWidths = {
-  'col-num': 30, 'col-order': 110, 'col-status': 180,
-  'col-agreement': 85, 'col-date': 80, 'col-client': 120,
-  'col-manager': 85, 'col-area': 60, 'col-qty': 40,
-  'col-pogon': 70, 'col-wood': 100, 'col-color': 100,
-  'col-price': 100, 'col-comment': 150
+  'col-num': 30, 'col-order': 110, 'col-cross-batch': 80, 'col-status': 180,
+  'col-agreement': 85, 'col-client': 120,
+  'col-manager': 85, 'col-ready': 90, 'col-sp-arrival': 95, 'col-area': 60, 'col-qty': 40,
+  'col-pogon': 70, 'col-wood': 100, 'col-shpross': 120, 'col-color': 100,
+  'col-brus-enough': 110,
+  'col-supply-comment': 150
 };
 var colsAutoFitted = false;
 var minColWidths = {
-  'col-num': 28, 'col-order': 70, 'col-status': 80,
-  'col-agreement': 60, 'col-date': 72, 'col-client': 70,
-  'col-manager': 60, 'col-area': 42, 'col-qty': 30,
-  'col-pogon': 50, 'col-wood': 60, 'col-color': 60,
-  'col-price': 60, 'col-comment': 60
+  'col-num': 28, 'col-order': 70, 'col-cross-batch': 60, 'col-status': 80,
+  'col-agreement': 60, 'col-client': 70,
+  'col-manager': 60, 'col-ready': 70, 'col-sp-arrival': 70, 'col-area': 42, 'col-qty': 30,
+  'col-pogon': 50, 'col-wood': 60, 'col-shpross': 60, 'col-color': 60,
+  'col-brus-enough': 70,
+  'col-supply-comment': 60
 };
 var maxColWidths = {
-  'col-num': 40, 'col-order': 180, 'col-status': 250,
-  'col-agreement': 160, 'col-date': 100, 'col-client': 280,
-  'col-manager': 160, 'col-area': 85, 'col-qty': 55,
-  'col-pogon': 95, 'col-wood': 200, 'col-color': 200,
-  'col-price': 160, 'col-comment': 300
+  'col-num': 40, 'col-order': 180, 'col-cross-batch': 150, 'col-status': 250,
+  'col-agreement': 160, 'col-client': 280,
+  'col-manager': 160, 'col-ready': 120, 'col-sp-arrival': 140, 'col-area': 85, 'col-qty': 55,
+  'col-pogon': 95, 'col-wood': 200, 'col-shpross': 200, 'col-color': 200,
+  'col-brus-enough': 220,
+  'col-supply-comment': 300
 };
 
 // ========== API ==========
@@ -562,6 +578,8 @@ function setMode(mode) {
 // ========== LOAD ==========
 
 function loadData() {
+  if (autoRefreshTimer) { clearTimeout(autoRefreshTimer); autoRefreshTimer = null; }
+  colsAutoFitted = false;
   document.getElementById('content').innerHTML =
     '<div class="loading">Загрузка заказов...</div>';
 
@@ -573,20 +591,53 @@ function loadData() {
     .then(function(result) {
       batches = JSON.parse(result.data);
       render();
+      autoRefreshTimer = setTimeout(silentRefresh, 5000);
     })
     .catch(function(err) {
       showError('Ошибка загрузки: ' + err);
+      autoRefreshTimer = setTimeout(silentRefresh, 5000);
     });
 }
 
 function loadBatches() {
+  if (autoRefreshTimer) { clearTimeout(autoRefreshTimer); autoRefreshTimer = null; }
   callMethod('getBatches', { batchType: currentMode })
     .then(function(result) {
       batches = JSON.parse(result.data);
       render();
+      autoRefreshTimer = setTimeout(silentRefresh, 5000);
     })
     .catch(function(err) {
       showError('Ошибка загрузки партий: ' + err);
+      autoRefreshTimer = setTimeout(silentRefresh, 5000);
+    });
+}
+
+function silentRefresh() {
+  autoRefreshTimer = null;
+  // Не обновляем во время перетаскивания
+  if (draggedOrderId !== null) {
+    autoRefreshTimer = setTimeout(silentRefresh, 2000);
+    return;
+  }
+  var cont = document.getElementById('content');
+  var scrollX = cont ? cont.scrollLeft : 0;
+  var scrollY = window.pageYOffset || 0;
+
+  callMethod('getProductionOrders', {})
+    .then(function(result) {
+      orders = JSON.parse(result.data);
+      return callMethod('getBatches', { batchType: currentMode });
+    })
+    .then(function(result) {
+      batches = JSON.parse(result.data);
+      render();
+      if (cont) cont.scrollLeft = scrollX;
+      window.scrollTo(0, scrollY);
+      autoRefreshTimer = setTimeout(silentRefresh, 5000);
+    })
+    .catch(function() {
+      autoRefreshTimer = setTimeout(silentRefresh, 5000);
     });
 }
 
@@ -681,18 +732,21 @@ function renderBatchSection(batchNum, title, batchOrders, canDelete) {
     html += '<thead><tr>';
     html += '<th class="col-num">#</th>';
     html += '<th class="col-order">Заказ</th>';
+    html += '<th class="col-cross-batch">' + (currentMode === 1 ? 'Малярка' : 'Столярка') + '</th>';
     html += '<th class="col-status">Состояние</th>';
     html += '<th class="col-agreement">Договор</th>';
-    html += '<th class="col-date">Дата</th>';
     html += '<th class="col-client">Клиент</th>';
     html += '<th class="col-manager">Менеджер</th>';
+    html += '<th class="col-ready">Дата готовности</th>';
+    html += '<th class="col-sp-arrival">Дата прихода СП</th>';
     html += '<th class="col-area">Кв.м.</th>';
     html += '<th class="col-qty">Шт</th>';
     html += '<th class="col-pogon">Погонаж</th>';
     html += '<th class="col-wood">Порода</th>';
+    html += '<th class="col-shpross">Шпросс</th>';
     html += '<th class="col-color">Цвет</th>';
-    html += '<th class="col-price">Сумма</th>';
-    html += '<th class="col-comment">Комментарий</th>';
+    html += '<th class="col-brus-enough">Наличие бруса</th>';
+    html += '<th class="col-supply-comment">Прим. снабжения</th>';
     html += '</tr></thead><tbody>';
     batchOrders.forEach(function(order, idx) {
       html += renderOrderRow(order, idx + 1);
@@ -705,7 +759,8 @@ function renderBatchSection(batchNum, title, batchOrders, canDelete) {
 }
 
 // Кружки прогресса: RECINDEX 4-10 = участки, 100 = Готово, 1000 = Возврат
-// filledCount: ri<4->0, ri=4->0, ri=5->1, ..., ri=10->6, ri=100->7, ri>=1000->0
+// Стадии RECINDEX 4-17 (14 штук) → 7 шариков, по паре (передано/готово) на шарик
+// ri=4,5->0; ri=6,7->1; ri=8,9->2; ri=10,11->3; ri=12,13->4; ri=14,15->5; ri=16,17->6; ri=100->7
 function renderProgressDots(recIdx) {
   var ri = parseInt(recIdx, 10);
   var filledCount;
@@ -714,7 +769,7 @@ function renderProgressDots(recIdx) {
   } else if (ri >= 100) {
     filledCount = 7; // Готово
   } else {
-    filledCount = Math.min(ri - 4, 6); // 4->0, 5->1, ..., 10->6
+    filledCount = Math.min(Math.ceil((ri - 4) / 2), 7);
   }
   var html = '<div class="progress-dots">';
   for (var d = 0; d < 7; d++) {
@@ -727,31 +782,37 @@ function renderProgressDots(recIdx) {
 function renderOrderRow(order, num) {
   var ri = parseInt(order.stateRecIdx, 10);
   var statusClass;
-  if (ri >= 4 && ri <= 10) statusClass = 'status-prod';
-  else if (ri === 100)     statusClass = 'status-ready';
-  else if (ri >= 1000)     statusClass = 'status-return';
-  else                     statusClass = 'status-pre';
-
-  var price   = order.totalPrice ? formatPrice(order.totalPrice) : '';
-  var date    = order.dateOrder  ? formatDate(order.dateOrder)   : '';
-  var comment = order.comment || '';
-  if (comment.length > 40) comment = comment.substring(0, 40) + '...';
+  if (order.orderStateId == 26)  statusClass = 'status-checked';
+  else if (ri >= 4 && ri < 100)  statusClass = 'status-prod';
+  else if (ri === 100)           statusClass = 'status-ready';
+  else if (ri >= 1000)           statusClass = 'status-return';
+  else                           statusClass = 'status-pre';
 
   var html = '<tr class="order-row" draggable="true" data-order-id="' + order.id + '">';
   html += '<td class="col-num">' + num + '</td>';
   html += '<td class="col-order"><a class="order-link" onclick="openOrder(' + order.id + ')">' + escapeHtml(order.orderNo) + '</a></td>';
+  var crossBatch = currentMode === 1 ? (order.paintBatch || '') : (order.carpBatch || '');
+  html += '<td class="col-cross-batch">' + escapeHtml(crossBatch) + '</td>';
   html += '<td class="col-status"><div class="status-cell">' + renderProgressDots(order.stateRecIdx) + '<span class="status-badge ' + statusClass + '">' + escapeHtml(order.stateName || '') + '</span></div></td>';
   html += '<td class="col-agreement">' + escapeHtml(order.agreementNo || '') + '</td>';
-  html += '<td class="col-date">' + date + '</td>';
   html += '<td class="col-client" title="' + escapeAttr(order.customerName || '') + '">' + (order.customerId ? '<a class="client-link" onclick="openCustomer(' + order.customerId + ')">' + escapeHtml(order.customerName || '') + '</a>' : escapeHtml(order.customerName || '')) + '</td>';
   html += '<td class="col-manager">' + escapeHtml(order.manager || '') + '</td>';
+  var readyDate = '';
+  if (order.payYear && order.payMonth && order.payDay && order.prodTime > 0) {
+    var payDate = new Date(order.payYear, order.payMonth - 1, order.payDay);
+    readyDate = addWorkingDays(payDate, order.prodTime - 2);
+  }
+  var spArrivalDate = formatDate(order.spArrivalDate);
+  html += '<td class="col-ready">' + readyDate + '</td>';
+  html += '<td class="col-sp-arrival">' + spArrivalDate + '</td>';
   html += '<td class="col-area">' + formatDecimal(order.areaIzd) + '</td>';
   html += '<td class="col-qty">' + (order.qtyIzd > 0 ? Math.round(order.qtyIzd) : '') + '</td>';
   html += '<td class="col-pogon">' + formatDecimal(order.lengthPogon) + '</td>';
   html += '<td class="col-wood" title="' + escapeAttr(order.woodTypes || '') + '">' + escapeHtml(order.woodTypes || '') + '</td>';
+  html += '<td class="col-shpross" title="' + escapeAttr(order.shprosse || '') + '">' + escapeHtml(order.shprosse || '') + '</td>';
   html += '<td class="col-color" title="' + escapeAttr(order.colors || '') + '">' + escapeHtml(order.colors || '') + '</td>';
-  html += '<td class="col-price price">' + price + '</td>';
-  html += '<td class="col-comment" title="' + escapeAttr(order.comment || '') + '">' + escapeHtml(comment) + '</td>';
+  html += '<td class="col-brus-enough" title="' + escapeAttr(order.brusEnough || '') + '">' + escapeHtml(order.brusEnough || '') + '</td>';
+  html += '<td class="col-supply-comment" title="' + escapeAttr(order.commentSupply || '') + '">' + escapeHtml(order.commentSupply || '') + '</td>';
   html += '</tr>';
   return html;
 }
@@ -786,8 +847,8 @@ function editBatch(batchNum) {
   confirm.className = 'btn btn-primary' + (currentMode === 2 ? ' paint' : '');
   confirm.textContent = 'Сохранить';
   document.getElementById('modal-name').value = batchNum;
-  document.getElementById('modal-date-start').value = batch.dateStart || '';
-  document.getElementById('modal-date-end').value = batch.dateEnd || '';
+  document.getElementById('modal-date-start').value = toInputDateValue(batch.dateStart);
+  document.getElementById('modal-date-end').value = toInputDateValue(batch.dateEnd);
   document.getElementById('modal-overlay').classList.add('show');
   setTimeout(function() { document.getElementById('modal-name').focus(); }, 50);
 }
@@ -884,10 +945,12 @@ function confirmDelete() {
 }
 
 function toggleSection(sectionId) {
-  var body  = document.getElementById('body-'  + sectionId);
-  var arrow = document.getElementById('arrow-' + sectionId);
+  var section = document.getElementById('section-' + sectionId);
+  var body    = document.getElementById('body-'    + sectionId);
+  var arrow   = document.getElementById('arrow-'   + sectionId);
   body.classList.toggle('collapsed');
   arrow.classList.toggle('collapsed');
+  section.classList.toggle('collapsed');
 }
 
 // ========== DRAG AND DROP ==========
@@ -1028,8 +1091,20 @@ function openOrder(orderId) {
 }
 
 function openCustomer(customerId) {
-  callMethod('openCustomer', { customerId: customerId })
-    .catch(function(err) { showToast('Не удалось открыть клиента: ' + err); });
+  var idNum = parseInt(customerId, 10);
+  var tries = [];
+  if (!isNaN(idNum)) tries.push(idNum);
+  tries.push(String(customerId));
+
+  function tryOpen(i) {
+    return callMethod('openCustomer', { customerId: tries[i] })
+      .catch(function(err) {
+        if (i + 1 < tries.length) return tryOpen(i + 1);
+        showToast('Не удалось открыть клиента: ' + err);
+      });
+  }
+
+  tryOpen(0);
 }
 
 // ========== HELPERS ==========
@@ -1052,15 +1127,61 @@ function formatDecimal(value) {
   return n.toFixed(2).replace(/\.?0+$/, '');
 }
 
-function formatDate(dateStr) {
-  if (!dateStr || dateStr === 'null') return '';
+var RU_HOLIDAYS = {
+  '2026-01-01':1,'2026-01-02':1,'2026-01-05':1,'2026-01-06':1,
+  '2026-01-07':1,'2026-01-08':1,'2026-01-09':1,'2026-02-23':1,
+  '2026-03-09':1,'2026-05-01':1,'2026-05-11':1,'2026-06-12':1,
+  '2026-11-04':1,'2026-12-31':1
+};
+
+function parseAnyDate(str) {
+  if (!str || str === 'null') return null;
+  var m = str.match(/^(\d{2})\.(\d{2})\.(\d{4})/);
+  if (m) return new Date(parseInt(m[3], 10), parseInt(m[2], 10) - 1, parseInt(m[1], 10));
+  var d = new Date(str);
+  return isNaN(d.getTime()) ? null : d;
+}
+
+function addWorkingDays(dateOrObj, days) {
+  if (!dateOrObj || !days || days <= 0) return '';
   try {
-    var d = new Date(dateStr);
-    if (isNaN(d.getTime())) return dateStr;
+    var d = (dateOrObj instanceof Date) ? new Date(dateOrObj.getTime()) : parseAnyDate(String(dateOrObj));
+    if (!d || isNaN(d.getTime())) return '';
+    var added = 0;
+    while (added < days) {
+      d.setDate(d.getDate() + 1);
+      var dow = d.getDay();
+      var iso = d.getFullYear() + '-' +
+                ('0' + (d.getMonth() + 1)).slice(-2) + '-' +
+                ('0' + d.getDate()).slice(-2);
+      if (dow !== 0 && dow !== 6 && !RU_HOLIDAYS[iso]) added++;
+    }
     return ('0' + d.getDate()).slice(-2) + '.' +
            ('0' + (d.getMonth() + 1)).slice(-2) + '.' +
            d.getFullYear();
-  } catch(e) { return dateStr; }
+  } catch(e) { return ''; }
+}
+
+function formatDate(dateStr) {
+  if (!dateStr || dateStr === 'null') return '';
+  try {
+    var d = parseAnyDate(dateStr);
+    if (!d) return '';
+    return ('0' + d.getDate()).slice(-2) + '.' +
+           ('0' + (d.getMonth() + 1)).slice(-2) + '.' +
+           d.getFullYear();
+  } catch(e) { return ''; }
+}
+
+function toInputDateValue(dateStr) {
+  if (!dateStr || dateStr === 'null') return '';
+  try {
+    var d = parseAnyDate(dateStr);
+    if (!d) return '';
+    return d.getFullYear() + '-' +
+           ('0' + (d.getMonth() + 1)).slice(-2) + '-' +
+           ('0' + d.getDate()).slice(-2);
+  } catch(e) { return ''; }
 }
 
 function escapeHtml(str) {
@@ -1297,18 +1418,21 @@ function initBottomScrollbar() {
 var FLOAT_COLS = [
   {cls:'col-num',label:'#',r:false},
   {cls:'col-order',label:'\u0417\u0430\u043a\u0430\u0437',r:false},
+  {cls:'col-cross-batch',label:'',r:false},
   {cls:'col-status',label:'\u0421\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435',r:false},
   {cls:'col-agreement',label:'\u0414\u043e\u0433\u043e\u0432\u043e\u0440',r:false},
-  {cls:'col-date',label:'\u0414\u0430\u0442\u0430',r:false},
   {cls:'col-client',label:'\u041a\u043b\u0438\u0435\u043d\u0442',r:false},
   {cls:'col-manager',label:'\u041c\u0435\u043d\u0435\u0434\u0436\u0435\u0440',r:false},
+  {cls:'col-ready',label:'\u0414\u0430\u0442\u0430 \u0433\u043e\u0442\u043e\u0432\u043d\u043e\u0441\u0442\u0438',r:false},
+  {cls:'col-sp-arrival',label:'\u0414\u0430\u0442\u0430 \u043f\u0440\u0438\u0445\u043e\u0434\u0430 \u0421\u041f',r:false},
   {cls:'col-area',label:'\u041a\u0432.\u043c.',r:true},
   {cls:'col-qty',label:'\u0428\u0442',r:true},
   {cls:'col-pogon',label:'\u041f\u043e\u0433\u043e\u043d\u0430\u0436',r:true},
   {cls:'col-wood',label:'\u041f\u043e\u0440\u043e\u0434\u0430',r:false},
+  {cls:'col-shpross',label:'\u0428\u043f\u0440\u043e\u0441\u0441',r:false},
   {cls:'col-color',label:'\u0426\u0432\u0435\u0442',r:false},
-  {cls:'col-price',label:'\u0421\u0443\u043c\u043c\u0430',r:true},
-  {cls:'col-comment',label:'\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439',r:false}
+  {cls:'col-brus-enough',label:'\u041d\u0430\u043b\u0438\u0447\u0438\u0435 \u0431\u0440\u0443\u0441\u0430',r:false},
+  {cls:'col-supply-comment',label:'\u041f\u0440\u0438\u043c. \u0441\u043d\u0430\u0431\u0436\u0435\u043d\u0438\u044f',r:false}
 ];
 
 function buildFloatHeaderHtml() {
@@ -1318,7 +1442,10 @@ function buildFloatHeaderHtml() {
   html += '<tr>';
   FLOAT_COLS.forEach(function(c) {
     var align = c.r ? 'right' : 'left';
-    html += '<th class="' + c.cls + '" style="text-align:' + align + ';">' + c.label + '</th>';
+    var label = c.cls === 'col-cross-batch'
+      ? (currentMode === 1 ? 'Малярка' : 'Столярка')
+      : c.label;
+    html += '<th class="' + c.cls + '" style="text-align:' + align + ';">' + label + '</th>';
   });
   html += '</tr></table>';
   return html;

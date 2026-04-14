@@ -7,8 +7,11 @@
 //   carpBatch, paintBatch,
 //   manager (фамилия владельца документа),
 //   qtyIzd (шт, UF 48), areaIzd (кв.м, UF 49), lengthPogon (погонаж, UF 122),
+//   brusEnough (доп.поле по коду brus_enough),
+//   spArrivalDate (ожидаемая дата прихода СП из заказа изделий "Стеклопакет"),
 //   woodTypes (породы дерева из PACKINFO через GetConstructionInfo),
-//   colors (цвета из ORDERS_UNITS.INCOLORID/OUTCOLORID)
+//   colors (цвета из ORDERS_UNITS.INCOLORID/OUTCOLORID),
+//   shprosse (уникальные профили шпросс из Filling.InnerFalse/OuterFalse.Beams.MrkProfil)
 //
 // Настройка UF ID для carpBatch/paintBatch берётся из VK_PROD_SETTINGS
 // (ID=1, поля CARP_UF_ID/PAINT_UF_ID). Если таблица не создана — fallback 170/171.
@@ -34,6 +37,44 @@ begin
         ''
       );
 
+    if (not VarIsNull(cfgVal)) and (VarToStr(cfgVal) <> '') then
+      Result := cfgVal;
+  except
+    // fallback уже задан выше
+  end;
+end;
+
+function GetOrderUfIdByCode(fieldCode: string): Integer;
+var
+  cfgVal: Variant;
+begin
+  Result := 0;
+  try
+    cfgVal := QueryValue(
+      'SELECT FIRST 1 USERFIELDID ' +
+      'FROM USERFIELDS ' +
+      'WHERE DOCTYPE = ''IdocOrder'' AND DELETED = 0 AND FIELDNAME = ''' + fieldCode + '''',
+      MakeDictionary([]),
+      ''
+    );
+    if (not VarIsNull(cfgVal)) and (VarToStr(cfgVal) <> '') then
+      Result := cfgVal;
+  except
+    // fallback 0 = поле не найдено
+  end;
+end;
+
+function GetProductTypeIdByName(typeName: string; fallbackId: Integer): Integer;
+var
+  cfgVal: Variant;
+begin
+  Result := fallbackId;
+  try
+    cfgVal := QueryValue(
+      'SELECT FIRST 1 ID FROM PRODUCTTYPES WHERE DELETED = 0 AND NAME = ''' + typeName + '''',
+      MakeDictionary([]),
+      ''
+    );
     if (not VarIsNull(cfgVal)) and (VarToStr(cfgVal) <> '') then
       Result := cfgVal;
   except
@@ -79,19 +120,67 @@ begin
     Result := existing + ', ' + item;
 end;
 
+// Уникальные профили шпросс из одного изделия (InnerFalse + OuterFalse)
+// Логика идентична fGetShpross из библиотеки sGetPP
+function GetShpross(packInfo: Variant): string;
+var
+  constr: IcsConstruction;
+  prod: IcsProduct;
+  filling: IcsFilling;
+  iP: Integer;
+  fillIdx: Integer;
+  iB: Integer;
+  beam: string;
+begin
+  Result := '';
+  try
+    constr := GetConstructionInfo(packInfo);
+    for iP := 0 to constr.Products.Count - 1 do
+    begin
+      prod := constr.Products[iP];
+      for fillIdx := 0 to prod.Fillings.Count - 1 do
+      begin
+        filling := prod.Fillings[fillIdx];
+        if not VarIsClear(filling.InnerFalse) then
+        begin
+          for iB := 0 to filling.InnerFalse.Beams.Count - 1 do
+          begin
+            beam := VarToStr(filling.InnerFalse.Beams[iB].MrkProfil);
+            if (beam <> '') and (Pos(beam, Result) = 0) then
+              Result := AppendCsv(Result, beam);
+          end;
+        end;
+        if not VarIsClear(filling.OuterFalse) then
+        begin
+          for iB := 0 to filling.OuterFalse.Beams.Count - 1 do
+          begin
+            beam := VarToStr(filling.OuterFalse.Beams[iB].MrkProfil);
+            if (beam <> '') and (Pos(beam, Result) = 0) then
+              Result := AppendCsv(Result, beam);
+          end;
+        end;
+      end;
+    end;
+  except
+  end;
+end;
+
 var
   records, unitRecs: IcmDictionaryList;
   srcRec, unitRec, outRec: IcmDictionary;
-  woodByOrder, colorByOrder: IcmDictionary;
+  woodByOrder, colorByOrder, shprossByOrder: IcmDictionary;
   seenWood, seenColor: IcmDictionary;
   i: Integer;
   json: string;
   orderIdsCsv, orderKey: string;
   woodVal, colorIn, colorOut, listVal, markKey: string;
-  carpUfId, paintUfId: Integer;
+  carpUfId, paintUfId, brusEnoughUfId, glassProductTypeId: Integer;
+  shprossVal: string;
 begin
   carpUfId := GetBatchUfId(1);
   paintUfId := GetBatchUfId(2);
+  brusEnoughUfId := GetOrderUfIdByCode('brus_enough');
+  glassProductTypeId := GetProductTypeIdByName('Стеклопакет', 2);
 
   // Основной запрос: заказы + менеджер + UF-поля
   records := QueryRecordList(
@@ -111,7 +200,17 @@ begin
     '  COALESCE(p.PERSONLASTNAME, '''') as MANAGER, ' +
     '  COALESCE(uf_qty.VAR_FLT, 0) as QTY_IZD, ' +
     '  COALESCE(uf_area.VAR_FLT, 0) as AREA_IZD, ' +
-    '  COALESCE(uf_pogon.VAR_FLT, 0) as LENGTH_POGON ' +
+    '  COALESCE(uf_pogon.VAR_FLT, 0) as LENGTH_POGON, ' +
+    '  COALESCE(uf_ptime.VAR_INT, 0) as PROD_TIME, ' +
+    '  COALESCE(CAST(uf_supply.VAR_BIN AS VARCHAR(2000)), '''') as SUPPLY_COMMENT, ' +
+    '  COALESCE(uf_brus.VAR_STR, '''') as BRUS_ENOUGH, ' +
+    '  (SELECT MIN(fo.DUEDATE) ' +
+    '     FROM FACTORY_ORDERS_UF_VALUES fov ' +
+    '     JOIN FACTORY_ORDERS fo ON fo.ID = fov.FACTORYORDERID AND fo.DELETED = 0 AND fo.PRODUCTTYPEID = ' + IntToStr(glassProductTypeId) + ' ' +
+    '    WHERE fov.USERFIELDID = 178 AND TRIM(fov.VAR_GUID) = TRIM(o.GUID)) as SP_ARRIVAL_DATE, ' +
+    '  (SELECT EXTRACT(YEAR  FROM MIN(op2.DATEPAYMENT)) FROM PAYMENTRELAT pr2 JOIN ORDERPAYMENT op2 ON op2.ORDERPAYMENTID = pr2.ORDERPAYMENTID WHERE pr2.ORDERID = o.ID AND op2.DELETED = 0) as PAY_YEAR, ' +
+    '  (SELECT EXTRACT(MONTH FROM MIN(op2.DATEPAYMENT)) FROM PAYMENTRELAT pr2 JOIN ORDERPAYMENT op2 ON op2.ORDERPAYMENTID = pr2.ORDERPAYMENTID WHERE pr2.ORDERID = o.ID AND op2.DELETED = 0) as PAY_MONTH, ' +
+    '  (SELECT EXTRACT(DAY   FROM MIN(op2.DATEPAYMENT)) FROM PAYMENTRELAT pr2 JOIN ORDERPAYMENT op2 ON op2.ORDERPAYMENTID = pr2.ORDERPAYMENTID WHERE pr2.ORDERID = o.ID AND op2.DELETED = 0) as PAY_DAY ' +
     'FROM ORDERS o ' +
     'LEFT JOIN ORDERSTATES os ON os.ORDERSTATEID = o.ORDERSTATEID ' +
     'LEFT JOIN CONTRAGENTS ca ON ca.CONTRAGID = o.CUSTOMERID ' +
@@ -122,16 +221,25 @@ begin
     'LEFT JOIN ORDERS_UF_VALUES uf_qty   ON uf_qty.ORDERID   = o.ID AND uf_qty.USERFIELDID   = 48 ' +
     'LEFT JOIN ORDERS_UF_VALUES uf_area  ON uf_area.ORDERID  = o.ID AND uf_area.USERFIELDID  = 49 ' +
     'LEFT JOIN ORDERS_UF_VALUES uf_pogon ON uf_pogon.ORDERID = o.ID AND uf_pogon.USERFIELDID = 122 ' +
-    'WHERE o.DELETED = 0 AND o.AGREEMENTNO IS NOT NULL AND TRIM(o.AGREEMENTNO) <> '''' ' +
+    'LEFT JOIN ORDERS_UF_VALUES uf_ptime ON uf_ptime.ORDERID = o.ID AND uf_ptime.USERFIELDID = 77 ' +
+    'LEFT JOIN ORDERS_UF_VALUES uf_supply ON uf_supply.ORDERID = o.ID AND uf_supply.USERFIELDID = 174 ' +
+    'LEFT JOIN ORDERS_UF_VALUES uf_brus ON uf_brus.ORDERID = o.ID AND uf_brus.USERFIELDID = ' + IntToStr(brusEnoughUfId) + ' ' +
+    'WHERE o.DELETED = 0 ' +
+    'AND (' +
+    '  EXISTS (SELECT 1 FROM ORDERS_UF_VALUES atp WHERE atp.ORDERID = o.ID AND atp.USERFIELDID = 173 AND atp.VAR_STR = ''Да'') ' +
+    '  OR EXISTS (SELECT 1 FROM PAYMENTRELAT pr JOIN ORDERPAYMENT op ON op.ORDERPAYMENTID = pr.ORDERPAYMENTID WHERE pr.ORDERID = o.ID AND op.DATEPAYMENT >= ''2026-03-01'' AND op.DELETED = 0) ' +
+    '  OR EXISTS (SELECT 1 FROM ORDERS_UF_VALUES bp WHERE bp.ORDERID = o.ID AND bp.USERFIELDID IN (' + IntToStr(carpUfId) + ',' + IntToStr(paintUfId) + ') AND bp.VAR_STR IS NOT NULL AND TRIM(bp.VAR_STR) <> '''') ' +
+    ') ' +
     'ORDER BY o.DATEORDER DESC',
     MakeDictionary([]),
     ''
   );
 
   // Подготовка агрегатов по изделиям заказа (без N+1 запросов)
-  woodByOrder := CreateDictionary;
-  colorByOrder := CreateDictionary;
-  seenWood := CreateDictionary;
+  woodByOrder    := CreateDictionary;
+  colorByOrder   := CreateDictionary;
+  shprossByOrder := CreateDictionary;
+  seenWood  := CreateDictionary;
   seenColor := CreateDictionary;
 
   orderIdsCsv := '';
@@ -207,6 +315,16 @@ begin
           colorByOrder.Add(orderKey, listVal);
         end;
       end;
+
+      // Шпросс: уникальные профили из InnerFalse/OuterFalse через GetShpross
+      shprossVal := GetShpross(unitRec['PACKINFO']);
+      if shprossVal <> '' then
+      begin
+        if shprossByOrder.Exists(orderKey) then listVal := VarToStr(shprossByOrder[orderKey])
+        else listVal := '';
+        if Pos(shprossVal, listVal) = 0 then
+          shprossByOrder.Add(orderKey, AppendCsv(listVal, shprossVal));
+      end;
     end;
   end;
 
@@ -227,14 +345,21 @@ begin
     outRec.Add('stateName',    srcRec['STATENAME']);
     outRec.Add('customerId',   srcRec['CUSTOMERID']);
     outRec.Add('customerName', srcRec['CUSTOMERNAME']);
-    outRec.Add('comment',      srcRec['RCOMMENT']);
+    outRec.Add('comment',         srcRec['RCOMMENT']);
+    outRec.Add('commentSupply',   VarToStr(srcRec['SUPPLY_COMMENT']));
+    outRec.Add('brusEnough',      VarToStr(srcRec['BRUS_ENOUGH']));
+    outRec.Add('spArrivalDate',   VarToStr(srcRec['SP_ARRIVAL_DATE']));
     outRec.Add('totalPrice',   srcRec['TOTALPRICE']);
     outRec.Add('prodDate',     VarToStr(srcRec['PRODDATE']));
     outRec.Add('factoryNum',   srcRec['FACTORYNUM']);
     outRec.Add('carpBatch',    srcRec['CARP_BATCH']);
     outRec.Add('paintBatch',   srcRec['PAINT_BATCH']);
-    outRec.Add('manager',      srcRec['MANAGER']);
-    outRec.Add('qtyIzd',       srcRec['QTY_IZD']);
+    outRec.Add('manager',           srcRec['MANAGER']);
+    outRec.Add('prodTime',  srcRec['PROD_TIME']);
+    outRec.Add('payYear',   srcRec['PAY_YEAR']);
+    outRec.Add('payMonth',  srcRec['PAY_MONTH']);
+    outRec.Add('payDay',    srcRec['PAY_DAY']);
+    outRec.Add('qtyIzd',            srcRec['QTY_IZD']);
     outRec.Add('areaIzd',      srcRec['AREA_IZD']);
     outRec.Add('lengthPogon',  srcRec['LENGTH_POGON']);
 
@@ -247,6 +372,11 @@ begin
       outRec.Add('colors', VarToStr(colorByOrder[orderKey]))
     else
       outRec.Add('colors', '');
+
+    if shprossByOrder.Exists(orderKey) then
+      outRec.Add('shprosse', VarToStr(shprossByOrder[orderKey]))
+    else
+      outRec.Add('shprosse', '');
 
     if i > 0 then json := json + ',';
     json := json + JSONEncode(outRec);

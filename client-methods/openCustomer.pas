@@ -5,7 +5,7 @@
 //
 // Параметры:
 //   customerId: Integer — ID контрагента (CUSTOMERID)
-// Возвращает: Result['success'] = 'true'/'false'
+//   success: string — признак успешного открытия
 
 var
   Customer: IdocCustomer;
@@ -14,8 +14,8 @@ begin
   if Customer <> nil then
   begin
     Customer.ShowModal;
-    Result['success'] := 'true';
+    success := 'true';
   end
   else
-    Result['success'] := 'false';
+    success := 'false';
 end;

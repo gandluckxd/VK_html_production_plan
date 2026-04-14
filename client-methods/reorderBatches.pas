@@ -4,7 +4,7 @@
 //   batchesStr  (string,  Входной)  — legacy: имена партий через |
 //   success     (string,  Выходной)
 //
-// Дополнительно поддерживается JSON через Args['batchesJson']:
+// Дополнительно поддерживается JSON через входной параметр batchesJson:
 //   [{"batchNumber":"..."}, ...]
 // Если JSON не передан/невалиден, используется legacy batchesStr.
 
@@ -53,12 +53,7 @@ var
   remaining, token, jsonPayload: string;
   sepPos, sortOrder: Integer;
 begin
-  jsonPayload := '';
-  try
-    jsonPayload := VarToStr(Args['batchesJson']);
-  except
-    jsonPayload := '';
-  end;
+  jsonPayload := VarToStr(batchesJson);
 
   if ApplyOrderFromJson(jsonPayload) then
   begin
