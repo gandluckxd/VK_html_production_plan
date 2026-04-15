@@ -179,6 +179,21 @@
     font-size: 12px;
   }
 
+  .batch-labor {
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #334155;
+  }
+
+  .batch-labor-link {
+    color: #0f766e;
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(15,118,110,0.4);
+    cursor: pointer;
+  }
+  .batch-labor-link:hover { color: #0f766e; border-bottom-color: rgba(15,118,110,0.8); }
+
   .mode-tag {
     display: inline-block;
     padding: 2px 8px;
@@ -256,10 +271,12 @@
   .col-area      { width: 60px; text-align: right; }
   .col-qty       { width: 40px; text-align: right; }
   .col-pogon     { width: 70px; text-align: right; }
+  .col-labor     { width: 100px; text-align: right; }
   .col-wood      { width: 100px; }
   .col-shpross   { width: 120px; }
   .col-color     { width: 100px; }
   .col-brus-enough { width: 110px; }
+  .col-notes     { width: 340px; }
   .col-sp-arrival { width: 95px; }
   .col-ready     { width: 90px; }
   .col-supply-comment { width: 150px; }
@@ -288,6 +305,15 @@
     transition: color 0.15s;
   }
   tr.order-row .client-link:hover { color: #4f46e5; text-decoration: underline; }
+
+  tr.order-row .labor-link {
+    color: #0f766e;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-bottom: 1px dashed rgba(15,118,110,0.35);
+  }
+  tr.order-row .labor-link:hover { border-bottom-color: rgba(15,118,110,0.9); }
 
   /* ---- STATUS ---- */
   .status-badge {
@@ -464,6 +490,126 @@
     gap: 8px;
     margin-top: 24px;
   }
+
+  .modal.modal-large {
+    max-width: 1140px;
+    min-width: 860px;
+    width: calc(100vw - 48px);
+    max-height: calc(100vh - 64px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .labor-content {
+    overflow: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #f8fafc;
+    padding: 12px;
+  }
+
+  .labor-summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(140px, 1fr));
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .labor-summary-item {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 7px 8px;
+  }
+
+  .labor-summary-item .k {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #64748b;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+
+  .labor-summary-item .v {
+    margin-top: 2px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .labor-table-wrap {
+    overflow: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  .labor-table {
+    min-width: 100%;
+    width: max-content;
+    table-layout: auto;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .labor-table th {
+    position: sticky;
+    top: 0;
+    background: #f1f5f9;
+    z-index: 1;
+    padding: 5px 8px;
+    font-size: 10px;
+    color: #475569;
+    text-transform: uppercase;
+    border-bottom: 1px solid #cbd5e1;
+    border-right: 1px solid #e2e8f0;
+    white-space: nowrap;
+  }
+
+  .labor-table td {
+    padding: 4px 8px;
+    border-bottom: 1px solid #eef2f7;
+    border-right: 1px solid #eef2f7;
+    font-size: 12px;
+    color: #334155;
+    white-space: nowrap;
+  }
+
+  .labor-table th:last-child, .labor-table td:last-child { border-right: none; }
+  .labor-table td.num, .labor-table th.num {
+    text-align: right;
+    width: 1%;
+    white-space: nowrap;
+  }
+  .labor-table th.name-col, .labor-table td.name-col {
+    min-width: 340px;
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .labor-table tr.total-row td { font-weight: 700; background: #f8fafc; }
+
+  .labor-formula {
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    border: 1px solid #dbeafe;
+    background: #eff6ff;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #1e3a8a;
+  }
+
+  @media (max-width: 980px) {
+    .modal.modal-large {
+      min-width: 0;
+      width: calc(100vw - 18px);
+      padding: 14px;
+    }
+    .labor-summary {
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+    }
+  }
 </style>
 </head>
 <body>
@@ -520,6 +666,17 @@
   </div>
 </div>
 
+<!-- Модальный диалог детализации трудоёмкости -->
+<div class="modal-overlay" id="modal-labor-overlay">
+  <div class="modal modal-large">
+    <h2 id="modal-labor-title">Калькуляция трудоёмкости</h2>
+    <div id="modal-labor-content" class="labor-content"></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeLaborModal()">Закрыть</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // ========== STATE ==========
 var orders  = [];
@@ -534,8 +691,9 @@ var colWidths = {
   'col-num': 30, 'col-order': 110, 'col-cross-batch': 80, 'col-status': 180,
   'col-agreement': 85, 'col-client': 120,
   'col-manager': 85, 'col-ready': 90, 'col-sp-arrival': 95, 'col-area': 60, 'col-qty': 40,
-  'col-pogon': 70, 'col-wood': 100, 'col-shpross': 120, 'col-color': 100,
+  'col-pogon': 70, 'col-labor': 100, 'col-wood': 100, 'col-shpross': 120, 'col-color': 100,
   'col-brus-enough': 110,
+  'col-notes': 340,
   'col-supply-comment': 150
 };
 var colsAutoFitted = false;
@@ -543,16 +701,18 @@ var minColWidths = {
   'col-num': 28, 'col-order': 70, 'col-cross-batch': 60, 'col-status': 80,
   'col-agreement': 60, 'col-client': 70,
   'col-manager': 60, 'col-ready': 70, 'col-sp-arrival': 70, 'col-area': 42, 'col-qty': 30,
-  'col-pogon': 50, 'col-wood': 60, 'col-shpross': 60, 'col-color': 60,
+  'col-pogon': 50, 'col-labor': 70, 'col-wood': 60, 'col-shpross': 60, 'col-color': 60,
   'col-brus-enough': 70,
+  'col-notes': 140,
   'col-supply-comment': 60
 };
 var maxColWidths = {
   'col-num': 40, 'col-order': 180, 'col-cross-batch': 150, 'col-status': 250,
   'col-agreement': 160, 'col-client': 280,
   'col-manager': 160, 'col-ready': 120, 'col-sp-arrival': 140, 'col-area': 85, 'col-qty': 55,
-  'col-pogon': 95, 'col-wood': 200, 'col-shpross': 200, 'col-color': 200,
+  'col-pogon': 95, 'col-labor': 160, 'col-wood': 200, 'col-shpross': 200, 'col-color': 200,
   'col-brus-enough': 220,
+  'col-notes': 900,
   'col-supply-comment': 300
 };
 
@@ -699,6 +859,8 @@ function render() {
 function renderBatchSection(batchNum, title, batchOrders, canDelete) {
   var sectionId   = batchNum === '' ? 'unassigned' : 'batch-' + batchNum.replace(/[^a-zA-Z0-9]/g, '_');
   var headerClass = batchNum === '' ? 'batch-header unassigned' : 'batch-header';
+  var batchLaborHours = getBatchLaborHours(batchOrders);
+  var batchLaborTotal = batchLaborHours;
   var editBtn   = canDelete
     ? '<button class="btn btn-sm" style="margin-right:4px;" onclick="event.stopPropagation();editBatch(\'' + escapeAttr(batchNum) + '\')">Изменить</button>'
     : '';
@@ -717,6 +879,7 @@ function renderBatchSection(batchNum, title, batchOrders, canDelete) {
   html += '<span class="arrow" id="arrow-' + sectionId + '">&#9660;</span> ';
   html += title;
   html += ' <span class="batch-count">(' + batchOrders.length + ')</span>';
+  html += ' <span class="batch-labor">Трудоемкость партии: <a class="batch-labor-link" onclick="event.stopPropagation();showBatchLaborDetails(\'' + escapeAttr(batchNum) + '\')">' + formatDecimalFixed(batchLaborTotal) + '</a></span>';
   html += '</span>';
   html += '<div style="display:flex;gap:4px;">' + editBtn + deleteBtn + '</div>';
   html += '</div>';
@@ -731,6 +894,7 @@ function renderBatchSection(batchNum, title, batchOrders, canDelete) {
     html += '<table data-batch-label="' + escapeAttr(tableLabel) + '">';
     html += '<thead><tr>';
     html += '<th class="col-num">#</th>';
+    html += '<th class="col-labor">Трудоемкость</th>';
     html += '<th class="col-order">Заказ</th>';
     html += '<th class="col-cross-batch">' + (currentMode === 1 ? 'Малярка' : 'Столярка') + '</th>';
     html += '<th class="col-status">Состояние</th>';
@@ -746,6 +910,7 @@ function renderBatchSection(batchNum, title, batchOrders, canDelete) {
     html += '<th class="col-shpross">Шпросс</th>';
     html += '<th class="col-color">Цвет</th>';
     html += '<th class="col-brus-enough">Наличие бруса</th>';
+    html += '<th class="col-notes">Примечания</th>';
     html += '<th class="col-supply-comment">Прим. снабжения</th>';
     html += '</tr></thead><tbody>';
     batchOrders.forEach(function(order, idx) {
@@ -790,6 +955,7 @@ function renderOrderRow(order, num) {
 
   var html = '<tr class="order-row" draggable="true" data-order-id="' + order.id + '">';
   html += '<td class="col-num">' + num + '</td>';
+  html += '<td class="col-labor"><a class="labor-link" onclick="showLaborDetails(' + order.id + '); return false;">' + formatDecimalFixed(order.laborTotal) + '</a></td>';
   html += '<td class="col-order"><a class="order-link" onclick="openOrder(' + order.id + ')">' + escapeHtml(order.orderNo) + '</a></td>';
   var crossBatch = currentMode === 1 ? (order.paintBatch || '') : (order.carpBatch || '');
   html += '<td class="col-cross-batch">' + escapeHtml(crossBatch) + '</td>';
@@ -812,6 +978,7 @@ function renderOrderRow(order, num) {
   html += '<td class="col-shpross" title="' + escapeAttr(order.shprosse || '') + '">' + escapeHtml(order.shprosse || '') + '</td>';
   html += '<td class="col-color" title="' + escapeAttr(order.colors || '') + '">' + escapeHtml(order.colors || '') + '</td>';
   html += '<td class="col-brus-enough" title="' + escapeAttr(order.brusEnough || '') + '">' + escapeHtml(order.brusEnough || '') + '</td>';
+  html += '<td class="col-notes" title="' + escapeAttr(order.notes || '') + '">' + escapeHtml(order.notes || '') + '</td>';
   html += '<td class="col-supply-comment" title="' + escapeAttr(order.commentSupply || '') + '">' + escapeHtml(order.commentSupply || '') + '</td>';
   html += '</tr>';
   return html;
@@ -1107,6 +1274,126 @@ function openCustomer(customerId) {
   tryOpen(0);
 }
 
+function openLaborModal(title, contentHtml) {
+  document.getElementById('modal-labor-title').textContent = title;
+  document.getElementById('modal-labor-content').innerHTML = contentHtml;
+  document.getElementById('modal-labor-overlay').classList.add('show');
+}
+
+function closeLaborModal() {
+  document.getElementById('modal-labor-overlay').classList.remove('show');
+}
+
+function showLaborDetails(orderId) {
+  var order = findOrder(orderId);
+  if (!order) return;
+
+  var explain = parseLaborExplain(order);
+  if (!explain) {
+    openLaborModal(
+      'Калькуляция трудоёмкости — заказ ' + (order.orderNo || ''),
+      '<div class="error-msg" style="margin:0;">Нет данных детализации по этому заказу.</div>'
+    );
+    return;
+  }
+
+  var items = explain.items || [];
+  var calcQtySum = 0;
+  items.forEach(function(item) {
+    var q = parseFloat(item.qty);
+    if (isFinite(q)) calcQtySum += q;
+  });
+  var summary = '';
+  summary += '<div class="labor-summary">';
+  summary += '<div class="labor-summary-item"><div class="k">Ср. кв.м / изделие</div><div class="v">' + formatDecimalFixed(explain.avgAreaPerItem) + '</div></div>';
+  summary += '<div class="labor-summary-item"><div class="k">Изделий</div><div class="v">' + formatDecimalFixed(explain.qtyIzd) + '</div></div>';
+  summary += '<div class="labor-summary-item"><div class="k">Кол-во в расчёте</div><div class="v">' + formatDecimalFixed(calcQtySum) + '</div></div>';
+  summary += '<div class="labor-summary-item"><div class="k">Труд. по изделиям</div><div class="v">' + formatDecimalFixed(explain.laborByUnits) + '</div></div>';
+  summary += '<div class="labor-summary-item"><div class="k">Длина погонажа</div><div class="v">' + formatDecimalFixed(explain.lengthPogon) + '</div></div>';
+  summary += '<div class="labor-summary-item"><div class="k">Погонаж заказа</div><div class="v">' + formatDecimalFixed(explain.laborByPogon) + '</div></div>';
+  summary += '<div class="labor-summary-item"><div class="k">Итого трудоёмкость</div><div class="v">' + formatDecimalFixed(explain.laborTotal) + '</div></div>';
+  summary += '<div class="labor-summary-item"><div class="k">Заказ</div><div class="v">' + escapeHtml(explain.orderNo || order.orderNo || '') + '</div></div>';
+  summary += '</div>';
+
+  var rowsHtml = '<div class="labor-table-wrap"><table class="labor-table"><thead><tr>' +
+    '<th class="name-col">Наименование</th>' +
+    '<th class="num">Площадь, кв.м.</th>' +
+    '<th class="num">Количество</th>' +
+    '<th class="num">Коэф. ср.кв.м</th>' +
+    '<th class="num">Коэф. 2-ст покраска</th>' +
+    '<th class="num">Коэф. шпросы</th>' +
+    '<th class="num">Итог</th>' +
+    '</tr></thead><tbody>';
+
+  var sumRows = 0;
+  items.forEach(function(item) {
+    var rowLabor = parseFloat(item.labor);
+    if (!isFinite(rowLabor)) rowLabor = 0;
+    sumRows += rowLabor;
+    rowsHtml += '<tr>' +
+      '<td class="name-col">' + escapeHtml(item.name || '') + '</td>' +
+      '<td class="num">' + formatDecimalFixed(item.areaM2) + '</td>' +
+      '<td class="num">' + formatDecimalFixed(item.qty) + '</td>' +
+      '<td class="num">' + formatDecimalFixed(item.k07) + '</td>' +
+      '<td class="num">' + formatDecimalFixed(item.kTwoSide) + '</td>' +
+      '<td class="num">' + formatDecimalFixed(item.kCross) + '</td>' +
+      '<td class="num">' + formatDecimalFixed(item.labor) + '</td>' +
+      '</tr>';
+  });
+
+  rowsHtml += '<tr class="total-row">' +
+    '<td colspan="6">Сумма по изделиям</td>' +
+    '<td class="num">' + formatDecimalFixed(sumRows) + '</td>' +
+    '</tr>';
+  rowsHtml += '<tr class="total-row">' +
+    '<td colspan="6">Погонаж заказа (без коэффициентов)</td>' +
+    '<td class="num">' + formatDecimalFixed(explain.laborByPogon) + '</td>' +
+    '</tr>';
+  rowsHtml += '<tr class="total-row">' +
+    '<td colspan="6">Итого трудоёмкость заказа ((изделия + погонаж) / 8)</td>' +
+    '<td class="num">' + formatDecimalFixed(explain.laborTotal) + '</td>' +
+    '</tr>';
+  rowsHtml += '</tbody></table></div>';
+
+  openLaborModal(
+    'Калькуляция трудоёмкости — заказ ' + (order.orderNo || ''),
+    summary + rowsHtml
+  );
+}
+
+function showBatchLaborDetails(batchNum) {
+  var batchOrders = orders.filter(function(o) {
+    return getOrderBatch(o) === batchNum;
+  });
+  var batchLabel = batchNum === '' ? 'Нераспределённые заказы' : ('Партия ' + batchNum);
+  var sumHours = getBatchLaborHours(batchOrders);
+  var batchLabor = sumHours;
+
+  var html = '<div class="labor-summary">';
+  html += '<div class="labor-summary-item"><div class="k">Трудоёмкость партии</div><div class="v">' + formatDecimalFixed(batchLabor) + '</div></div>';
+  html += '<div class="labor-summary-item"><div class="k">Заказов в партии</div><div class="v">' + batchOrders.length + '</div></div>';
+  html += '</div>';
+
+  html += '<div class="labor-table-wrap"><table class="labor-table"><thead><tr>' +
+    '<th>Заказ</th>' +
+    '<th>Клиент</th>' +
+    '<th class="num">Трудоёмкость</th>' +
+    '</tr></thead><tbody>';
+
+  batchOrders.forEach(function(order) {
+    html += '<tr>' +
+      '<td>' + escapeHtml(order.orderNo || '') + '</td>' +
+      '<td>' + escapeHtml(order.customerName || '') + '</td>' +
+      '<td class="num"><a class="labor-link" onclick="showLaborDetails(' + order.id + '); return false;">' + formatDecimalFixed(order.laborTotal) + '</a></td>' +
+      '</tr>';
+  });
+
+  html += '<tr class="total-row"><td colspan="2">Трудоёмкость партии</td><td class="num">' + formatDecimalFixed(batchLabor) + '</td></tr>';
+  html += '</tbody></table></div>';
+
+  openLaborModal('Калькуляция партии — ' + batchLabel, html);
+}
+
 // ========== HELPERS ==========
 
 function findOrder(id) {
@@ -1125,6 +1412,58 @@ function formatDecimal(value) {
   var n = parseFloat(value);
   if (!n || n <= 0) return '';
   return n.toFixed(2).replace(/\.?0+$/, '');
+}
+
+function formatDecimalFixed(value) {
+  var n = parseFloat(value);
+  if (!isFinite(n)) n = 0;
+  return n.toFixed(2);
+}
+
+function getOrderLaborTotal(order) {
+  var n = parseFloat(order && order.laborTotal);
+  return isFinite(n) ? n : 0;
+}
+
+function getBatchLaborHours(batchOrders) {
+  var sum = 0;
+  for (var i = 0; i < batchOrders.length; i++) {
+    sum += getOrderLaborTotal(batchOrders[i]);
+  }
+  return sum;
+}
+
+function parseLaborExplain(order) {
+  if (!order) return null;
+  var raw = order.laborExplain;
+  if (!raw) return null;
+
+  var explain = null;
+  if (typeof raw === 'string') {
+    try { explain = JSON.parse(raw); } catch (e) { explain = null; }
+  } else if (typeof raw === 'object') {
+    explain = raw;
+  }
+  if (!explain) return null;
+
+  if (typeof order.laborItems === 'string') {
+    try {
+      explain.items = JSON.parse(order.laborItems);
+    } catch (e) {
+      explain.items = [];
+    }
+  } else if (typeof explain.itemsJson === 'string') {
+    try {
+      explain.items = JSON.parse(explain.itemsJson);
+    } catch (e) {
+      explain.items = [];
+    }
+  } else if (!Array.isArray(explain.items)) {
+    explain.items = [];
+  }
+
+  if (!Array.isArray(explain.items)) explain.items = [];
+  return explain;
 }
 
 var RU_HOLIDAYS = {
@@ -1217,8 +1556,11 @@ document.getElementById('modal-overlay').addEventListener('click', function(e) {
 document.getElementById('modal-delete-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeDeleteModal();
 });
+document.getElementById('modal-labor-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeLaborModal();
+});
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') { closeModal(); closeDeleteModal(); }
+  if (e.key === 'Escape') { closeModal(); closeDeleteModal(); closeLaborModal(); }
   if (e.key === 'Enter' && document.getElementById('modal-overlay').classList.contains('show')) {
     confirmModal();
   }
@@ -1247,12 +1589,12 @@ function applyColWidths() {
   css += 'td.col-num { background:#fff !important; }\n';
   css += 'tr.order-row:hover td.col-num { background:#f8fafc !important; }\n';
   var numW = colWidths['col-num'] || 30;
-  css += 'th.col-order, td.col-order { position:sticky; left:' + numW + 'px; z-index:2; }\n';
-  css += 'th.col-order { background:#f8fafc !important; }\n';
-  css += 'td.col-order { background:#fff !important; }\n';
-  css += 'tr.order-row:hover td.col-order { background:#f8fafc !important; }\n';
-  // Right border on col-order via ::after
-  css += 'th.col-order::after, td.col-order::after { content:""; position:absolute; right:0; top:0; bottom:0; width:1px; background:#e2e8f0; pointer-events:none; }\n';
+  css += 'th.col-labor, td.col-labor { position:sticky; left:' + numW + 'px; z-index:2; }\n';
+  css += 'th.col-labor { background:#f8fafc !important; }\n';
+  css += 'td.col-labor { background:#fff !important; }\n';
+  css += 'tr.order-row:hover td.col-labor { background:#f8fafc !important; }\n';
+  // Right border on second sticky column via ::after
+  css += 'th.col-labor::after, td.col-labor::after { content:""; position:absolute; right:0; top:0; bottom:0; width:1px; background:#e2e8f0; pointer-events:none; }\n';
   // Sticky batch headers (fixed horizontally)
   var cont = document.getElementById('content');
   var visW = cont ? cont.clientWidth : 0;
@@ -1417,6 +1759,7 @@ function initBottomScrollbar() {
 
 var FLOAT_COLS = [
   {cls:'col-num',label:'#',r:false},
+  {cls:'col-labor',label:'\u0422\u0440\u0443\u0434\u043e\u0451\u043c\u043a\u043e\u0441\u0442\u044c',r:true},
   {cls:'col-order',label:'\u0417\u0430\u043a\u0430\u0437',r:false},
   {cls:'col-cross-batch',label:'',r:false},
   {cls:'col-status',label:'\u0421\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435',r:false},
@@ -1432,6 +1775,7 @@ var FLOAT_COLS = [
   {cls:'col-shpross',label:'\u0428\u043f\u0440\u043e\u0441\u0441',r:false},
   {cls:'col-color',label:'\u0426\u0432\u0435\u0442',r:false},
   {cls:'col-brus-enough',label:'\u041d\u0430\u043b\u0438\u0447\u0438\u0435 \u0431\u0440\u0443\u0441\u0430',r:false},
+  {cls:'col-notes',label:'\u041f\u0440\u0438\u043c\u0435\u0447\u0430\u043d\u0438\u044f',r:false},
   {cls:'col-supply-comment',label:'\u041f\u0440\u0438\u043c. \u0441\u043d\u0430\u0431\u0436\u0435\u043d\u0438\u044f',r:false}
 ];
 
