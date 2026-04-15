@@ -687,6 +687,7 @@ var draggedBatchNum = null;
 var editingBatchNumber = null; // null = добавление, string = редактирование
 var pendingDeleteBatch = null;
 var autoRefreshTimer = null;
+var scrollToBottomOnOpen = true;
 var colWidths = {
   'col-num': 30, 'col-order': 110, 'col-cross-batch': 80, 'col-status': 180,
   'col-agreement': 85, 'col-client': 120,
@@ -709,11 +710,11 @@ var minColWidths = {
 var maxColWidths = {
   'col-num': 40, 'col-order': 180, 'col-cross-batch': 150, 'col-status': 250,
   'col-agreement': 160, 'col-client': 280,
-  'col-manager': 160, 'col-ready': 120, 'col-sp-arrival': 140, 'col-area': 85, 'col-qty': 55,
-  'col-pogon': 95, 'col-labor': 160, 'col-wood': 200, 'col-shpross': 200, 'col-color': 200,
-  'col-brus-enough': 220,
+  'col-manager': 120, 'col-ready': 105, 'col-sp-arrival': 120, 'col-area': 70, 'col-qty': 46,
+  'col-pogon': 80, 'col-labor': 120, 'col-wood': 170, 'col-shpross': 180, 'col-color': 170,
+  'col-brus-enough': 130,
   'col-notes': 900,
-  'col-supply-comment': 300
+  'col-supply-comment': 190
 };
 
 // ========== API ==========
@@ -751,6 +752,12 @@ function loadData() {
     .then(function(result) {
       batches = JSON.parse(result.data);
       render();
+      if (scrollToBottomOnOpen) {
+        scrollToBottomOnOpen = false;
+        // Run twice: immediately after first paint and after layout settles.
+        setTimeout(scrollPlanToBottom, 0);
+        setTimeout(scrollPlanToBottom, 60);
+      }
       autoRefreshTimer = setTimeout(silentRefresh, 5000);
     })
     .catch(function(err) {
@@ -894,22 +901,22 @@ function renderBatchSection(batchNum, title, batchOrders, canDelete) {
     html += '<table data-batch-label="' + escapeAttr(tableLabel) + '">';
     html += '<thead><tr>';
     html += '<th class="col-num">#</th>';
-    html += '<th class="col-labor">Трудоемкость</th>';
     html += '<th class="col-order">Заказ</th>';
+    html += '<th class="col-labor">Трудоемкость</th>';
     html += '<th class="col-cross-batch">' + (currentMode === 1 ? 'Малярка' : 'Столярка') + '</th>';
     html += '<th class="col-status">Состояние</th>';
     html += '<th class="col-agreement">Договор</th>';
     html += '<th class="col-client">Клиент</th>';
     html += '<th class="col-manager">Менеджер</th>';
-    html += '<th class="col-ready">Дата готовности</th>';
-    html += '<th class="col-sp-arrival">Дата прихода СП</th>';
+    html += '<th class="col-ready">Готовность</th>';
+    html += '<th class="col-sp-arrival">Приход СП</th>';
     html += '<th class="col-area">Кв.м.</th>';
     html += '<th class="col-qty">Шт</th>';
     html += '<th class="col-pogon">Погонаж</th>';
     html += '<th class="col-wood">Порода</th>';
     html += '<th class="col-shpross">Шпросс</th>';
     html += '<th class="col-color">Цвет</th>';
-    html += '<th class="col-brus-enough">Наличие бруса</th>';
+    html += '<th class="col-brus-enough">Нал. бруса</th>';
     html += '<th class="col-notes">Примечания</th>';
     html += '<th class="col-supply-comment">Прим. снабжения</th>';
     html += '</tr></thead><tbody>';
@@ -955,8 +962,8 @@ function renderOrderRow(order, num) {
 
   var html = '<tr class="order-row" draggable="true" data-order-id="' + order.id + '">';
   html += '<td class="col-num">' + num + '</td>';
-  html += '<td class="col-labor"><a class="labor-link" onclick="showLaborDetails(' + order.id + '); return false;">' + formatDecimalFixed(order.laborTotal) + '</a></td>';
   html += '<td class="col-order"><a class="order-link" onclick="openOrder(' + order.id + ')">' + escapeHtml(order.orderNo) + '</a></td>';
+  html += '<td class="col-labor"><a class="labor-link" onclick="showLaborDetails(' + order.id + '); return false;">' + formatDecimalFixed(order.laborTotal) + '</a></td>';
   var crossBatch = currentMode === 1 ? (order.paintBatch || '') : (order.carpBatch || '');
   html += '<td class="col-cross-batch">' + escapeHtml(crossBatch) + '</td>';
   html += '<td class="col-status"><div class="status-cell">' + renderProgressDots(order.stateRecIdx) + '<span class="status-badge ' + statusClass + '">' + escapeHtml(order.stateName || '') + '</span></div></td>';
@@ -1549,6 +1556,16 @@ function showError(msg) {
     '<div class="error-msg">' + escapeHtml(msg) + '</div>';
 }
 
+function scrollPlanToBottom() {
+  try {
+    var h = Math.max(
+      document.body ? document.body.scrollHeight : 0,
+      document.documentElement ? document.documentElement.scrollHeight : 0
+    );
+    window.scrollTo(0, h);
+  } catch(e) {}
+}
+
 // ========== MODAL KEYBOARD ==========
 document.getElementById('modal-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
@@ -1582,19 +1599,19 @@ function applyColWidths() {
     total += colWidths[cls];
   }
   css += '.batch-section { min-width: ' + total + 'px; }\n';
-  css += 'table { min-width: ' + total + 'px; }\n';
+  css += '.batch-section table[data-batch-label] { width: ' + total + 'px !important; min-width: ' + total + 'px !important; }\n';
   // Frozen columns
   css += 'th.col-num, td.col-num { position:sticky; left:0; z-index:3; }\n';
   css += 'th.col-num { background:#f8fafc !important; }\n';
   css += 'td.col-num { background:#fff !important; }\n';
   css += 'tr.order-row:hover td.col-num { background:#f8fafc !important; }\n';
   var numW = colWidths['col-num'] || 30;
-  css += 'th.col-labor, td.col-labor { position:sticky; left:' + numW + 'px; z-index:2; }\n';
-  css += 'th.col-labor { background:#f8fafc !important; }\n';
-  css += 'td.col-labor { background:#fff !important; }\n';
-  css += 'tr.order-row:hover td.col-labor { background:#f8fafc !important; }\n';
+  css += 'th.col-order, td.col-order { position:sticky; left:' + numW + 'px; z-index:2; }\n';
+  css += 'th.col-order { background:#f8fafc !important; }\n';
+  css += 'td.col-order { background:#fff !important; }\n';
+  css += 'tr.order-row:hover td.col-order { background:#f8fafc !important; }\n';
   // Right border on second sticky column via ::after
-  css += 'th.col-labor::after, td.col-labor::after { content:""; position:absolute; right:0; top:0; bottom:0; width:1px; background:#e2e8f0; pointer-events:none; }\n';
+  css += 'th.col-order::after, td.col-order::after { content:""; position:absolute; right:0; top:0; bottom:0; width:1px; background:#e2e8f0; pointer-events:none; }\n';
   // Sticky batch headers (fixed horizontally)
   var cont = document.getElementById('content');
   var visW = cont ? cont.clientWidth : 0;
@@ -1650,24 +1667,29 @@ function autoFitColumns() {
   if (available <= 0) { applyColWidths(); return; }
 
   try {
-    var measured = {};
-    for (var k in colWidths) measured[k] = 0;
+    var headerMeasured = {};
+    var cellMeasured = {};
+    for (var k in colWidths) {
+      headerMeasured[k] = 0;
+      cellMeasured[k] = 0;
+    }
 
     // Single reusable probe — textContent only, fast
     var probe = document.createElement('span');
     probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;';
     document.body.appendChild(probe);
 
-    // 1) Measure headers
+    // 1) Measure headers (defines minimum readable width)
     probe.style.font = '700 10px Segoe UI,Tahoma,sans-serif';
     probe.style.textTransform = 'uppercase';
     probe.style.letterSpacing = '0.5px';
     document.querySelectorAll('table thead th').forEach(function(th) {
       var cls = th.className.split(' ')[0];
-      if (!(cls in measured)) return;
+      if (!(cls in headerMeasured)) return;
       probe.textContent = th.textContent;
-      var w = probe.offsetWidth + 30;
-      if (w > measured[cls]) measured[cls] = w;
+      // text + left/right padding + small reserve for resize handle
+      var w = probe.offsetWidth + 22;
+      if (w > headerMeasured[cls]) headerMeasured[cls] = w;
     });
 
     // 2) Measure cells — textContent, limit 80 per column
@@ -1679,37 +1701,27 @@ function autoFitColumns() {
 
     document.querySelectorAll('table tbody td').forEach(function(td) {
       var cls = td.className.split(' ')[0];
-      if (!(cls in measured)) return;
+      if (!(cls in cellMeasured)) return;
       if (counts[cls] >= 80) return;
       counts[cls]++;
       probe.textContent = td.textContent;
-      var w = probe.offsetWidth + 20;
+      var w = probe.offsetWidth + 18;
       // col-status: add width for 7 dots + gaps (~56px)
       if (cls === 'col-status') w += 56;
-      if (w > measured[cls]) measured[cls] = w;
+      if (w > cellMeasured[cls]) cellMeasured[cls] = w;
     });
 
     document.body.removeChild(probe);
 
-    // Clamp to min/max
+    // Final width: max(header-min, cell-fit) with hard max cap.
+    // This keeps headers visually even and prevents oversized empty columns.
     for (var c in colWidths) {
-      var mw = measured[c] || colWidths[c];
-      var mn = minColWidths[c] || 28;
+      var headerMin = headerMeasured[c] || 0;
+      var cellNeed = cellMeasured[c] || 0;
+      var mn = Math.max(minColWidths[c] || 28, headerMin);
       var mx = maxColWidths[c] || 300;
-      colWidths[c] = Math.min(Math.max(mw, mn), mx);
-    }
-
-    // Distribute remaining space if total < available
-    var total = 0;
-    for (var c in colWidths) total += colWidths[c];
-    if (total < available) {
-      var extra = available - total;
-      var totalOrig = total;
-      for (var c in colWidths) {
-        var mx = maxColWidths[c] || 300;
-        var add = Math.round(extra * (colWidths[c] / totalOrig));
-        colWidths[c] = Math.min(colWidths[c] + add, mx);
-      }
+      var need = Math.max(mn, cellNeed);
+      colWidths[c] = Math.min(need, mx);
     }
   } catch(e) {
     // fallback — keep default colWidths
@@ -1759,22 +1771,22 @@ function initBottomScrollbar() {
 
 var FLOAT_COLS = [
   {cls:'col-num',label:'#',r:false},
-  {cls:'col-labor',label:'\u0422\u0440\u0443\u0434\u043e\u0451\u043c\u043a\u043e\u0441\u0442\u044c',r:true},
   {cls:'col-order',label:'\u0417\u0430\u043a\u0430\u0437',r:false},
+  {cls:'col-labor',label:'\u0422\u0440\u0443\u0434\u043e\u0451\u043c\u043a\u043e\u0441\u0442\u044c',r:true},
   {cls:'col-cross-batch',label:'',r:false},
   {cls:'col-status',label:'\u0421\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435',r:false},
   {cls:'col-agreement',label:'\u0414\u043e\u0433\u043e\u0432\u043e\u0440',r:false},
   {cls:'col-client',label:'\u041a\u043b\u0438\u0435\u043d\u0442',r:false},
   {cls:'col-manager',label:'\u041c\u0435\u043d\u0435\u0434\u0436\u0435\u0440',r:false},
-  {cls:'col-ready',label:'\u0414\u0430\u0442\u0430 \u0433\u043e\u0442\u043e\u0432\u043d\u043e\u0441\u0442\u0438',r:false},
-  {cls:'col-sp-arrival',label:'\u0414\u0430\u0442\u0430 \u043f\u0440\u0438\u0445\u043e\u0434\u0430 \u0421\u041f',r:false},
+  {cls:'col-ready',label:'\u0413\u043e\u0442\u043e\u0432\u043d\u043e\u0441\u0442\u044c',r:false},
+  {cls:'col-sp-arrival',label:'\u041f\u0440\u0438\u0445\u043e\u0434 \u0421\u041f',r:false},
   {cls:'col-area',label:'\u041a\u0432.\u043c.',r:true},
   {cls:'col-qty',label:'\u0428\u0442',r:true},
   {cls:'col-pogon',label:'\u041f\u043e\u0433\u043e\u043d\u0430\u0436',r:true},
   {cls:'col-wood',label:'\u041f\u043e\u0440\u043e\u0434\u0430',r:false},
   {cls:'col-shpross',label:'\u0428\u043f\u0440\u043e\u0441\u0441',r:false},
   {cls:'col-color',label:'\u0426\u0432\u0435\u0442',r:false},
-  {cls:'col-brus-enough',label:'\u041d\u0430\u043b\u0438\u0447\u0438\u0435 \u0431\u0440\u0443\u0441\u0430',r:false},
+  {cls:'col-brus-enough',label:'\u041d\u0430\u043b. \u0431\u0440\u0443\u0441\u0430',r:false},
   {cls:'col-notes',label:'\u041f\u0440\u0438\u043c\u0435\u0447\u0430\u043d\u0438\u044f',r:false},
   {cls:'col-supply-comment',label:'\u041f\u0440\u0438\u043c. \u0441\u043d\u0430\u0431\u0436\u0435\u043d\u0438\u044f',r:false}
 ];
