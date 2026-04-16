@@ -247,7 +247,13 @@ var
   u: string;
 begin
   u := UpperCase(formulaName);
-  if (Pos('WARM', u) > 0) or (Pos('TGI', u) > 0) or (Pos('CH', u) > 0) then
+  if (Pos('WARM', u) > 0) or
+     (Pos('TGI', u) > 0) or
+     (Pos('TPS', u) > 0) or
+     (Pos('CHROMATECH', u) > 0) or
+     (Pos('SWISS', u) > 0) or
+     (Pos('THERM', u) > 0) or
+     (Pos(' CH ', ' ' + u + ' ') > 0) then
     Result := 1
   else
     Result := 0;
@@ -256,6 +262,163 @@ end;
 function IsDigitChar(ch: string): Integer;
 begin
   if (ch >= '0') and (ch <= '9') then Result := 1 else Result := 0;
+end;
+
+function PosFrom(substr, source: string; startPos: Integer): Integer;
+var
+  i, maxPos: Integer;
+begin
+  Result := 0;
+  if startPos < 1 then startPos := 1;
+  if (substr = '') or (source = '') then Exit;
+  maxPos := Length(source) - Length(substr) + 1;
+  if maxPos < startPos then Exit;
+  for i := startPos to maxPos do
+    if Copy(source, i, Length(substr)) = substr then
+    begin
+      Result := i;
+      Exit;
+    end;
+end;
+
+function IsAllDigits(value: string): Integer;
+var
+  i: Integer;
+begin
+  if value = '' then
+  begin
+    Result := 0;
+    Exit;
+  end;
+  for i := 1 to Length(value) do
+    if IsDigitChar(Copy(value, i, 1)) = 0 then
+    begin
+      Result := 0;
+      Exit;
+    end;
+  Result := 1;
+end;
+
+function ExtractLast4Digits(sourceText: string): string;
+var
+  i: Integer;
+  digits: string;
+begin
+  digits := '';
+  for i := 1 to Length(sourceText) do
+    if IsDigitChar(Copy(sourceText, i, 1)) = 1 then
+      digits := digits + Copy(sourceText, i, 1);
+
+  if Length(digits) >= 4 then
+    Result := Copy(digits, Length(digits) - 3, 4)
+  else
+    Result := '';
+end;
+
+function ExtractRalFromSpacerCode(spaceCode: string): string;
+var
+  p1, p2: Integer;
+  chunk: string;
+begin
+  spaceCode := UpperCase(Trim(spaceCode));
+  Result := '';
+  p1 := Pos('_', spaceCode);
+  if p1 <= 0 then Exit;
+  p2 := PosFrom('_', spaceCode, p1 + 1);
+  if p2 <= p1 then Exit;
+  chunk := Copy(spaceCode, p1 + 1, p2 - p1 - 1);
+  if (Length(chunk) = 4) and (IsAllDigits(chunk) = 1) then
+    Result := chunk;
+end;
+
+procedure ParseWarmSpacerFormula(
+  formulaJson: string;
+  gpName: string;
+  spaceNameByCode: IcmDictionary;
+  var hasWarm: Integer;
+  var ralColors: string
+);
+var
+  u, code, spacerName, ralCode, gpUpper: string;
+  p, q, keyPos, colonPos, q1, q2, searchPos: Integer;
+  seen: IcmDictionary;
+begin
+  hasWarm := 0;
+  ralColors := '';
+  seen := CreateDictionary;
+  u := UpperCase(formulaJson);
+  searchPos := 1;
+
+  while True do
+  begin
+    keyPos := PosFrom('"SPACE_CODE"', u, searchPos);
+    if keyPos = 0 then Break;
+
+    colonPos := PosFrom(':', u, keyPos + 12);
+    if colonPos = 0 then Break;
+    q1 := PosFrom('"', u, colonPos + 1);
+    if q1 = 0 then Break;
+    q2 := PosFrom('"', u, q1 + 1);
+    if q2 = 0 then Break;
+
+    code := Copy(u, q1 + 1, q2 - q1 - 1);
+    searchPos := q2 + 1;
+
+    code := Trim(code);
+    if code = '' then Continue;
+
+    if Copy(code, 1, 3) <> 'AL_' then
+    begin
+      hasWarm := 1;
+      spacerName := '';
+      if spaceNameByCode.Exists(code) then
+        spacerName := VarToStr(spaceNameByCode[code]);
+
+      ralCode := ExtractLast4Digits(spacerName);
+      if ralCode = '' then
+        ralCode := ExtractRalFromSpacerCode(code);
+
+      if ralCode <> '' then
+        AddUniqueToCsv(ralColors, seen, 'WARM_RAL', 'RAL ' + ralCode);
+    end;
+  end;
+
+  // Extra fallback: some formulas may not parse cleanly as JSON, but still contain CH_####
+  p := PosFrom('CH_', u, 1);
+  while p > 0 do
+  begin
+    q := p + 3;
+    if (q + 3 <= Length(u)) and
+       (IsDigitChar(Copy(u, q, 1)) = 1) and
+       (IsDigitChar(Copy(u, q + 1, 1)) = 1) and
+       (IsDigitChar(Copy(u, q + 2, 1)) = 1) and
+       (IsDigitChar(Copy(u, q + 3, 1)) = 1) then
+    begin
+      hasWarm := 1;
+      ralCode := Copy(u, q, 4);
+      AddUniqueToCsv(ralColors, seen, 'WARM_RAL', 'RAL ' + ralCode);
+    end;
+    p := PosFrom('CH_', u, p + 1);
+  end;
+
+  // Fallback: if JSON parsing did not find space_code, try GPNAME text (e.g. "Ch 9016")
+  gpUpper := UpperCase(gpName);
+  p := PosFrom('CH ', gpUpper, 1);
+  while p > 0 do
+  begin
+    q := p + 3;
+    if (q + 3 <= Length(gpUpper)) and
+       (IsDigitChar(Copy(gpUpper, q, 1)) = 1) and
+       (IsDigitChar(Copy(gpUpper, q + 1, 1)) = 1) and
+       (IsDigitChar(Copy(gpUpper, q + 2, 1)) = 1) and
+       (IsDigitChar(Copy(gpUpper, q + 3, 1)) = 1) then
+    begin
+      hasWarm := 1;
+      ralCode := Copy(gpUpper, q, 4);
+      AddUniqueToCsv(ralColors, seen, 'WARM_RAL', 'RAL ' + ralCode);
+    end;
+    p := PosFrom('CH ', gpUpper, p + 1);
+  end;
 end;
 
 function ExtractRalLikeCodes(sourceText: string): string;
@@ -572,9 +735,10 @@ begin
 end;
 
 var
-  records, unitRecs, warmRecs, itemTypeRecs, laborRecs: IcmDictionaryList;
-  srcRec, unitRec, outRec, noteRec, laborRec, laborRowRec, laborExplainRec: IcmDictionary;
+  records, unitRecs, warmRecs, itemTypeRecs, laborRecs, spacerRecs: IcmDictionaryList;
+  srcRec, unitRec, outRec, noteRec, laborRec, laborRowRec, laborExplainRec, spacerRec: IcmDictionary;
   woodByOrder, colorByOrder, shprossByOrder: IcmDictionary;
+  spaceNameByCode: IcmDictionary;
   seenWood, seenColor, seenShpross: IcmDictionary;
   noteTemperedByOrder, noteDaByOrder, noteRaskByOrder: IcmDictionary;
   noteItalianByOrder, noteBroshByOrder, noteWarmByOrder: IcmDictionary;
@@ -590,7 +754,8 @@ var
   orderIdsCsv, orderKey: string;
   woodVal, colorIn, colorOut, rowsJson, itemsJson, laborExplainJson: string;
   itemName, unitProductName, unitName: string;
-  shprossVal, notesVal, warmFormula, warmColors, itemTypeCode: string;
+  shprossVal, notesVal, warmFormula, warmFormulaJson, warmColors, spacerCode, spacerName, itemTypeCode: string;
+  warmHas: Integer;
   areaIzd, qtyIzd, avgAreaPerItem, lengthPogon, laborByPogon, laborByUnits, laborTotal: Double;
   unitAreaM2, baseLabor, k07, kTwoSide, kCross, k2, kTotal, unitLabor: Double;
   carpUfId, paintUfId, brusEnoughUfId, glassProductTypeId: Integer;
@@ -685,6 +850,23 @@ begin
   seenRaskColors := CreateDictionary;
   seenWarmColors := CreateDictionary;
   seenMsColors := CreateDictionary;
+  spaceNameByCode := CreateDictionary;
+
+  spacerRecs := QueryRecordList(
+    'SELECT UPPER(TRIM(CODE)) AS CODE, TRIM(NAME) AS NAME ' +
+    'FROM R_GLASS_SPACES ' +
+    'WHERE DELETED = 0',
+    MakeDictionary([]),
+    ''
+  );
+  for i := 0 to spacerRecs.Count - 1 do
+  begin
+    spacerRec := spacerRecs.Items[i];
+    spacerCode := Trim(VarToStr(spacerRec['CODE']));
+    spacerName := Trim(VarToStr(spacerRec['NAME']));
+    if spacerCode <> '' then
+      spaceNameByCode.Add(spacerCode, spacerName);
+  end;
 
   orderIdsCsv := '';
   for i := 0 to records.Count - 1 do
@@ -751,12 +933,12 @@ begin
 
     // Тёплая рамка: анализ формулы стеклопакета (любая дистанционная рамка не AL)
     warmRecs := QueryRecordList(
-      'SELECT ou.ORDERID, COALESCE(gp.FORMULANAME, '''') AS FORMULANAME ' +
+      'SELECT ou.ORDERID, COALESCE(ou.GPNAME, gp.FORMULANAME, '''') AS FORMULANAME, ' +
+      '  COALESCE(CAST(ou.GPFORMULA AS VARCHAR(4000)), CAST(gp.FORMULA AS VARCHAR(4000)), '''') AS FORMULA_JSON ' +
       'FROM ORDERS_UNITS ou ' +
-      'JOIN GPACKETTYPES gp ON gp.GPTYPEID = ou.GPTYPEID ' +
+      'LEFT JOIN GPACKETTYPES gp ON gp.GPTYPEID = ou.GPTYPEID ' +
       'WHERE ou.ORDERID IN (' + orderIdsCsv + ') ' +
-      '  AND ou.PRODUCTTYPEID = 2 ' +
-      '  AND ou.GPTYPEID IS NOT NULL',
+      '  AND ou.PRODUCTTYPEID = 2',
       MakeDictionary([]),
       ''
     );
@@ -765,11 +947,13 @@ begin
     begin
       orderKey := VarToStr(warmRecs.Items[i]['ORDERID']);
       warmFormula := VarToStr(warmRecs.Items[i]['FORMULANAME']);
-      if IsWarmSpacerFormula(warmFormula) = 1 then
+      warmFormulaJson := VarToStr(warmRecs.Items[i]['FORMULA_JSON']);
+      ParseWarmSpacerFormula(warmFormulaJson, warmFormula, spaceNameByCode, warmHas, warmColors);
+      if (warmHas > 0) or (IsWarmSpacerFormula(warmFormula) = 1) then
       begin
         SetOrderFlag(noteWarmByOrder, orderKey);
-        warmColors := ExtractRalLikeCodes(warmFormula);
-        AddCsvItemsToOrder(noteWarmColorsByOrder, seenWarmColors, orderKey, warmColors);
+        if warmColors <> '' then
+          AddCsvItemsToOrder(noteWarmColorsByOrder, seenWarmColors, orderKey, warmColors);
       end;
     end;
 
@@ -1035,7 +1219,7 @@ begin
 
     cnt := GetOrderCounter(noteDriveCntByOrder, orderKey);
     if cnt > 0 then
-      notesVal := AppendCsv(notesVal, 'электропривод (' + IntToStr(cnt) + ' шт.)');
+      notesVal := AppendCsv(notesVal, 'электропривод');
 
     outRec.Add('notes', notesVal);
 
